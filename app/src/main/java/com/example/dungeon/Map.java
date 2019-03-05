@@ -282,6 +282,14 @@ public class Map
         map[x][y] = 4;
     }
 
+    public static Map createMap(){
+        Map map1=new Map(60,60);
+        map1.generateTunnels();
+        map1.generateRooms();
+        map1.addStairs();
+        return map1;
+
+    }
 
     public static void main(String[] args)
     {
@@ -289,13 +297,5 @@ public class Map
         map1.generateTunnels();
         map1.generateRooms();
         map1.addStairs();
-    }
-    public static Map generate(){
-        Map map1=new Map(60,60);
-        map1.generateTunnels();
-        map1.generateRooms();
-        map1.addStairs();
-        return map1;
-
     }
 }

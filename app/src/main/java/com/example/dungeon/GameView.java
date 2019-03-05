@@ -9,6 +9,7 @@ import android.view.SurfaceHolder;
 public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
 
     private MainThread thread;
+    final int pixelSize = 15;
 
     public GameView (Context context){
         super(context);
@@ -57,13 +58,13 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
     public void draw (Canvas canvas, Char current){
         super.draw(canvas);
         if (canvas != null) {
-            canvas.drawColor(Color.BLACK);
+            canvas.drawColor(Color.DKGRAY);
             Paint player = new Paint();
             player.setColor(Color.rgb(0, 250, 0));
             Paint ground = new Paint();
             ground.setColor(Color.rgb(0, 0, 250));
             Paint stairs = new Paint();
-            stairs.setColor(Color.rgb(0, 250, 250));
+            stairs.setColor(Color.rgb(250, 0, 250));
            int x = current.getPositionX();
            int y = current.getPositionY();
            int a=0;
@@ -79,13 +80,13 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
                     if(y>cMap.getWidth()-10){}
 
                     if(cMap.getValMap((x+i+a),(y+j+b))==3) {
-                        canvas.drawRect((x+i+a)*100, (y+j+b)*100, (x+i+a+1)*100, (y+j+b+1)*100, player);
+                        canvas.drawRect((x+i+a)*pixelSize, (y+j+b)*pixelSize, (x+i+a+1)*pixelSize, (y+j+b+1)*pixelSize, player);
                     }
                     else if(cMap.getValMap(x+i+a,y+j+b)==2||cMap.getValMap(x+i+a,y+j+b)==1){
-                        canvas.drawRect((x+i+a)*100, (y+j+b)*100, (x+i+1+a)*100, (y+j+1+b)*100, ground);
+                        canvas.drawRect((x+i+a)*pixelSize, (y+j+b)*pixelSize, (x+i+1+a)*pixelSize, (y+j+1+b)*pixelSize, ground);
                     }
                     else if(cMap.getValMap(x+i+a,y+j+b)==4){
-                        canvas.drawRect((x+i+a)*100, (y+j+b)*100, (x+i+1+a)*100, (y+j+1+b)*100, stairs);
+                        canvas.drawRect((x+i+a)*pixelSize, (y+j+b)*pixelSize, (x+i+1+a)*pixelSize, (y+j+1+b)*pixelSize, stairs);
                     }
                 }
             }
