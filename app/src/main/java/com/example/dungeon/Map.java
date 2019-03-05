@@ -195,6 +195,7 @@ public class Map
                 }
             }
         }
+        return true;
     }
 
     private int[][] addRoom(int x1,int y1,int x2,int y2)

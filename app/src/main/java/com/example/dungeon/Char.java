@@ -15,7 +15,7 @@ public class Char{
         currentMap = cMap;
         positionX = 0;
         positionY = 0;
-        while(Map[positionX][positionY]!=2){
+        while(currentMap.getValMap(positionX,positionY)!=2){
             positionX =currentMap.generator.nextInt(currentMap.getLength()-2)+1;
             positionY =currentMap.generator.nextInt(currentMap.getWidth()-2)+1;
 
