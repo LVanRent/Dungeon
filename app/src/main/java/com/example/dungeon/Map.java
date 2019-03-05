@@ -265,9 +265,7 @@ public class Map
     public int[][] getMap(){
         return map;
     }
-    public Random getGenerator(){
-        return generator;
-    }
+
     public int getLength(){
         return length;
     }
