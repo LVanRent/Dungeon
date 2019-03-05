@@ -74,10 +74,10 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
 
             for(int i=-10;i<10;i++){
                 for(int j=-10;j<10;j++){
-                    if(x<10){}
-                    if(y<10){}
-                    if(x>cMap.getLength()-10){}
-                    if(y>cMap.getWidth()-10){}
+                    if(x<10){ a=10-x;}
+                    if(y<10){b=10-y;}
+                    if(x>cMap.getLength()-10){a=x-cMap.getLength();}
+                    if(y>cMap.getWidth()-10){b = y-cMap.getWidth();}
 
                     if(cMap.getValMap((x+i+a),(y+j+b))==3) {
                         canvas.drawRect((x+i+a)*pixelSize, (y+j+b)*pixelSize, (x+i+a+1)*pixelSize, (y+j+b+1)*pixelSize, player);
