@@ -80,13 +80,13 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
                     if(y>cMap.getWidth()-10){b = y-cMap.getWidth();}
 
                     if(cMap.getValMap((x+i+a),(y+j+b))==3) {
-                        canvas.drawRect((x+i+a)*pixelSize, (y+j+b)*pixelSize, (x+i+a+1)*pixelSize, (y+j+b+1)*pixelSize, player);
+                        canvas.drawRect((i+10)*pixelSize, (j+10)*pixelSize, (i+11)*pixelSize, (j+11)*pixelSize, player);
                     }
                     else if(cMap.getValMap(x+i+a,y+j+b)==2||cMap.getValMap(x+i+a,y+j+b)==1){
-                        canvas.drawRect((x+i+a)*pixelSize, (y+j+b)*pixelSize, (x+i+1+a)*pixelSize, (y+j+1+b)*pixelSize, ground);
+                        canvas.drawRect((i+10)*pixelSize, (j+10)*pixelSize, (i+11)*pixelSize, (j+11)*pixelSize, ground);
                     }
                     else if(cMap.getValMap(x+i+a,y+j+b)==4){
-                        canvas.drawRect((x+i+a)*pixelSize, (y+j+b)*pixelSize, (x+i+1+a)*pixelSize, (y+j+1+b)*pixelSize, stairs);
+                        canvas.drawRect((i+10)*pixelSize, (j+10)*pixelSize, (i+11)*pixelSize, (j+11)*pixelSize, stairs);
                     }
                 }
             }
