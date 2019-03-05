@@ -66,19 +66,26 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
             stairs.setColor(Color.rgb(0, 250, 250));
            int x = current.getPositionX();
            int y = current.getPositionY();
+           int a=0;
+           int b=0;
            Map cMap = current.getCurrentMap();
 
 
             for(int i=-10;i<10;i++){
                 for(int j=-10;j<10;j++){
-                    if(cMap.getValMap((x+i),(y+j))==3) {
-                        canvas.drawRect((x+i)*100, (y+j)*100, (x+i+1)*100, (y+j+1)*100, player);
+                    if(x<10){}
+                    if(y<10){}
+                    if(x>cMap.getLength()-10){}
+                    if(y>cMap.getWidth()-10){}
+
+                    if(cMap.getValMap((x+i+a),(y+j+b))==3) {
+                        canvas.drawRect((x+i+a)*100, (y+j+b)*100, (x+i+a+1)*100, (y+j+b+1)*100, player);
                     }
-                    else if(cMap.getValMap(x+i,y+j)==2||cMap.getValMap(x+i,y+j)==1){
-                        canvas.drawRect((x+i)*100, (y+j)*100, (x+i+1)*100, (y+j+1)*100, ground);
+                    else if(cMap.getValMap(x+i+a,y+j+b)==2||cMap.getValMap(x+i+a,y+j+b)==1){
+                        canvas.drawRect((x+i+a)*100, (y+j+b)*100, (x+i+1+a)*100, (y+j+1+b)*100, ground);
                     }
-                    else if(cMap.getValMap(x+i,y+j)==4){
-                        canvas.drawRect((x+i)*100, (y+j)*100, (x+i+1)*100, (y+j+1)*100, stairs);
+                    else if(cMap.getValMap(x+i+a,y+j+b)==4){
+                        canvas.drawRect((x+i+a)*100, (y+j+b)*100, (x+i+1+a)*100, (y+j+1+b)*100, stairs);
                     }
                 }
             }
