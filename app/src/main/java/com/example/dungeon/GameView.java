@@ -9,7 +9,7 @@ import android.view.SurfaceHolder;
 public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
 
     private MainThread thread;
-    final int pixelSize = 15;
+    final int pixelSize = 40;
 
     public GameView (Context context){
         super(context);
@@ -58,13 +58,15 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
     public void draw (Canvas canvas, Char current){
         super.draw(canvas);
         if (canvas != null) {
-            canvas.drawColor(Color.DKGRAY);
+            canvas.drawColor(Color.WHITE);
             Paint player = new Paint();
             player.setColor(Color.rgb(0, 250, 0));
             Paint ground = new Paint();
             ground.setColor(Color.rgb(0, 0, 250));
             Paint stairs = new Paint();
             stairs.setColor(Color.rgb(250, 0, 250));
+            Paint wall = new Paint();
+            wall.setColor(Color.rgb(0, 0, 0));
            int x = current.getPositionX();
            int y = current.getPositionY();
            int a=0;
@@ -88,6 +90,10 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
                     else if(cMap.getValMap(x+i+a,y+j+b)==4){
                         canvas.drawRect((i+10)*pixelSize, (j+10)*pixelSize, (i+11)*pixelSize, (j+11)*pixelSize, stairs);
                     }
+                    else if(cMap.getValMap(x+i+a,y+j+b)==0){
+                        canvas.drawRect((i+10)*pixelSize, (j+10)*pixelSize, (i+11)*pixelSize, (j+11)*pixelSize, wall);
+                    }
+
                 }
             }
 
