@@ -9,8 +9,8 @@
     <TableLayout
         android:layout_width="395dp"
         android:layout_height="224dp"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="499dp">
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="498dp">
 
         <TableRow
             android:layout_width="match_parent"
@@ -43,7 +43,7 @@
         android:layout_height="wrap_content"
         android:text="Button"
         tools:layout_editor_absoluteX="78dp"
-        tools:layout_editor_absoluteY="523dp" />
+        tools:layout_editor_absoluteY="569dp" />
 
     <Button
         android:id="@+id/button13"
@@ -61,18 +61,14 @@
         tools:layout_editor_absoluteX="78dp"
         tools:layout_editor_absoluteY="653dp" />
 
-    <FrameLayout
-        android:layout_width="395dp"
-        android:layout_height="483dp"
-        android:visibility="visible"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="8dp">
-
-        <view
-            class="com.example.dungeon.GameView"
-            id="@+id/view4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </FrameLayout>
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="387dp"
+        android:layout_height="153dp"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="569dp" />
 
 </android.support.constraint.ConstraintLayout>
