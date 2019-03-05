@@ -22,7 +22,7 @@ public class MainThread extends Thread {
     @Override
     public void run() {
         Map cMap = Map.generate();
-        Char player = new Char(cMap)
+        Char player = new Char(cMap);
         while (running) {
             canvas = null;
 

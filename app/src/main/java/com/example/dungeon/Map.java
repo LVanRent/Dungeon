@@ -290,7 +290,7 @@ public class Map
         map1.generateRooms();
         map1.addStairs();
     }
-    public Map generate(){
+    public static Map generate(){
         Map map1=new Map(60,60);
         map1.generateTunnels();
         map1.generateRooms();
