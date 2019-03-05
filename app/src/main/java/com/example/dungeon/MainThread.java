@@ -21,6 +21,8 @@ public class MainThread extends Thread {
     }
     @Override
     public void run() {
+        Map cMap = Map.generate();
+        Char player = new Char(cMap)
         while (running) {
             canvas = null;
 
@@ -28,7 +30,7 @@ public class MainThread extends Thread {
                 canvas = this.surfaceHolder.lockCanvas();
                 synchronized(surfaceHolder) {
                     this.gameView.update();
-                    this.gameView.draw(canvas);
+                    this.gameView.draw(canvas,player);
                 }
             } catch (Exception e) {} finally {
                 if (canvas != null) {

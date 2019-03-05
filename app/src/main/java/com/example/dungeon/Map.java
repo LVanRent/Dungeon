@@ -282,12 +282,20 @@ public class Map
         map[x][y] = 4;
     }
 
+
     public static void main(String[] args)
     {
         Map map1=new Map(60,60);
         map1.generateTunnels();
         map1.generateRooms();
         map1.addStairs();
-        map1.drawMap();
+    }
+    public Map generate(){
+        Map map1=new Map(60,60);
+        map1.generateTunnels();
+        map1.generateRooms();
+        map1.addStairs();
+        return map1;
+
     }
 }
