@@ -1,5 +1,4 @@
 package com.example.dungeon;
-
 import java.util.Random;
 
 //
@@ -16,7 +15,7 @@ public class Char{
         currentMap = cMap;
         positionX = 0;
         positionY = 0;
-        while(map[positionX][positionY]!=2){
+        while(Map[positionX][positionY]!=2){
             positionX =generator.nextInt(length-2)+1;
             positionY =generator.nextInt(width-2)+1;
 

@@ -16,7 +16,7 @@ public class Map
 {
 
     private int[][] map;
-    private Random generator;
+    public Random generator;
     private int length;
     private int width;
 
