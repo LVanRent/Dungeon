@@ -16,13 +16,13 @@ public class Char{
         positionX = 0;
         positionY = 0;
         while(Map[positionX][positionY]!=2){
-            positionX =generator.nextInt(length-2)+1;
-            positionY =generator.nextInt(width-2)+1;
+            positionX =currentMap.generator.nextInt(currentMap.getLength()-2)+1;
+            positionY =currentMap.generator.nextInt(currentMap.getWidth()-2)+1;
 
         }
         currentCell = 2;
-        currentMap.setValMap(positionX, positionY,3);
-        explored = new int[cMap.getLength][cMap.getWidth];
+        currentMap.setMap(positionX, positionY,3);
+        explored = new int[cMap.getLength()][cMap.getWidth()];
 
     }
 
@@ -67,7 +67,7 @@ public class Char{
             positionX = positionX +1;
             currentMap.setMap(positionX, positionY,3);
         }
-        if(direciton==1)
+        if(direction==1)
         {
             int val = currentMap.getValMap(positionX, positionY + 1);
             if (currentMap.getValMap(positionX, positionY + 1) != 0)
