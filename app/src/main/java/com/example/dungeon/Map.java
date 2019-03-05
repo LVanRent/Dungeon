@@ -284,7 +284,7 @@ public class Map
 
     public static void main(String[] args)
     {
-        Map map1=new Map(60,60,Integer.parseInt(args[0]));
+        Map map1=new Map(60,60);
         map1.generateTunnels();
         map1.generateRooms();
         map1.addStairs();
