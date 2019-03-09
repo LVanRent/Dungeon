@@ -7,38 +7,26 @@
     tools:context=".Main2Activity">
 
     <TableLayout
-        android:id="@+id/tableLayout"
         android:layout_width="395dp"
-        android:layout_height="241dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/button12">
+        android:layout_height="224dp"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="498dp">
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="visible" />
+            android:layout_height="match_parent" />
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="visible" />
+            android:layout_height="match_parent" />
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="visible" />
+            android:layout_height="match_parent" />
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="visible" />
+            android:layout_height="match_parent" />
     </TableLayout>
 
     <Button
@@ -55,7 +43,7 @@
         android:layout_height="wrap_content"
         android:text="Button"
         tools:layout_editor_absoluteX="78dp"
-        tools:layout_editor_absoluteY="523dp" />
+        tools:layout_editor_absoluteY="569dp" />
 
     <Button
         android:id="@+id/button13"
@@ -73,26 +61,14 @@
         tools:layout_editor_absoluteX="78dp"
         tools:layout_editor_absoluteY="653dp" />
 
-    <FrameLayout
-        android:id="@+id/frameLayout"
-        android:layout_width="395dp"
-        android:layout_height="483dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/tableLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <view
-            class="com.example.dungeon.GameView"
-            id="@+id/view4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </FrameLayout>
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="387dp"
+        android:layout_height="153dp"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="569dp" />
 
 </android.support.constraint.ConstraintLayout>
