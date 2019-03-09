@@ -1,20 +1,14 @@
 package com.example.dungeon;
-//import java.awt.image.BufferedImage;
-//import java.io.File;
-//import javax.imageio.ImageIO;
 import java.util.Random;
-
-
 /*
 0=mur
 1=couloir
 2=salle
 3=perso
 4=sortie
- */
+*/
 public class Map
 {
-
     private int[][] map;
     public Random generator;
     private int length;
@@ -28,7 +22,6 @@ public class Map
         this.width=width;
     }
 
-
     public Map(int length,int width, int seed)
     {
         map=new int[length][width];
@@ -41,83 +34,59 @@ public class Map
     //            2-negativelength 3-negativewidth
     //            x-length y-width
 
-    public void setMap(int x, int y, int val){
+    public void setMap(int x, int y, int val)
+    {
         map[x][y]=val;
     }
-    public int getValMap(int x, int y){
+    public int getValMap(int x, int y)
+    {
         return map[x][y];
     }
 
-    public int[][] generateTunnels()
+    public int[][] generateTunnels(int[][] coords)
     {
-        int tunnelNumber=9;
-        int minDepth=15;
-        int x=generator.nextInt(length-2)+1;
-        int y=generator.nextInt(width-2)+1;
-        int direction=generator.nextInt(4);
-        int[] dir02=new int[] {1,3};
-        int[] dir13=new int[] {0,2};
-        for(int i=0; i<tunnelNumber; i++)
+        for(int i=0;i<coords.length-1;i++)
         {
-            if(direction==0)
+            connectTunnel(coords[i][0],coords[i][1],coords[i+1][0],coords[i+1][1]);
+        }
+        return map;
+    }
+
+    public int[][] connectTunnel(int i1,int j1,int i2,int j2)
+    {
+        if((i2-i1)*(j2-j1)>=0)
+        {
+            int x1=Math.min(i1,i2);
+            int x2=Math.max(i1,i2);
+            int y1=Math.min(j1,j2);
+            int y2=Math.max(j1,j2);
+            if(generator.nextInt(2)==1)
             {
-                if(length-2-x<minDepth+1)
-                {
-                    addTunnel(x,y,direction,length-2-x);
-                    x=length-2;
-                }
-                else
-                {
-                    int depth=generator.nextInt(length-x-1-minDepth)+minDepth;
-                    addTunnel(x,y,direction,depth);
-                    x=x+depth;
-                }
-                direction=dir02[generator.nextInt(2)];
+                addTunnel(x1,y1,0,x2-x1);
+                addTunnel(x2,y1,1,y2-y1);
             }
-            else if(direction==1)
+            else
             {
-                if(width-2-y<minDepth+1)
-                {
-                    addTunnel(x,y,direction,width-2-y);
-                    y=width-2;
-                }
-                else
-                {
-                    int depth=generator.nextInt(width-y-1-minDepth)+minDepth;
-                    addTunnel(x,y,direction,depth);
-                    y=y+depth;
-                }
-                direction=dir13[generator.nextInt(2)];
+                addTunnel(x2,y1,1,y2-y1);
+                addTunnel(x1,y1,0,x2-x1);
             }
-            else if(direction==2)
+        }
+
+        else
+        {
+            int x1=Math.min(i1,i2);
+            int x2=Math.max(i1,i2);
+            int y1=Math.max(j1,j2);
+            int y2=Math.min(j1,j2);
+            if(generator.nextInt(2)==1)
             {
-                if(x<minDepth+2)
-                {
-                    addTunnel(x,y,direction,x-1);
-                    x=1;
-                }
-                else
-                {
-                    int depth=generator.nextInt(x-minDepth)+minDepth;
-                    addTunnel(x,y,direction,depth);
-                    x=x-depth;
-                }
-                direction=dir02[generator.nextInt(2)];
+                addTunnel(x1,y1,0,x2-x1);
+                addTunnel(x2,y1,3,y2-y1);
             }
-            else if(direction==3)
+            else
             {
-                if(y<minDepth+2)
-                {
-                    addTunnel(x,y,direction,y-1);
-                    y=1;
-                }
-                else
-                {
-                    int depth=generator.nextInt(y-minDepth)+minDepth;
-                    addTunnel(x,y,direction,depth);
-                    y=y-depth;
-                }
-                direction=dir13[generator.nextInt(2)];
+                addTunnel(x2,y1,3,y1-y2);
+                addTunnel(x1,y1,0,x2-x1);
             }
         }
         return map;
@@ -131,28 +100,28 @@ public class Map
     {
         if(direction==0)
         {
-            for(int i=0; i<depth+1;i++)
+            for(int i=0; i<=depth;i++)
             {
                 map[x+i][y]=1;
             }
         }
         if(direction==1)
         {
-            for(int i=0; i<depth+1;i++)
+            for(int i=0; i<=depth;i++)
             {
                 map[x][y+i]=1;
             }
         }
         if(direction==2)
         {
-            for(int i=0; i<depth+1;i++)
+            for(int i=0; i<=depth;i++)
             {
                 map[x-i][y]=1;
             }
         }
         if(direction==3)
         {
-            for(int i=0; i<depth;i++)
+            for(int i=0; i<=depth;i++)
             {
                 map[x][y-i]=1;
             }
@@ -160,26 +129,55 @@ public class Map
         return map;
     }
 
-    private int[][] generateRooms()
+    private int[][] generateStuff()
     {
-        int x=14;
-        int y=14;
+        int i;
+        int j;
+        int i2;
+        int j2;
         int[] size=sizes(5,9);
         int generated=0;
-        while(generated<5)
+        int numberOfRooms=8;
+        int[][] coords=new int [numberOfRooms][2];
+        while(generated<numberOfRooms)
         {
-            int i=generator.nextInt(length-21)+10;
-            int j=generator.nextInt(width-21)+10;
-            int i2=i+size[generator.nextInt(size.length)];
-            int j2=j+size[generator.nextInt(size.length)];
-            if (map[i][j]==1 && notOccupied(i,j,i2,j2))
+            if(generated==0)
             {
-                addRoom(i,j,i2,j2);
-                x=i;
-                y=j;
+                i=11;
+                j=11;
+                addRoom(i,j,
+                        i+size[generator.nextInt(size.length)],
+                        j+size[generator.nextInt(size.length)],
+                        5);
+                coords[0]=new int[]{10,10};
                 generated++;
             }
+            else if(generated==numberOfRooms-1)
+            {
+                i=49;
+                j=49;
+                addRoom(i,j,
+                        i+size[generator.nextInt(size.length)],
+                        j+size[generator.nextInt(size.length)],
+                        6);
+                coords[coords.length-1]=new int[]{50,50};
+                generated++;
+            }
+            else
+            {
+                i=generator.nextInt(length-21)+10;
+                j=generator.nextInt(width-21)+10;
+                i2=i+size[generator.nextInt(size.length)];
+                j2=j+size[generator.nextInt(size.length)];
+                if (notOccupied(i,j,i2,j2))
+                {
+                    addRoom(i,j,i2,j2,2);
+                    coords[generated]=new int[] {i,j};
+                    generated++;
+                }
+            }
         }
+        generateTunnels(coords);
         return map;
     }
 
@@ -188,9 +186,9 @@ public class Map
         int x2 = Math.max(i, i2);
         int y1 = Math.min(j, j2);
         int y2 = Math.max(j, j2);
-        for (int m = x1; m <= x2 + 1; m++) {
-            for (int n = y1; n <= y2 + 1; n++) {
-                if (map[m][n] == 2) {
+        for (int m = x1-1; m <= x2 + 1; m++) {
+            for (int n = y1-1; n <= y2 + 1; n++) {
+                if (map[m][n] == 2 || map[m][n] == 5 || map[m][n] == 6) {
                     return false;
                 }
             }
@@ -198,7 +196,9 @@ public class Map
         return true;
     }
 
-    private int[][] addRoom(int x1,int y1,int x2,int y2)
+    //room types:
+    //2-normal 5-entrance 6-exit
+    private int[][] addRoom(int x1,int y1,int x2,int y2,int type)
     {
         int up=Math.max(x1,x2);
         int down=Math.min(x1,x2);
@@ -208,7 +208,7 @@ public class Map
         {
             for(int j=left;j<right+1;j++)
             {
-                map[i][j]=2;
+                map[i][j]=type;
             }
         }
         return map;
@@ -233,35 +233,6 @@ public class Map
         return sizes;
     }
 
-    private void drawMap()
-    {
-  /*      try
-        {
-            int h=600;
-            int w=600;
-            BufferedImage bufferImage2=new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
-            for(int i=0; i<w; i++)
-            {
-                for(int j=0; j<h; j++)
-                {
-                    if(map[i/10][j/10]==0)
-                    {
-                        bufferImage2.setRGB(i,j,1234);
-                    }
-                    else
-                    {
-                        bufferImage2.setRGB(i,j,0);
-                    }
-                }
-            }
-            File outputfile = new File("D:\\saved.jpg");
-            ImageIO.write(bufferImage2, "jpg", outputfile);
-        }
-        catch(Exception ee)
-        {
-            ee.printStackTrace();
-        }
-  */  }
     public int[][] getMap(){
         return map;
     }
@@ -272,21 +243,31 @@ public class Map
     public int getWidth(){
         return width;
     }
-    public void addStairs(){
+    public void addExit(){
         int x = 0;
         int y = 0;
-        while(map[x][y] != 2) {
+        while(map[x][y] != 6) {
             x = generator.nextInt(length - 2) + 1;
             y = generator.nextInt(width - 2) + 1;
         }
         map[x][y] = 4;
     }
 
+    public void addEntrance(){
+        int x = 0;
+        int y = 0;
+        while(map[x][y] != 5) {
+            x = generator.nextInt(length - 2) + 1;
+            y = generator.nextInt(width - 2) + 1;
+        }
+        map[x][y] = 7;
+    }
+
     public static Map createMap(){
         Map map1=new Map(60,60);
-        map1.generateTunnels();
-        map1.generateRooms();
-        map1.addStairs();
+        map1.generateStuff();
+        map1.addExit();
+        map1.addEntrance();
         return map1;
 
     }
@@ -294,8 +275,8 @@ public class Map
     public static void main(String[] args)
     {
         Map map1=new Map(60,60);
-        map1.generateTunnels();
-        map1.generateRooms();
-        map1.addStairs();
+        map1.generateStuff();
+        map1.addExit();
+        map1.addEntrance();
     }
 }
