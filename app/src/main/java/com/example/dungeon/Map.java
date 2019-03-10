@@ -81,7 +81,7 @@ public class Map
             if(generator.nextInt(2)==1)
             {
                 addTunnel(x1,y1,0,x2-x1);
-                addTunnel(x2,y1,3,y2-y1);
+                addTunnel(x2,y1,3,y1-y2);
             }
             else
             {
@@ -91,7 +91,6 @@ public class Map
         }
         return map;
     }
-
     //directions: 0-positivelength 1-positivewidth
     //            2-negativelength 3-negativewidth
     //            x-length y-width
@@ -149,10 +148,10 @@ public class Map
                         i+size[generator.nextInt(size.length)],
                         j+size[generator.nextInt(size.length)],
                         5);
-                coords[0]=new int[]{10,10};
+                coords[0]=new int[]{11,11};
                 generated++;
             }
-            else if(generated==numberOfRooms-1)
+            else if(generated==1)
             {
                 i=49;
                 j=49;
@@ -160,7 +159,7 @@ public class Map
                         i+size[generator.nextInt(size.length)],
                         j+size[generator.nextInt(size.length)],
                         6);
-                coords[coords.length-1]=new int[]{50,50};
+                coords[coords.length-1]=new int[]{49,49};
                 generated++;
             }
             else
@@ -172,7 +171,7 @@ public class Map
                 if (notOccupied(i,j,i2,j2))
                 {
                     addRoom(i,j,i2,j2,2);
-                    coords[generated]=new int[] {i,j};
+                    coords[generated-1]=new int[] {i,j};
                     generated++;
                 }
             }
