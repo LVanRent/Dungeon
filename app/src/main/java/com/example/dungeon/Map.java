@@ -134,51 +134,55 @@ public class Map
         int j;
         int i2;
         int j2;
-        int[] size=sizes(5,9);
+        int minsize=5;
+        int maxsize=9;
+        int[] size=sizes(minsize,maxsize);
         int generated=0;
-        int numberOfRooms=8;
+        int numberOfRooms=10;
         int[][] coords=new int [numberOfRooms][2];
         while(generated<numberOfRooms)
         {
-            if(generated==0)
+            i=generator.nextInt(length-3-2*maxsize)+maxsize+1;
+            j=generator.nextInt(width-3-2*maxsize)+maxsize;
+            i2=i+size[generator.nextInt(size.length)];
+            j2=j+size[generator.nextInt(size.length)];
+            if (notOccupied(i,j,i2,j2))
             {
-                i=11;
-                j=11;
-                addRoom(i,j,
-                        i+size[generator.nextInt(size.length)],
-                        j+size[generator.nextInt(size.length)],
-                        5);
-                coords[0]=new int[]{11,11};
+                addRoom(i,j,i2,j2,2);
+                coords[generated]=new int[] {i,j};
                 generated++;
-            }
-            else if(generated==1)
-            {
-                i=49;
-                j=49;
-                addRoom(i,j,
-                        i+size[generator.nextInt(size.length)],
-                        j+size[generator.nextInt(size.length)],
-                        6);
-                coords[coords.length-1]=new int[]{49,49};
-                generated++;
-            }
-            else
-            {
-                i=generator.nextInt(length-21)+10;
-                j=generator.nextInt(width-21)+10;
-                i2=i+size[generator.nextInt(size.length)];
-                j2=j+size[generator.nextInt(size.length)];
-                if (notOccupied(i,j,i2,j2))
-                {
-                    addRoom(i,j,i2,j2,2);
-                    coords[generated-1]=new int[] {i,j};
-                    generated++;
-                }
             }
         }
         generateTunnels(coords);
+        addStairs(coords);
         return map;
     }
+
+    public int[][] addStairs(int[][] coords)
+    {
+        int i;
+        int j;
+        double dist=0;
+        int[] enter=new int[2];
+        int[] exit=new int[2];
+        while(dist<length/3)
+        {
+            i=generator.nextInt(coords.length);
+            j=generator.nextInt(coords.length);
+            dist=distance(coords[i][0],coords[i][1],coords[j][0],coords[j][1]);
+            enter=new int[] {coords[i][0],coords[i][1]};
+            exit=new int[] {coords[j][0],coords[j][1]};
+        }
+        map[enter[0]][enter[1]]=7;
+        map[exit[0]][exit[1]]=4;
+        return map;
+    }
+
+    public double distance(int x1, int y1, int x2, int y2)
+    {
+        return Math.sqrt((x2-x1)*(x2-x1)+(y2-y1)*(y2-y1));
+    }
+
 
     private boolean notOccupied(int i,int j,int i2,int j2) {
         int x1 = Math.min(i, i2);
@@ -252,21 +256,9 @@ public class Map
         map[x][y] = 4;
     }
 
-    public void addEntrance(){
-        int x = 0;
-        int y = 0;
-        while(map[x][y] != 5) {
-            x = generator.nextInt(length - 2) + 1;
-            y = generator.nextInt(width - 2) + 1;
-        }
-        map[x][y] = 7;
-    }
-
     public static Map createMap(){
         Map map1=new Map(60,60);
         map1.generateStuff();
-        map1.addExit();
-        map1.addEntrance();
         return map1;
 
     }
@@ -275,7 +267,5 @@ public class Map
     {
         Map map1=new Map(60,60);
         map1.generateStuff();
-        map1.addExit();
-        map1.addEntrance();
     }
 }
