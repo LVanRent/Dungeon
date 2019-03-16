@@ -158,6 +158,60 @@ public class Map
         return map;
     }
 
+    public boolean isSeen(int x1, int y1, int x2, int y2)
+    {
+        if(x1==x2)
+        {
+            for(int i=Math.min(y1,y2);i<=Math.max(y1,y2);i++)
+            {
+                if(map[x1][i]==0)
+                {
+                    return false;
+                }
+            }
+        }
+        else if(y1==y2)
+        {
+            for(int i=Math.min(x1,x2);i<=Math.max(x1,x2);i++)
+            {
+                if(map[i][y1]==0)
+                {
+                    return false;
+                }
+            }
+        }
+        else if(Math.abs((y2-y1)/(x2-x1))<1)
+        {
+            for(int i=Math.min(x1,x2);i<=Math.max(x1,x2);i++)
+            {
+                if(map[i][(int)Math.round(linePointValueY(x1,y1,x2,y2,i))]==0)
+                {
+                    return false;
+                }
+            }
+        }
+        else
+        {
+            for(int i=Math.min(y1,y2);i<=Math.max(y1,y2);i++)
+            {
+                if(map[(int)Math.round(linePointValueX(x1,y1,x2,y2,i))][i]==0)
+                {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    public double linePointValueY(double x1, double y1,double x2,double y2,double x)
+    {
+        return (x*(y2-y1)+y1*x2-x1*y2)/(x2-x1);
+    }
+
+    public double linePointValueX(double x1,double y1,double x2,double y2,double y)
+    {
+        return (y*(x2-x1)+x1*y2-y1*x2)/(y2-y1);
+    }
+
     public int[][] addStairs(int[][] coords)
     {
         int i;
