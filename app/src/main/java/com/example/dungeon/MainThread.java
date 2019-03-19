@@ -58,7 +58,8 @@ public class MainThread extends Thread {
                         }
                     }
                     this.gameView.lastevent=0;
-                    direction = player.moveCharWall(direction);
+                    //direction = player.moveCharWall(direction);
+                    player.moveChar(direction);
                     player.getCurrentMap().updateVisible(player.getPositionX(),player.getPositionY());
                     this.gameView.draw(canvas,player);
 
