@@ -7,6 +7,7 @@ import android.view.Window;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Button;
+import android.view.MotionEvent;
 
 public class MainActivity extends Activity {
 
@@ -28,4 +29,5 @@ public class MainActivity extends Activity {
         Button RIGHT = (Button) findViewById(R.id.button4);
         */
     }
+
 }
