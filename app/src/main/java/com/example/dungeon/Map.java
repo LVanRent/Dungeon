@@ -122,6 +122,11 @@ public class Map
         return map[x][y];
     }
 
+    public int getValVisible(int x, int y)
+    {
+        return visible[x][y];
+    }
+
     public int[] getEnter()
     {
         return enter;

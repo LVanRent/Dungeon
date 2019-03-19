@@ -64,11 +64,13 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
             Paint player = new Paint();
             player.setColor(Color.rgb(0, 250, 0));
             Paint ground = new Paint();
-            ground.setColor(Color.rgb(0, 0, 250));
+            ground.setColor(Color.rgb(145, 68, 250));
             Paint stairs = new Paint();
             stairs.setColor(Color.rgb(250, 0, 250));
             Paint wall = new Paint();
-            wall.setColor(Color.rgb(0, 0, 0));
+            wall.setColor(Color.rgb(80, 37, 0));
+            Paint fog = new Paint();
+            fog.setColor(Color.rgb(0, 0, 0));
            int x = current.getPositionX();
            int y = current.getPositionY();
            int a=0;
@@ -83,19 +85,25 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
                     if(x>cMap.getLength()-10){a=x-cMap.getLength();}
                     if(y>cMap.getWidth()-10){b = y-cMap.getWidth();}
 
-                    if(cMap.getValMap((x+i+a),(y+j+b))==3) {
-                        canvas.drawRect((i+10)*pixelSize, (j+10)*pixelSize, (i+11)*pixelSize, (j+11)*pixelSize, player);
-                    }
-                    else if(cMap.getValMap(x+i+a,y+j+b)==2||cMap.getValMap(x+i+a,y+j+b)==1){
-                        canvas.drawRect((i+10)*pixelSize, (j+10)*pixelSize, (i+11)*pixelSize, (j+11)*pixelSize, ground);
-                    }
-                    else if(cMap.getValMap(x+i+a,y+j+b)==4){
-                        canvas.drawRect((i+10)*pixelSize, (j+10)*pixelSize, (i+11)*pixelSize, (j+11)*pixelSize, stairs);
-                    }
-                    else if(cMap.getValMap(x+i+a,y+j+b)==0){
-                        canvas.drawRect((i+10)*pixelSize, (j+10)*pixelSize, (i+11)*pixelSize, (j+11)*pixelSize, wall);
-                    }
+                    if(cMap.getValVisible((x+i+a),(y+j+b))==1){
+                      if(cMap.getValMap((x+i+a),(y+j+b))==3) {
+                           canvas.drawRect((i+10)*pixelSize, (j+10)*pixelSize, (i+11)*pixelSize, (j+11)*pixelSize, player);
+                        }
+                        else if(cMap.getValMap(x+i+a,y+j+b)==2||cMap.getValMap(x+i+a,y+j+b)==1){
+                           canvas.drawRect((i+10)*pixelSize, (j+10)*pixelSize, (i+11)*pixelSize, (j+11)*pixelSize, ground);
+                        }
+                        else if(cMap.getValMap(x+i+a,y+j+b)==4){
+                            canvas.drawRect((i+10)*pixelSize, (j+10)*pixelSize, (i+11)*pixelSize, (j+11)*pixelSize, stairs);
+                       }
+                     else if(cMap.getValMap(x+i+a,y+j+b)==0){
+                           canvas.drawRect((i+10)*pixelSize, (j+10)*pixelSize, (i+11)*pixelSize, (j+11)*pixelSize, wall);
+                       }
 
+                }
+                    if(cMap.getValVisible((x+i+a),(y+j+b))==0)
+                    {
+                        canvas.drawRect((i+10)*pixelSize, (j+10)*pixelSize, (i+11)*pixelSize, (j+11)*pixelSize, fog);
+                    }
                 }
             }
 
