@@ -46,6 +46,11 @@ class Hero extends Sprite {
                     setHp(getHp() - 1);
                 }
             }
+            if (getCurrentCell()==5){
+                hunger = 100;
+
+                setCurrentCell(1);
+            }
             return a;
         }
     return -1;
