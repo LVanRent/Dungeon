@@ -313,11 +313,9 @@ public class Map
         return width;
     }
 
-    public static Map createMap(){
-        Map map1=new Map(60,60);
-        return map1;
 
-    }
+
+
 
     public boolean isSeen(int x1, int y1, int x2, int y2)
     {
@@ -373,8 +371,12 @@ public class Map
         return (y*(x2-x1)+x1*y2-y1*x2)/(y2-y1);
     }
 
+    public static Map createMap(){
+        Map map1=new Map(100,100);
+        return map1;}
+
     public static void main(String[] args)
     {
-        Map map1=new Map(60,60);
+        Map map1=new Map(100,100);
     }
 }
