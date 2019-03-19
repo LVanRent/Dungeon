@@ -133,6 +133,8 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
             wall.setColor(Color.rgb(40, 18, 0));
             Paint fog = new Paint();
             fog.setColor(Color.rgb(0, 0, 0));
+            Paint command = new Paint();
+            command.setColor(Color.rgb(25,25,25));
            int x = current.getPositionX();
            int y = current.getPositionY();
            int a=0;
@@ -179,7 +181,8 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
                     if (cMap.getValVisible((x + i + a), (y + j + b)) == 0) {
                         canvas.drawRect((i + 10) * pixelSize, (j + 10) * pixelSize, (i + 11) * pixelSize, (j + 11) * pixelSize, fog);
                     }
-
+                    canvas.drawLine(0,0,min(screenHeight,screenWidht),min(screenHeight,screenWidht),command);
+                    canvas.drawLine(0,min(screenHeight,screenWidht),min(screenHeight,screenWidht),0,command);
                 }
             }
 
