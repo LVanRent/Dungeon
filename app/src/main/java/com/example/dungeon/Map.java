@@ -1,5 +1,7 @@
 package com.example.dungeon;
 import java.util.Random;
+import android.util.Log;
+
 /*
 0=mur
 1=couloir
@@ -22,9 +24,11 @@ public class Map
     {
         map=new int[length][width];
         visible=new int[length][width];
+        explored=new int[length][width];
         generator=new Random();
         this.length=length;
         this.width=width;
+
 
         int i;
         int j;
@@ -41,7 +45,17 @@ public class Map
             i=generator.nextInt(length-3-2*maxsize)+maxsize+1;
             j=generator.nextInt(width-3-2*maxsize)+maxsize;
             i2=i+size[generator.nextInt(size.length)];
+            Log.i("value of i2 is ", String.valueOf(i2));
+            if (i2 > this.length) {
+                continue ;
+            }
+
             j2=j+size[generator.nextInt(size.length)];
+            Log.i("value of j2 is ", String.valueOf(j2));
+
+            if (j2 > this.length) {
+                continue ;
+            }
             if (notOccupied(i,j,i2,j2))
             {
                 addRoom(i,j,i2,j2,2);
@@ -69,6 +83,7 @@ public class Map
     {
         map=new int[length][width];
         visible=new int[length][width];
+        explored=new int[length][width];
         generator=new Random(seed);
         this.length=length;
         this.width=width;
@@ -87,8 +102,15 @@ public class Map
         {
             i=generator.nextInt(length-3-2*maxsize)+maxsize+1;
             j=generator.nextInt(width-3-2*maxsize)+maxsize;
+
             i2=i+size[generator.nextInt(size.length)];
+            if (i2 > this.length && i2 <= 0) {
+                continue ;
+            }
             j2=j+size[generator.nextInt(size.length)];
+            if (j2 > this.length && j2 <= 0) {
+                continue ;
+            }
             if (notOccupied(i,j,i2,j2))
             {
                 addRoom(i,j,i2,j2,2);
@@ -262,10 +284,13 @@ public class Map
         int x2 = Math.max(i, i2);
         int y1 = Math.min(j, j2);
         int y2 = Math.max(j, j2);
-        for (int m = x1-1; m <= x2 + 1; m++) {
+        for (int m = x1-1 ; m <= x2 + 1 ; m++) {
             for (int n = y1-1; n <= y2 + 1; n++) {
                 if (map[m][n] == 2 || map[m][n] == 5 || map[m][n] == 6) {
                     return false;
+
+
+
                 }
             }
         }
