@@ -9,6 +9,7 @@ import android.view.View.OnTouchListener;
 import java.util.Random;
 
 import static com.example.dungeon.Map.*;
+import static java.lang.Math.min;
 
 
 public class MainThread extends Thread {
@@ -42,7 +43,20 @@ public class MainThread extends Thread {
                 canvas = this.surfaceHolder.lockCanvas();
                 synchronized(surfaceHolder) {
                     this.gameView.update();
-                    if (this.gameView.lastevent ==2){ direction = 2;}
+                    if (this.gameView.lastevent ==2){
+                        if(gameView.lastTouchX < gameView.lastTouchY && gameView.lastTouchX+gameView.lastTouchY<min(gameView.screenHeight,gameView.screenWidht)){
+                        direction = 2;
+                        }
+                        if(gameView.lastTouchX>gameView.lastTouchY && gameView.lastTouchX+gameView.lastTouchY>min(gameView.screenHeight,gameView.screenWidht)){
+                            direction=0;
+                        }
+                        if(gameView.lastTouchX>gameView.lastTouchY && gameView.lastTouchX+gameView.lastTouchY<min(gameView.screenHeight,gameView.screenWidht)){
+                            direction=3;
+                        }
+                        if(gameView.lastTouchX<gameView.lastTouchY && gameView.lastTouchX+gameView.lastTouchY>min(gameView.screenHeight,gameView.screenWidht)){
+                            direction=1;
+                        }
+                    }
                     this.gameView.lastevent=0;
                     direction = player.moveCharWall(direction);
                     player.getCurrentMap().updateVisible(player.getPositionX(),player.getPositionY());
