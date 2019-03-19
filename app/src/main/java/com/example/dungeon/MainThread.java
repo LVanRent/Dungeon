@@ -45,6 +45,7 @@ public class MainThread extends Thread {
                     if (this.gameView.lastevent ==2){ direction = 2;}
                     this.gameView.lastevent=0;
                     direction = player.moveCharWall(direction);
+                    player.getCurrentMap().updateVisible(player.getPositionX(),player.getPositionY());
                     this.gameView.draw(canvas,player);
 
                     sleep(1000);

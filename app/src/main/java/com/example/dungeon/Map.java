@@ -371,6 +371,37 @@ public class Map
         return (y*(x2-x1)+x1*y2-y1*x2)/(y2-y1);
     }
 
+    public int[][] updateVisible(int x, int y)
+    {
+        for(int i=0;i<length;i++)
+        {
+            for(int j=0;j<width;j++)
+            {
+                if(isSeen(x,y,i,j))
+                {
+                    visible[i][j]=1;
+                }
+                else{visible[i][j]=0;}
+            }
+        }
+        return visible;
+    }
+
+    public int[][] updateExplored(int x, int y)
+    {
+        for(int i=0;i<length;i++)
+        {
+            for(int j=0;j<width;j++)
+            {
+                if(isSeen(x,y,i,j))
+                {
+                    visible[i][j]=1;
+                }
+            }
+        }
+        return visible;
+    }
+
     public static Map createMap(){
         Map map1=new Map(100,100);
         return map1;}
