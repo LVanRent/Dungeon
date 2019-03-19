@@ -119,10 +119,16 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
             player.setColor(Color.rgb(0, 250, 0));
             Paint ground = new Paint();
             ground.setColor(Color.rgb(145, 68, 250));
+            Paint darkground = new Paint();
+            ground.setColor(Color.rgb(123, 34, 125));
             Paint stairs = new Paint();
             stairs.setColor(Color.rgb(250, 0, 250));
+            Paint darkstairs = new Paint();
+            stairs.setColor(Color.rgb(125, 0, 125));
             Paint wall = new Paint();
             wall.setColor(Color.rgb(80, 37, 0));
+            Paint darkwall = new Paint();
+            wall.setColor(Color.rgb(40, 18, 0));
             Paint fog = new Paint();
             fog.setColor(Color.rgb(0, 0, 0));
            int x = current.getPositionX();
@@ -132,32 +138,46 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
            Map cMap = current.getCurrentMap();
 
 
-            for(int i=-10;i<10;i++){
-                for(int j=-10;j<10;j++){
-                    if(x<10){ a=10-x;}
-                    if(y<10){b=10-y;}
-                    if(x>cMap.getLength()-10){a=x-cMap.getLength();}
-                    if(y>cMap.getWidth()-10){b = y-cMap.getWidth();}
-
-                    if(cMap.getValVisible((x+i+a),(y+j+b))==1){
-                      if(cMap.getValMap((x+i+a),(y+j+b))==3) {
-                           canvas.drawRect((i+10)*pixelSize, (j+10)*pixelSize, (i+11)*pixelSize, (j+11)*pixelSize, player);
-                        }
-                        else if(cMap.getValMap(x+i+a,y+j+b)==2||cMap.getValMap(x+i+a,y+j+b)==1){
-                           canvas.drawRect((i+10)*pixelSize, (j+10)*pixelSize, (i+11)*pixelSize, (j+11)*pixelSize, ground);
-                        }
-                        else if(cMap.getValMap(x+i+a,y+j+b)==4){
-                            canvas.drawRect((i+10)*pixelSize, (j+10)*pixelSize, (i+11)*pixelSize, (j+11)*pixelSize, stairs);
-                       }
-                     else if(cMap.getValMap(x+i+a,y+j+b)==0){
-                           canvas.drawRect((i+10)*pixelSize, (j+10)*pixelSize, (i+11)*pixelSize, (j+11)*pixelSize, wall);
-                       }
-
-                }
-                    if(cMap.getValVisible((x+i+a),(y+j+b))==0)
-                    {
-                        canvas.drawRect((i+10)*pixelSize, (j+10)*pixelSize, (i+11)*pixelSize, (j+11)*pixelSize, fog);
+            for(int i=-10;i<10;i++) {
+                for (int j = -10; j < 10; j++) {
+                    if (x < 10) {
+                        a = 10 - x;
                     }
+                    if (y < 10) {
+                        b = 10 - y;
+                    }
+                    if (x > cMap.getLength() - 10) {
+                        a = x - cMap.getLength();
+                    }
+                    if (y > cMap.getWidth() - 10) {
+                        b = y - cMap.getWidth();
+                    }
+
+                    if (cMap.getValVisible((x + i + a), (y + j + b)) == 1) {
+                        if (cMap.getValMap((x + i + a), (y + j + b)) == 3) {
+                            canvas.drawRect((i + 10) * pixelSize, (j + 10) * pixelSize, (i + 11) * pixelSize, (j + 11) * pixelSize, player);
+                        } else if (cMap.getValMap(x + i + a, y + j + b) == 2 || cMap.getValMap(x + i + a, y + j + b) == 1) {
+                            canvas.drawRect((i + 10) * pixelSize, (j + 10) * pixelSize, (i + 11) * pixelSize, (j + 11) * pixelSize, ground);
+                        } else if (cMap.getValMap(x + i + a, y + j + b) == 4) {
+                            canvas.drawRect((i + 10) * pixelSize, (j + 10) * pixelSize, (i + 11) * pixelSize, (j + 11) * pixelSize, stairs);
+                        } else if (cMap.getValMap(x + i + a, y + j + b) == 0) {
+                            canvas.drawRect((i + 10) * pixelSize, (j + 10) * pixelSize, (i + 11) * pixelSize, (j + 11) * pixelSize, wall);
+                        }
+
+                    }
+                    if (cMap.getValVisible((x + i + a), (y + j + b)) == 0 && cMap.getValExplored((x + i + a), (y + j + b)) == 1) {
+                        if (cMap.getValMap(x + i + a, y + j + b) == 2 || cMap.getValMap(x + i + a, y + j + b) == 1) {
+                            canvas.drawRect((i + 10) * pixelSize, (j + 10) * pixelSize, (i + 11) * pixelSize, (j + 11) * pixelSize, darkground);
+                        } else if (cMap.getValMap(x + i + a, y + j + b) == 4) {
+                            canvas.drawRect((i + 10) * pixelSize, (j + 10) * pixelSize, (i + 11) * pixelSize, (j + 11) * pixelSize, darkstairs);
+                        } else if (cMap.getValMap(x + i + a, y + j + b) == 0) {
+                            canvas.drawRect((i + 10) * pixelSize, (j + 10) * pixelSize, (i + 11) * pixelSize, (j + 11) * pixelSize, darkwall);
+                        }
+                    }
+                    if (cMap.getValVisible((x + i + a), (y + j + b)) == 0) {
+                        canvas.drawRect((i + 10) * pixelSize, (j + 10) * pixelSize, (i + 11) * pixelSize, (j + 11) * pixelSize, fog);
+                    }
+
                 }
             }
 
