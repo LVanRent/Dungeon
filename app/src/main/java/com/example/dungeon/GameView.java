@@ -194,8 +194,7 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
                     }
 
                     canvas.drawRect(screenHeight-screenWidht,screenWidht,screenHeight-screenWidht+10,screenHeight,command);
-
-                   canvas.drawRect((screenHeight-screenWidht)/2,screenWidht,(screenHeight-screenWidht)/2+5,screenHeight,command);
+                    canvas.drawRect((screenHeight-screenWidht)/2,screenWidht,(screenHeight-screenWidht)/2+5,screenHeight,command);
                    canvas.drawRect(0,(screenHeight+screenWidht)/2,screenHeight-screenWidht,(screenHeight+screenWidht+10)/2,command);
                     canvas.drawRect(screenHeight-screenWidht+20,screenWidht+20,screenHeight-screenWidht+20+current.getHp(),screenWidht+40,hp);
                     canvas.drawRect(screenHeight-screenWidht+20,screenWidht+60,screenHeight-screenWidht+20+current.getHunger(),screenWidht+80,hunger);
