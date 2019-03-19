@@ -7,7 +7,6 @@ public class Char{
     private int positionY;
     private int currentCell;
     private Map currentMap;
-    private int[][] explored;
     private int hp;
     private int hunger;
 
@@ -17,7 +16,6 @@ public class Char{
         positionY =cMap.getEnter()[1];
         currentCell = 2;
         currentMap.setMap(positionX, positionY,3);
-        explored = new int[cMap.getLength()][cMap.getWidth()];
 
     }
 
@@ -31,7 +29,6 @@ public class Char{
 
         currentCell = 2;
         currentMap.setMap(positionX, positionY,3);
-        explored = new int[currentMap.getLength()][currentMap.getWidth()];
 
 
     }
@@ -56,10 +53,6 @@ public class Char{
         return positionY;
     }
 
-    public int[][] getExplored() {
-        return explored;
-    }
-
     public Map getCurrentMap() {
         return currentMap;
     }
@@ -70,8 +63,6 @@ public class Char{
         {
             int val = currentMap.getValMap(positionX +1, positionY);
             if(currentMap.getValMap(positionX +1, positionY)!=0) {
-
-                explored[positionX + 1][positionY] = val;
                 currentMap.setMap(positionX, positionY, currentCell);
                 currentCell = val;
                 positionX = positionX + 1;
@@ -82,7 +73,6 @@ public class Char{
         {
             int val = currentMap.getValMap(positionX, positionY + 1);
             if (currentMap.getValMap(positionX, positionY + 1) != 0) {
-                explored[positionX][positionY + 1] = val;
                 currentMap.setMap(positionX, positionY, currentCell);
                 currentCell = val;
                 positionY = positionY + 1;
@@ -93,7 +83,6 @@ public class Char{
         {
             int val = currentMap.getValMap(positionX -1, positionY);
             if(currentMap.getValMap(positionX -1, positionY)!=0) {
-                explored[positionX - 1][positionY] = val;
                 currentMap.setMap(positionX, positionY, currentCell);
                 currentCell = val;
                 positionX = positionX - 1;
@@ -104,7 +93,6 @@ public class Char{
         {
             int val = currentMap.getValMap(positionX, positionY - 1);
             if (currentMap.getValMap(positionX, positionY - 1) != 0) {
-                explored[positionX][positionY - 1] = val;
                 currentMap.setMap(positionX, positionY, currentCell);
                 currentCell = val;
                 positionY = positionY - 1;
@@ -121,8 +109,6 @@ public class Char{
         {
             int val = currentMap.getValMap(positionX +1, positionY);
             if(currentMap.getValMap(positionX +1, positionY)!=0) {
-
-                explored[positionX + 1][positionY] = val;
                 currentMap.setMap(positionX, positionY, currentCell);
                 currentCell = val;
                 positionX = positionX + 1;
@@ -134,7 +120,6 @@ public class Char{
         {
             int val = currentMap.getValMap(positionX, positionY + 1);
             if (currentMap.getValMap(positionX, positionY + 1) != 0) {
-                explored[positionX][positionY + 1] = val;
                 currentMap.setMap(positionX, positionY, currentCell);
                 currentCell = val;
                 positionY = positionY + 1;
@@ -146,7 +131,6 @@ public class Char{
         {
             int val = currentMap.getValMap(positionX -1, positionY);
             if(currentMap.getValMap(positionX -1, positionY)!=0) {
-                explored[positionX - 1][positionY] = val;
                 currentMap.setMap(positionX, positionY, currentCell);
                 currentCell = val;
                 positionX = positionX - 1;
@@ -158,7 +142,6 @@ public class Char{
         {
             int val = currentMap.getValMap(positionX, positionY - 1);
             if (currentMap.getValMap(positionX, positionY - 1) != 0) {
-                explored[positionX][positionY - 1] = val;
                 currentMap.setMap(positionX, positionY, currentCell);
                 currentCell = val;
                 positionY = positionY - 1;

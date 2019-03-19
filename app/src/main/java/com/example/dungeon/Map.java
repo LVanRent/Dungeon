@@ -16,6 +16,7 @@ public class Map
     private int width;
     private int[] enter;
     private int[] exit;
+    private int[][] explored;
 
     public Map(int length,int width)
     {
@@ -58,6 +59,7 @@ public class Map
                 if(isSeen(getEnter()[0],getEnter()[1],i,j))
                 {
                     visible[i][j]=1;
+                    explored[i][j]=1;
                 }
             }
         }
@@ -125,6 +127,11 @@ public class Map
     public int getValVisible(int x, int y)
     {
         return visible[x][y];
+    }
+
+    public int getValExplored(int x, int y)
+    {
+        return explored[x][y];
     }
 
     public int[] getEnter()
@@ -395,7 +402,7 @@ public class Map
             {
                 if(isSeen(x,y,i,j))
                 {
-                    visible[i][j]=1;
+                    explored[i][j]=1;
                 }
             }
         }
