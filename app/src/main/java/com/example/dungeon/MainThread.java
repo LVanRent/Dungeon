@@ -42,6 +42,8 @@ public class MainThread extends Thread {
                 this.processEvents();
                 canvas = this.surfaceHolder.lockCanvas();
                 synchronized(surfaceHolder) {
+
+                    sleep(1000);
                     this.gameView.update();
                     if (this.gameView.lastevent ==2){
                         if(gameView.lastTouchX < gameView.lastTouchY && gameView.lastTouchX+gameView.lastTouchY<min(gameView.screenHeight,gameView.screenWidht)){
@@ -57,13 +59,14 @@ public class MainThread extends Thread {
                             direction=1;
                         }
                     }
+
                     this.gameView.lastevent=0;
                     //direction = player.moveCharWall(direction);
                     player.moveChar(direction);
+                    direction=-1;
                     player.getCurrentMap().updateVisible(player.getPositionX(),player.getPositionY());
                     this.gameView.draw(canvas,player);
 
-                    sleep(1000);
                 }
             } catch (Exception e) {} finally {
                 if (canvas != null) {
