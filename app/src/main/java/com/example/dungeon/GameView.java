@@ -12,6 +12,10 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
 
     private MainThread thread;
     final int pixelSize = 40;
+    public MotionEvent mEvent;
+    public int lastevent;
+   public float lastTouchX;
+   public float lastTouchY;
 
     public GameView (Context context){
         super(context);
@@ -56,6 +60,33 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
 
 
     }
+    @Override
+    public boolean onTouchEvent(MotionEvent me) {
+
+        int action = me.getAction();
+        lastTouchX = me.getX();
+        lastTouchY = me.getY();
+/*
+        Log.v("MotionEvent", "Action = " + action);
+        Log.v("MotionEvent", "X = " + currentXPosition + "Y = " + currentYPosition);
+*/
+        if (action == MotionEvent.ACTION_MOVE) {
+            lastevent = 1;
+        }
+        if (action == MotionEvent.ACTION_UP) {
+            lastevent =0;
+        }
+        if (action != 0) {
+            lastevent =2;
+        }
+
+
+
+
+        return true;
+    }
+
+
 
     public void draw (Canvas canvas, Char current){
         super.draw(canvas);
