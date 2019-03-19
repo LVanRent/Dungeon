@@ -43,7 +43,7 @@ public class MainThread extends Thread {
                 canvas = this.surfaceHolder.lockCanvas();
                 synchronized(surfaceHolder) {
 
-                    sleep(1000);
+                   // sleep(1000);
                     this.gameView.update();
                     if (this.gameView.lastevent ==2){
                         if(gameView.lastTouchX < gameView.lastTouchY && gameView.lastTouchX+gameView.lastTouchY<min(gameView.screenHeight,gameView.screenWidht)){
