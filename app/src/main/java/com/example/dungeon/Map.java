@@ -10,24 +10,103 @@ import java.util.Random;
 public class Map
 {
     private int[][] map;
+    private int[][] visible;
     public Random generator;
     private int length;
     private int width;
+    private int[] enter;
+    private int[] exit;
 
     public Map(int length,int width)
     {
         map=new int[length][width];
+        visible=new int[length][width];
         generator=new Random();
         this.length=length;
         this.width=width;
+
+        int i;
+        int j;
+        int i2;
+        int j2;
+        int minsize=9;
+        int maxsize=20;
+        int[] size=sizes(minsize,maxsize);
+        int generated=0;
+        int numberOfRooms=15;
+        int[][] coords=new int [numberOfRooms][2];
+        while(generated<numberOfRooms)
+        {
+            i=generator.nextInt(length-3-2*maxsize)+maxsize+1;
+            j=generator.nextInt(width-3-2*maxsize)+maxsize;
+            i2=i+size[generator.nextInt(size.length)];
+            j2=j+size[generator.nextInt(size.length)];
+            if (notOccupied(i,j,i2,j2))
+            {
+                addRoom(i,j,i2,j2,2);
+                coords[generated]=new int[] {i,j};
+                generated++;
+            }
+        }
+        generateTunnels(coords);
+        addStairs(coords);
+
+        for(i=0;i<length;i++)
+        {
+            for(j=0;j<width;j++)
+            {
+                if(isSeen(getEnter()[0],getEnter()[1],i,j))
+                {
+                    visible[i][j]=1;
+                }
+            }
+        }
     }
 
     public Map(int length,int width, int seed)
     {
         map=new int[length][width];
+        visible=new int[length][width];
         generator=new Random(seed);
         this.length=length;
         this.width=width;
+
+        int i;
+        int j;
+        int i2;
+        int j2;
+        int minsize=5;
+        int maxsize=10;
+        int[] size=sizes(minsize,maxsize);
+        int generated=0;
+        int numberOfRooms=15;
+        int[][] coords=new int [numberOfRooms][2];
+        while(generated<numberOfRooms)
+        {
+            i=generator.nextInt(length-3-2*maxsize)+maxsize+1;
+            j=generator.nextInt(width-3-2*maxsize)+maxsize;
+            i2=i+size[generator.nextInt(size.length)];
+            j2=j+size[generator.nextInt(size.length)];
+            if (notOccupied(i,j,i2,j2))
+            {
+                addRoom(i,j,i2,j2,2);
+                coords[generated]=new int[] {i,j};
+                generated++;
+            }
+        }
+        generateTunnels(coords);
+        addStairs(coords);
+
+        for(i=0;i<length;i++)
+        {
+            for(j=0;j<width;j++)
+            {
+                if(isSeen(getEnter()[0],getEnter()[1],i,j))
+                {
+                    visible[i][j]=1;
+                }
+            }
+        }
     }
 
     //directions: 0-positivelength 1-positivewidth
@@ -42,6 +121,18 @@ public class Map
     {
         return map[x][y];
     }
+
+    public int[] getEnter()
+    {
+        return enter;
+    }
+
+    public int[] getExit()
+    {
+        return exit;
+    }
+
+
 
     public int[][] generateTunnels(int[][] coords)
     {
@@ -128,50 +219,20 @@ public class Map
         return map;
     }
 
-    private int[][] generateStuff()
-    {
-        int i;
-        int j;
-        int i2;
-        int j2;
-        int minsize=5;
-        int maxsize=9;
-        int[] size=sizes(minsize,maxsize);
-        int generated=0;
-        int numberOfRooms=10;
-        int[][] coords=new int [numberOfRooms][2];
-        while(generated<numberOfRooms)
-        {
-            i=generator.nextInt(length-3-2*maxsize)+maxsize+1;
-            j=generator.nextInt(width-3-2*maxsize)+maxsize;
-            i2=i+size[generator.nextInt(size.length)];
-            j2=j+size[generator.nextInt(size.length)];
-            if (notOccupied(i,j,i2,j2))
-            {
-                addRoom(i,j,i2,j2,2);
-                coords[generated]=new int[] {i,j};
-                generated++;
-            }
-        }
-        generateTunnels(coords);
-        addStairs(coords);
-        return map;
-    }
-
     public int[][] addStairs(int[][] coords)
     {
         int i;
         int j;
         double dist=0;
-        int[] enter=new int[2];
-        int[] exit=new int[2];
+        this.enter=new int[2];
+        this.exit=new int[2];
         while(dist<length/3)
         {
             i=generator.nextInt(coords.length);
             j=generator.nextInt(coords.length);
             dist=distance(coords[i][0],coords[i][1],coords[j][0],coords[j][1]);
-            enter=new int[] {coords[i][0],coords[i][1]};
-            exit=new int[] {coords[j][0],coords[j][1]};
+            this.enter=new int[] {coords[i][0],coords[i][1]};
+            this.exit=new int[] {coords[j][0],coords[j][1]};
         }
         map[enter[0]][enter[1]]=7;
         map[exit[0]][exit[1]]=4;
@@ -246,26 +307,69 @@ public class Map
     public int getWidth(){
         return width;
     }
-    public void addExit(){
-        int x = 0;
-        int y = 0;
-        while(map[x][y] != 6) {
-            x = generator.nextInt(length - 2) + 1;
-            y = generator.nextInt(width - 2) + 1;
-        }
-        map[x][y] = 4;
-    }
 
     public static Map createMap(){
         Map map1=new Map(60,60);
-        map1.generateStuff();
         return map1;
 
+    }
+
+    public boolean isSeen(int x1, int y1, int x2, int y2)
+    {
+        if(x1==x2)
+        {
+            for(int i=Math.min(y1,y2)+1;i<=Math.max(y1,y2)-1;i++)
+            {
+                if(map[x1][i]==0)
+                {
+                    return false;
+                }
+            }
+        }
+        else if(y1==y2)
+        {
+            for(int i=Math.min(x1,x2)+1;i<=Math.max(x1,x2)-1;i++)
+            {
+                if(map[i][y1]==0)
+                {
+                    return false;
+                }
+            }
+        }
+        else if(Math.abs((y2-y1)/(x2-x1))<1)
+        {
+            for(int i=Math.min(x1,x2)+1;i<=Math.max(x1,x2)-1;i++)
+            {
+                if(map[i][(int)Math.round(linePointValueY(x1,y1,x2,y2,i))]==0)
+                {
+                    return false;
+                }
+            }
+        }
+        else
+        {
+            for(int i=Math.min(y1,y2)+1;i<=Math.max(y1,y2)-1;i++)
+            {
+                if(map[(int)Math.round(linePointValueX(x1,y1,x2,y2,i))][i]==0)
+                {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    public double linePointValueY(double x1, double y1,double x2,double y2,double x)
+    {
+        return (x*(y2-y1)+y1*x2-x1*y2)/(x2-x1);
+    }
+
+    public double linePointValueX(double x1,double y1,double x2,double y2,double y)
+    {
+        return (y*(x2-x1)+x1*y2-y1*x2)/(y2-y1);
     }
 
     public static void main(String[] args)
     {
         Map map1=new Map(60,60);
-        map1.generateStuff();
     }
 }
