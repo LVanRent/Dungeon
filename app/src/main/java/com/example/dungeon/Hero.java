@@ -7,6 +7,10 @@ class Hero extends Sprite {
 
     private int hunger;
 
+
+    public Hero( Bitmap bmp) {
+        super(bmp);
+    }
     public Hero(Map cMap, Bitmap bmp) {
         super(cMap, bmp);
     }

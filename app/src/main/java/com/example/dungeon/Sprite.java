@@ -18,6 +18,18 @@ public class Sprite {
         canvas.drawBitmap(image,100,100,null);
     }
 
+
+    public Sprite(Bitmap bmp){
+        image = bmp;
+
+        currentMap = Map.createMap();
+        positionX =currentMap.getEnter()[0];
+        positionY =currentMap.getEnter()[1];
+        currentCell = 2;
+        currentMap.setMap(positionX, positionY,3);
+
+    }
+
     public Sprite(Map cMap, Bitmap bmp){
         image = bmp;
         currentMap = cMap;
@@ -28,7 +40,7 @@ public class Sprite {
 
     }
 
-    public void nextlevel(Char cChar){
+    public void nextlevel(Sprite cChar){
         currentMap = Map.createMap();
         positionX = 0;
         positionY = 0;
@@ -38,11 +50,11 @@ public class Sprite {
 
         currentCell = 2;
         currentMap.setMap(positionX, positionY,3);
-        explored = new int[currentMap.getLength()][currentMap.getWidth()];
+        //explored = new int[currentMap.getLength()][currentMap.getWidth()];
         return ;
 
     }
-    */
+
     public int getCurrentCell() {
         return currentCell;
     }
@@ -68,9 +80,9 @@ public class Sprite {
     public void setCurrentMap(Map map)
     { this.currentMap = map;}
 
-    public void setExplored(int [][] explored){
-        this.explored = explored;
-    }
+   // public void setExplored(int [][] explored){
+     //   this.explored = explored;
+    //}
 
     public void setHp (int hp)
     {this.hp = hp;}

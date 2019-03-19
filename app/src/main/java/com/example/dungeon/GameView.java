@@ -16,7 +16,7 @@ import static java.lang.Math.min;
 import static com.example.dungeon.MainThread.canvas;
 public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
     private MainThread thread;
-    final int pixelSize = 40;
+  //  final int pixelSize = 40;
     Sprite ash;
     public int pixelSize = 40;
     public MotionEvent mEvent;
@@ -91,6 +91,7 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
         int action = me.getAction();
         lastTouchX = me.getX();
         lastTouchY = me.getY();
+        Log.i("action x y",""+action+" "+lastTouchX+" "+lastTouchY);
 /*
         Log.v("MotionEvent", "Action = " + action);
         Log.v("MotionEvent", "X = " + currentXPosition + "Y = " + currentYPosition);

@@ -1,7 +1,24 @@
 package com.example.dungeon;
+
+import android.graphics.BitmapFactory;
 import android.view.SurfaceHolder;
 import android.graphics.Canvas;
 import android.view.MotionEvent;
+import android.content.Context;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Point;
+import android.view.*;
+import android.view.SurfaceView;
+import android.view.SurfaceHolder;
+import android.view.MotionEvent;
+import android.util.Log;
+import android.view.Window;
+import android.view.WindowManager;
+import static java.lang.Math.min;
+import static com.example.dungeon.MainThread.canvas;
 
 import android.view.View;
 import android.view.View.OnTouchListener;
@@ -34,7 +51,7 @@ public class MainThread extends Thread {
         lastEvent = null;
         direction = 0;
         Map cMap = Map.createMap();
-        Sprite player = new Sprite(cMap);
+        Sprite player = new Sprite(cMap, BitmapFactory.decodeResource(gameView.getResources(),R.drawable.ash));
         while (running) {
             canvas = null;
 
