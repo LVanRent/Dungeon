@@ -5,6 +5,8 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.view.SurfaceView;
 import android.view.SurfaceHolder;
+import android.view.MotionEvent;
+
 
 public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
 

@@ -26,6 +26,22 @@ public class Char{
 
     }
 
+    public Char nextlevel(Char cChar){
+        currentMap = Map.createMap();
+        positionX = 0;
+        positionY = 0;
+        while(currentMap.getValMap(positionX,positionY)!=7){
+            positionX =currentMap.generator.nextInt(currentMap.getLength()-2)+1;
+            positionY =currentMap.generator.nextInt(currentMap.getWidth()-2)+1;
+
+        }
+        currentCell = 2;
+        currentMap.setMap(positionX, positionY,3);
+        explored = new int[currentMap.getLength()][currentMap.getWidth()];
+
+
+    }
+
     public int getCurrentCell() {
         return currentCell;
     }
