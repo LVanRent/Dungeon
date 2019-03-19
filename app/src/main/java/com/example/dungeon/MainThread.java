@@ -2,8 +2,6 @@ package com.example.dungeon;
 import android.view.SurfaceHolder;
 import android.graphics.Canvas;
 
-import static com.example.dungeon.Map.*;
-
 
 public class MainThread extends Thread {
 
@@ -23,7 +21,7 @@ public class MainThread extends Thread {
     @Override
     public void run() {
         Map cMap = Map.createMap();
-        Char player = new Char(cMap);
+        Sprite player = new Sprite(cMap);
         while (running) {
             canvas = null;
 

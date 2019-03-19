@@ -1,17 +1,27 @@
 package com.example.dungeon;
-import java.util.Random;
+
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+
+import static com.example.dungeon.MainThread.canvas;
 
 //
-public class Char{
+public class Sprite {
     private int positionX;
     private int positionY;
     private int currentCell;
     private Map currentMap;
     private int[][] explored;
     private int hp;
-    private int hunger;
+    private Bitmap image;
 
-    public Char(Map cMap){
+
+    public void draw(Canvas canvas){
+        canvas.drawBitmap(image,100,100,null);
+    }
+
+    public Sprite(Map cMap, Bitmap bmp){
+        image = bmp;
         currentMap = cMap;
         positionX = 0;
         positionY = 0;
@@ -26,7 +36,10 @@ public class Char{
 
     }
 
-    public Char nextlevel(Char cChar){
+
+    //modified to debug, change String into Sprite
+    /**
+    public Hero nextlevel(Hero cChar){
         currentMap = Map.createMap();
         positionX = 0;
         positionY = 0;
@@ -38,10 +51,10 @@ public class Char{
         currentCell = 2;
         currentMap.setMap(positionX, positionY,3);
         explored = new int[currentMap.getLength()][currentMap.getWidth()];
-
+        return ;
 
     }
-
+    */
     public int getCurrentCell() {
         return currentCell;
     }
@@ -50,9 +63,32 @@ public class Char{
         return hp;
     }
 
-    public int getHunger() {
-        return hunger;
+
+
+    public void setPositionX(int positionX) {
+        this.positionX = positionX;
     }
+    public void setPositionY(int positionY){
+        this.positionY = positionY;
+    }
+
+    public void setCurrentCell(int currentCell)
+    {
+        this.currentCell = currentCell;
+    }
+
+    public void setCurrentMap(Map map)
+    { this.currentMap = map;}
+
+    public void setExplored(int [][] explored){
+        this.explored = explored;
+    }
+
+    public void setHp (int hp)
+    {this.hp = hp;}
+
+    public void setImage (Bitmap image)
+    {this.image = image;}
 
     public int getPositionX() {
         return positionX;

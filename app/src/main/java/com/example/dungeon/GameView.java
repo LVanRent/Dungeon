@@ -1,17 +1,19 @@
 package com.example.dungeon;
 import android.content.Context;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.view.SurfaceView;
 import android.view.SurfaceHolder;
-import android.view.MotionEvent;
+
+import static com.example.dungeon.MainThread.canvas;
 
 
 public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
-
     private MainThread thread;
     final int pixelSize = 40;
+    Sprite ash;
 
     public GameView (Context context){
         super(context);
@@ -30,6 +32,8 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
     public void surfaceCreated (SurfaceHolder holder){
         thread.setRunning(true);
         thread.start();
+        ash = new Sprite(BitmapFactory.decodeResource(getResources(),R.drawable.ash));
+        ash.draw(canvas);
 
 
     }
@@ -57,7 +61,7 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
 
     }
 
-    public void draw (Canvas canvas, Char current){
+    public void draw (Canvas canvas, Sprite current){
         super.draw(canvas);
         if (canvas != null) {
             canvas.drawColor(Color.WHITE);
