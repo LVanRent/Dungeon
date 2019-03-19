@@ -44,9 +44,9 @@ public class MainThread extends Thread {
                     this.gameView.update();
                     if (this.gameView.lastevent ==2){ direction = 2;}
                     this.gameView.lastevent=0;
+                    direction = player.moveCharWall(direction);
                     this.gameView.draw(canvas,player);
 
-                    direction = player.moveCharWall(direction);
                     sleep(1000);
                 }
             } catch (Exception e) {} finally {
