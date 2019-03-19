@@ -63,6 +63,7 @@ public class Map
         }
         generateTunnels(coords);
         addStairs(coords);
+        addFood();
 
         for(i=0;i<length;i++)
         {
@@ -118,7 +119,7 @@ public class Map
         }
         generateTunnels(coords);
         addStairs(coords);
-
+        addFood();
         for(i=0;i<length;i++)
         {
             for(j=0;j<width;j++)
@@ -135,6 +136,20 @@ public class Map
     //directions: 0-positivelength 1-positivewidth
     //            2-negativelength 3-negativewidth
     //            x-length y-width
+
+    public void addFood()
+    {
+        int generated=3;
+        for(int i=0; i<generated;i++)
+        {
+            int n=generator.nextInt(length);
+            int m=generator.nextInt(length);
+            if(map[m][n]==2)
+            {
+                map[m][n]=5;
+            }
+        }
+    }
 
     public void setMap(int x, int y, int val)
     {
