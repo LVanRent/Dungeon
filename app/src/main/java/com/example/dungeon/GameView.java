@@ -57,8 +57,8 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
     public void surfaceCreated (SurfaceHolder holder){
         thread.setRunning(true);
         thread.start();
-        ash = new Sprite(BitmapFactory.decodeResource(getResources(),R.drawable.ash));
-        ash.draw(canvas);
+        //ash = new Sprite(BitmapFactory.decodeResource(getResources(),R.drawable.ash));
+        //ash.draw(canvas);
 
 
     }
@@ -135,7 +135,7 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
             Paint fog = new Paint();
             fog.setColor(Color.rgb(0, 0, 0));
             Paint command = new Paint();
-            command.setColor(Color.rgb(25,25,25));
+            command.setColor(Color.rgb(0,0,0));
            int x = current.getPositionX();
            int y = current.getPositionY();
            int a=0;
@@ -182,8 +182,10 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
                     if (cMap.getValVisible((x + i + a), (y + j + b)) == 0) {
                         canvas.drawRect((i + 10) * pixelSize, (j + 10) * pixelSize, (i + 11) * pixelSize, (j + 11) * pixelSize, fog);
                     }
-                    canvas.drawLine(0,0,min(screenHeight,screenWidht),min(screenHeight,screenWidht),command);
-                    canvas.drawLine(0,min(screenHeight,screenWidht),min(screenHeight,screenWidht),0,command);
+                    canvas.drawRect(screenHeight-screenWidht,screenWidht,screenHeight-screenWidht+10,screenHeight,command);
+
+                   canvas.drawRect((screenHeight-screenWidht)/2,screenWidht,(screenHeight-screenWidht)/2+5,screenHeight,command);
+                   canvas.drawRect(0,(screenHeight+screenWidht)/2,screenHeight-screenWidht,(screenHeight+screenWidht+10)/2,command);
                 }
             }
 

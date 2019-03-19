@@ -63,18 +63,20 @@ public class MainThread extends Thread {
                    // sleep(1000);
                     this.gameView.update();
                     if (this.gameView.lastevent ==2){
-                        if(gameView.lastTouchX < gameView.lastTouchY && gameView.lastTouchX+gameView.lastTouchY<min(gameView.screenHeight,gameView.screenWidht)){
-                        direction = 2;
+                        if(gameView.lastTouchY>gameView.screenWidht && gameView.screenWidht+gameView.lastTouchX<gameView.screenHeight){
+                        if(gameView.lastTouchY-gameView.screenWidht < gameView.lastTouchX && gameView.lastTouchY+gameView.lastTouchX<gameView.screenHeight){
+                        direction = 3;
                         }
-                        if(gameView.lastTouchX>gameView.lastTouchY && gameView.lastTouchX+gameView.lastTouchY>min(gameView.screenHeight,gameView.screenWidht)){
-                            direction=0;
-                        }
-                        if(gameView.lastTouchX>gameView.lastTouchY && gameView.lastTouchX+gameView.lastTouchY<min(gameView.screenHeight,gameView.screenWidht)){
-                            direction=3;
-                        }
-                        if(gameView.lastTouchX<gameView.lastTouchY && gameView.lastTouchX+gameView.lastTouchY>min(gameView.screenHeight,gameView.screenWidht)){
+                        if(gameView.lastTouchY-gameView.screenWidht>gameView.lastTouchX && gameView.lastTouchY+gameView.lastTouchX>gameView.screenHeight){
                             direction=1;
                         }
+                        if(gameView.lastTouchY-gameView.screenWidht>gameView.lastTouchX && gameView.lastTouchY+gameView.lastTouchX<gameView.screenHeight){
+                            direction=2;
+                        }
+                        if(gameView.lastTouchY-gameView.screenWidht<gameView.lastTouchX && gameView.lastTouchY+gameView.lastTouchX>gameView.screenHeight){
+                            direction=0;
+                        }
+                    }
                     }
 
                     this.gameView.lastevent=0;
