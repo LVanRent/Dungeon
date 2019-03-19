@@ -45,15 +45,13 @@ public class Map
             i=generator.nextInt(length-3-2*maxsize)+maxsize+1;
             j=generator.nextInt(width-3-2*maxsize)+maxsize;
             i2=i+size[generator.nextInt(size.length)];
-            Log.i("value of i2 is ", String.valueOf(i2));
-            if (i2 > this.length) {
+            if (i2 > this.length && i2 <= 0) {
                 continue ;
             }
 
             j2=j+size[generator.nextInt(size.length)];
-            Log.i("value of j2 is ", String.valueOf(j2));
 
-            if (j2 > this.length) {
+            if (j2 > this.length && j2 <= 0) {
                 continue ;
             }
             if (notOccupied(i,j,i2,j2))
