@@ -8,11 +8,15 @@ class Hero extends Sprite {
     private int hunger;
 
 
-    public Hero( Bitmap bmp) {
+    public Hero(Bitmap bmp) {
         super(bmp);
     }
+
     public Hero(Map cMap, Bitmap bmp) {
         super(cMap, bmp);
+        super.setHp(100);
+        hunger = 100;
+        name = "hero";
     }
 
     public int getHunger() {
@@ -20,11 +24,30 @@ class Hero extends Sprite {
     }
 
 
-    public void Hero (String HeroName){
+    public void Heroname(String HeroName) {
         name = HeroName;
 
     }
-    public String getName(){
+
+    public String getName() {
         return this.name;
     }
- }
+
+    @Override
+    public int moveChar(int direction) {
+        if (getHp() > 0) {
+            int a = super.moveChar(direction);
+            if (a == 1) {
+                if (hunger > 0) {
+                    hunger--;
+                    if(getHp()<100) setHp(getHp()+1);
+
+                } else {
+                    setHp(getHp() - 1);
+                }
+            }
+            return a;
+        }
+    return -1;
+    }
+}

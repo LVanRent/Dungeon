@@ -108,7 +108,7 @@ public class Sprite {
         return currentMap;
     }
 
-    public void moveChar(int direction)
+    public int moveChar(int direction)
     {
         if(direction==0)
         {
@@ -118,7 +118,9 @@ public class Sprite {
                 currentCell = val;
                 positionX = positionX + 1;
                 currentMap.setMap(positionX, positionY, 3);
+
             }
+            else return 0;
         }
         if(direction==1)
         {
@@ -129,6 +131,7 @@ public class Sprite {
                 positionY = positionY + 1;
                 currentMap.setMap(positionX, positionY, 3);
             }
+            else return 0;
         }
         if(direction==2)
         {
@@ -139,6 +142,7 @@ public class Sprite {
                 positionX = positionX - 1;
                 currentMap.setMap(positionX, positionY, 3);
             }
+            else return 0;
         }
         if(direction==3)
         {
@@ -149,10 +153,14 @@ public class Sprite {
                 positionY = positionY - 1;
                 currentMap.setMap(positionX, positionY, 3);
             }
+            else return 0;
         }
         if(currentCell==4){
             nextlevel();
         }
+        if(direction==-1) return 0;
+        return 1;
+
 
 
 
