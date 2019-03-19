@@ -34,11 +34,11 @@ public class Map
         int j;
         int i2;
         int j2;
-        int minsize=9;
-        int maxsize=20;
+        int minsize=5;
+        int maxsize=15;
         int[] size=sizes(minsize,maxsize);
         int generated=0;
-        int numberOfRooms=15;
+        int numberOfRooms=5;
         int[][] coords=new int [numberOfRooms][2];
         while(generated<numberOfRooms)
         {
@@ -434,7 +434,7 @@ public class Map
     }
 
     public static Map createMap(){
-        Map map1=new Map(100,100);
+        Map map1=new Map(60,60);
         return map1;}
 
     public static void main(String[] args)

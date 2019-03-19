@@ -121,17 +121,17 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
             Paint player = new Paint();
             player.setColor(Color.rgb(0, 250, 0));
             Paint ground = new Paint();
-            ground.setColor(Color.rgb(145, 68, 250));
+            ground.setColor(Color.rgb(120, 68, 150));
             Paint darkground = new Paint();
-            ground.setColor(Color.rgb(123, 34, 125));
+            darkground.setColor(Color.rgb(60, 34, 75));
             Paint stairs = new Paint();
             stairs.setColor(Color.rgb(250, 0, 250));
             Paint darkstairs = new Paint();
-            stairs.setColor(Color.rgb(125, 0, 125));
+            darkstairs.setColor(Color.rgb(125, 0, 125));
             Paint wall = new Paint();
             wall.setColor(Color.rgb(80, 37, 0));
             Paint darkwall = new Paint();
-            wall.setColor(Color.rgb(40, 18, 0));
+            darkwall.setColor(Color.rgb(40, 18, 0));
             Paint fog = new Paint();
             fog.setColor(Color.rgb(0, 0, 0));
             Paint command = new Paint();
@@ -158,7 +158,7 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
                         b = y - cMap.getWidth();
                     }
 
-                    if (cMap.getValVisible((x + i + a), (y + j + b)) == 1) {
+                   if (cMap.getValVisible((x + i + a), (y + j + b)) == 1) {
                         if (cMap.getValMap((x + i + a), (y + j + b)) == 3) {
                             canvas.drawRect((i + 10) * pixelSize, (j + 10) * pixelSize, (i + 11) * pixelSize, (j + 11) * pixelSize, player);
                         } else if (cMap.getValMap(x + i + a, y + j + b) == 2 || cMap.getValMap(x + i + a, y + j + b) == 1) {
@@ -170,6 +170,9 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
                         }
 
                     }
+                    if (cMap.getValVisible((x + i + a), (y + j + b)) == 0) {
+                        canvas.drawRect((i + 10) * pixelSize, (j + 10) * pixelSize, (i + 11) * pixelSize, (j + 11) * pixelSize, fog);
+                    }
                     if (cMap.getValVisible((x + i + a), (y + j + b)) == 0 && cMap.getValExplored((x + i + a), (y + j + b)) == 1) {
                         if (cMap.getValMap(x + i + a, y + j + b) == 2 || cMap.getValMap(x + i + a, y + j + b) == 1) {
                             canvas.drawRect((i + 10) * pixelSize, (j + 10) * pixelSize, (i + 11) * pixelSize, (j + 11) * pixelSize, darkground);
@@ -179,9 +182,7 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
                             canvas.drawRect((i + 10) * pixelSize, (j + 10) * pixelSize, (i + 11) * pixelSize, (j + 11) * pixelSize, darkwall);
                         }
                     }
-                    if (cMap.getValVisible((x + i + a), (y + j + b)) == 0) {
-                        canvas.drawRect((i + 10) * pixelSize, (j + 10) * pixelSize, (i + 11) * pixelSize, (j + 11) * pixelSize, fog);
-                    }
+
                     canvas.drawRect(screenHeight-screenWidht,screenWidht,screenHeight-screenWidht+10,screenHeight,command);
 
                    canvas.drawRect((screenHeight-screenWidht)/2,screenWidht,(screenHeight-screenWidht)/2+5,screenHeight,command);
