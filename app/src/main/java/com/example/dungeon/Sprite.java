@@ -2,7 +2,6 @@ package com.example.dungeon;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-
 import static com.example.dungeon.MainThread.canvas;
 
 //
@@ -11,7 +10,6 @@ public class Sprite {
     private int positionY;
     private int currentCell;
     private Map currentMap;
-    private int[][] explored;
     private int hp;
     private Bitmap image;
 
@@ -23,31 +21,21 @@ public class Sprite {
     public Sprite(Map cMap, Bitmap bmp){
         image = bmp;
         currentMap = cMap;
-        positionX = 0;
-        positionY = 0;
-        while(currentMap.getValMap(positionX,positionY)!=7){
-            positionX =currentMap.generator.nextInt(currentMap.getLength()-2)+1;
-            positionY =currentMap.generator.nextInt(currentMap.getWidth()-2)+1;
-
-        }
+        positionX =cMap.getEnter()[0];
+        positionY =cMap.getEnter()[1];
         currentCell = 2;
         currentMap.setMap(positionX, positionY,3);
-        explored = new int[cMap.getLength()][cMap.getWidth()];
 
     }
 
-
-    //modified to debug, change String into Sprite
-    /**
-    public Hero nextlevel(Hero cChar){
+    public void nextlevel(Char cChar){
         currentMap = Map.createMap();
         positionX = 0;
         positionY = 0;
-        while(currentMap.getValMap(positionX,positionY)!=7){
-            positionX =currentMap.generator.nextInt(currentMap.getLength()-2)+1;
-            positionY =currentMap.generator.nextInt(currentMap.getWidth()-2)+1;
+        positionX =currentMap.getEnter()[0];
+        positionY =currentMap.getEnter()[1];
 
-        }
+
         currentCell = 2;
         currentMap.setMap(positionX, positionY,3);
         explored = new int[currentMap.getLength()][currentMap.getWidth()];
@@ -98,10 +86,6 @@ public class Sprite {
         return positionY;
     }
 
-    public int[][] getExplored() {
-        return explored;
-    }
-
     public Map getCurrentMap() {
         return currentMap;
     }
@@ -111,44 +95,95 @@ public class Sprite {
         if(direction==0)
         {
             int val = currentMap.getValMap(positionX +1, positionY);
-            if(currentMap.getValMap(positionX +1, positionY)!=0)
-
-                explored[positionX +1][positionY] = val;
-            currentMap.setMap(positionX, positionY, currentCell);
-            currentCell = val;
-            positionX = positionX +1;
-            currentMap.setMap(positionX, positionY,3);
+            if(currentMap.getValMap(positionX +1, positionY)!=0) {
+                currentMap.setMap(positionX, positionY, currentCell);
+                currentCell = val;
+                positionX = positionX + 1;
+                currentMap.setMap(positionX, positionY, 3);
+            }
         }
         if(direction==1)
         {
             int val = currentMap.getValMap(positionX, positionY + 1);
-            if (currentMap.getValMap(positionX, positionY + 1) != 0)
-                explored[positionX][positionY + 1] =val;
-            currentMap.setMap(positionX, positionY, currentCell);
-            currentCell = val;
-            positionY = positionY + 1;
-            currentMap.setMap(positionX, positionY, 3);
+            if (currentMap.getValMap(positionX, positionY + 1) != 0) {
+                currentMap.setMap(positionX, positionY, currentCell);
+                currentCell = val;
+                positionY = positionY + 1;
+                currentMap.setMap(positionX, positionY, 3);
+            }
         }
         if(direction==2)
         {
             int val = currentMap.getValMap(positionX -1, positionY);
-            if(currentMap.getValMap(positionX -1, positionY)!=0)
-                explored[positionX -1][positionY] = val;
-            currentMap.setMap(positionX, positionY, currentCell);
-            currentCell = val;
-            positionX = positionX -1;
-            currentMap.setMap(positionX, positionY,3);
+            if(currentMap.getValMap(positionX -1, positionY)!=0) {
+                currentMap.setMap(positionX, positionY, currentCell);
+                currentCell = val;
+                positionX = positionX - 1;
+                currentMap.setMap(positionX, positionY, 3);
+            }
         }
         if(direction==3)
         {
             int val = currentMap.getValMap(positionX, positionY - 1);
-            if (currentMap.getValMap(positionX, positionY - 1) != 0)
-                explored[positionX][positionY - 1] =val;
-            currentMap.setMap(positionX, positionY, currentCell);
-            currentCell = val;
-            positionY = positionY - 1;
-            currentMap.setMap(positionX, positionY, 3);
+            if (currentMap.getValMap(positionX, positionY - 1) != 0) {
+                currentMap.setMap(positionX, positionY, currentCell);
+                currentCell = val;
+                positionY = positionY - 1;
+                currentMap.setMap(positionX, positionY, 3);
+            }
         }
+
+
+
+    }
+    public int moveCharWall(int direction)
+    {
+        if(direction==0)
+        {
+            int val = currentMap.getValMap(positionX +1, positionY);
+            if(currentMap.getValMap(positionX +1, positionY)!=0) {
+                currentMap.setMap(positionX, positionY, currentCell);
+                currentCell = val;
+                positionX = positionX + 1;
+                currentMap.setMap(positionX, positionY, 3);
+            }
+            else direction++;
+        }
+        else if(direction==1)
+        {
+            int val = currentMap.getValMap(positionX, positionY + 1);
+            if (currentMap.getValMap(positionX, positionY + 1) != 0) {
+                currentMap.setMap(positionX, positionY, currentCell);
+                currentCell = val;
+                positionY = positionY + 1;
+                currentMap.setMap(positionX, positionY, 3);
+            }
+            else direction++;
+        }
+        else if(direction==2)
+        {
+            int val = currentMap.getValMap(positionX -1, positionY);
+            if(currentMap.getValMap(positionX -1, positionY)!=0) {
+                currentMap.setMap(positionX, positionY, currentCell);
+                currentCell = val;
+                positionX = positionX - 1;
+                currentMap.setMap(positionX, positionY, 3);
+            }
+            else direction++;
+        }
+        else if(direction==3)
+        {
+            int val = currentMap.getValMap(positionX, positionY - 1);
+            if (currentMap.getValMap(positionX, positionY - 1) != 0) {
+                currentMap.setMap(positionX, positionY, currentCell);
+                currentCell = val;
+                positionY = positionY - 1;
+                currentMap.setMap(positionX, positionY, 3);
+            }
+            else direction = 0;
+        }
+        return direction;
+
 
 
     }
