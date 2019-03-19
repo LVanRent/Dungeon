@@ -22,6 +22,7 @@ public class MainThread extends Thread {
     }
     @Override
     public void run() {
+        int direction = 0;
         Map cMap = Map.createMap();
         Char player = new Char(cMap);
         while (running) {
@@ -32,6 +33,9 @@ public class MainThread extends Thread {
                 synchronized(surfaceHolder) {
                     this.gameView.update();
                     this.gameView.draw(canvas,player);
+
+                    direction = player.moveCharWall(direction);
+                    sleep(1000);
                 }
             } catch (Exception e) {} finally {
                 if (canvas != null) {
