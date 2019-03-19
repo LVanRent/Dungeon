@@ -51,6 +51,7 @@ class Hero extends Sprite {
 
                 setCurrentCell(1);
             }
+            if (a==2) hunger=hunger+30;
             return a;
         }
     return -1;

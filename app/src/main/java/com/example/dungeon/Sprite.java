@@ -157,6 +157,7 @@ public class Sprite {
         }
         if(currentCell==4){
             nextlevel();
+            return 2;
         }
         if(direction==-1) return 0;
         return 1;

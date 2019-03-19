@@ -134,6 +134,9 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
             darkwall.setColor(Color.rgb(40, 18, 0));
             Paint fog = new Paint();
             fog.setColor(Color.rgb(0, 0, 0));
+            Paint food = new Paint();
+            food.setColor(Color.rgb(230, 220, 80));
+
             Paint command = new Paint();
             command.setColor(Color.rgb(0,0,0));
             Paint hp = new Paint();
@@ -169,6 +172,9 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
                             canvas.drawRect((i + 10) * pixelSize, (j + 10) * pixelSize, (i + 11) * pixelSize, (j + 11) * pixelSize, ground);
                         } else if (cMap.getValMap(x + i + a, y + j + b) == 4) {
                             canvas.drawRect((i + 10) * pixelSize, (j + 10) * pixelSize, (i + 11) * pixelSize, (j + 11) * pixelSize, stairs);
+                        } else if (cMap.getValMap(x + i + a, y + j + b) == 5) {
+                            canvas.drawRect((i + 10) * pixelSize, (j + 10) * pixelSize, (i + 11) * pixelSize, (j + 11) * pixelSize, food);
+
                         } else if (cMap.getValMap(x + i + a, y + j + b) == 0) {
                             canvas.drawRect((i + 10) * pixelSize, (j + 10) * pixelSize, (i + 11) * pixelSize, (j + 11) * pixelSize, wall);
                         }
@@ -193,6 +199,7 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
                    canvas.drawRect(0,(screenHeight+screenWidht)/2,screenHeight-screenWidht,(screenHeight+screenWidht+10)/2,command);
                     canvas.drawRect(screenHeight-screenWidht+20,screenWidht+20,screenHeight-screenWidht+20+current.getHp(),screenWidht+40,hp);
                     canvas.drawRect(screenHeight-screenWidht+20,screenWidht+60,screenHeight-screenWidht+20+current.getHunger(),screenWidht+80,hunger);
+                    canvas.drawText("lvl"+current.getCurrentLevel(), screenHeight-screenWidht,screenWidht+100 ,fog);
 
                 }
             }
