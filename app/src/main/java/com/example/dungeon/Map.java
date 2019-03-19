@@ -126,6 +126,7 @@ public class Map
                 if(isSeen(getEnter()[0],getEnter()[1],i,j))
                 {
                     visible[i][j]=1;
+                    explored[i][j]=1;
                 }
             }
         }
@@ -429,7 +430,7 @@ public class Map
                 }
             }
         }
-        return visible;
+        return explored;
     }
 
     public static Map createMap(){
