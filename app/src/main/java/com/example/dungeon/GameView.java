@@ -3,23 +3,46 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Point;
+import android.view.Display;
 import android.view.SurfaceView;
 import android.view.SurfaceHolder;
 import android.view.MotionEvent;
+import android.util.Log;
+import android.view.Window;
+import android.view.WindowManager;
+
+import static java.lang.Math.min;
 
 
 public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
 
     private MainThread thread;
-    final int pixelSize = 40;
+    public int pixelSize = 40;
     public MotionEvent mEvent;
     public int lastevent;
     public float lastTouchX;
     public float lastTouchY;
+    public int screenWidht;
+    public int screenHeight;
 
     public GameView (Context context){
         super(context);
         getHolder().addCallback(this);
+
+
+
+        thread = new MainThread(getHolder(), this);
+        setFocusable(true);
+    }
+    public GameView (Context context,int widht,int height){
+        super(context);
+        getHolder().addCallback(this);
+        screenHeight=height;
+        screenWidht=widht;
+        Log.i("height is", ""+height);
+        Log.i("width is", ""+widht);
+        pixelSize = min(height,widht)/20;
 
         thread = new MainThread(getHolder(), this);
         setFocusable(true);

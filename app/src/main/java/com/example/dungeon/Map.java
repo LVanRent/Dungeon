@@ -45,13 +45,13 @@ public class Map
             i=generator.nextInt(length-3-2*maxsize)+maxsize+1;
             j=generator.nextInt(width-3-2*maxsize)+maxsize;
             i2=i+size[generator.nextInt(size.length)];
-            if (i2 > this.length && i2 <= 0) {
+            if (i2 > this.length || i2 <= 0) {
                 continue ;
             }
 
             j2=j+size[generator.nextInt(size.length)];
 
-            if (j2 > this.length && j2 <= 0) {
+            if (j2 > this.length || j2 <= 0) {
                 continue ;
             }
             if (notOccupied(i,j,i2,j2))
@@ -102,11 +102,11 @@ public class Map
             j=generator.nextInt(width-3-2*maxsize)+maxsize;
 
             i2=i+size[generator.nextInt(size.length)];
-            if (i2 > this.length && i2 <= 0) {
+            if (i2 > this.length || i2 <= 0) {
                 continue ;
             }
             j2=j+size[generator.nextInt(size.length)];
-            if (j2 > this.length && j2 <= 0) {
+            if (j2 > this.length || j2 <= 0) {
                 continue ;
             }
             if (notOccupied(i,j,i2,j2))
