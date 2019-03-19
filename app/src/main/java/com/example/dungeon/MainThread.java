@@ -84,6 +84,7 @@ public class MainThread extends Thread {
                     player.moveChar(direction);
                     direction=-1;
                     player.getCurrentMap().updateVisible(player.getPositionX(),player.getPositionY());
+                    player.getCurrentMap().updateExplored(player.getPositionX(),player.getPositionY());
                     this.gameView.draw(canvas,player);
 
                 }
