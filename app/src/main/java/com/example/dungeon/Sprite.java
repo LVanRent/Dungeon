@@ -12,6 +12,7 @@ public class Sprite {
     private Map currentMap;
     private int hp;
     private Bitmap image;
+    private int currentLevel;
 
 
     public void draw(Canvas canvas){
@@ -32,15 +33,18 @@ public class Sprite {
 
     public Sprite(Map cMap, Bitmap bmp){
         image = bmp;
+        currentLevel=1;
         currentMap = cMap;
         positionX =cMap.getEnter()[0];
         positionY =cMap.getEnter()[1];
         currentCell = 2;
         currentMap.setMap(positionX, positionY,3);
 
+
     }
 
-    public void nextlevel(Sprite cChar){
+    public void nextlevel(){
+        currentLevel++;
         currentMap = Map.createMap();
         positionX = 0;
         positionY = 0;
@@ -63,7 +67,9 @@ public class Sprite {
         return hp;
     }
 
-
+    public int getCurrentLevel() {
+        return currentLevel;
+    }
 
     public void setPositionX(int positionX) {
         this.positionX = positionX;
@@ -143,6 +149,9 @@ public class Sprite {
                 positionY = positionY - 1;
                 currentMap.setMap(positionX, positionY, 3);
             }
+        }
+        if(currentCell==4){
+            nextlevel();
         }
 
 
