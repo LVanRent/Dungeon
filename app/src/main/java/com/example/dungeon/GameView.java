@@ -4,6 +4,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.Point;
 import android.view.Display;
 import android.view.SurfaceView;
@@ -112,7 +113,39 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
         return true;
     }
 
+    public void drawTriangle(Canvas canvas, Paint paint, int x, int y, int width,int direction) {
+        int halfWidth = width / 2;
+        int rotate = 1 ;
+        int beta = 1 ;
+        int gamma = 0 ;
+        int alpha = 1 ;
+        if ( direction == 1  ) {
+            rotate = -1 ;
+        }
 
+        if ( direction == 2 ) {
+            beta = -1 ;
+            gamma = 1 ;
+        }
+
+        if ( direction == 0) {
+            beta = -1 ;
+            gamma = 1 ;
+            rotate  = -1 ;
+            alpha = -1 ;
+        }
+
+        Path path = new Path();
+
+        // anti horlogique
+        path.moveTo(x - halfWidth * gamma * alpha , y - rotate *halfWidth * (1-gamma)); // Top ^_ or Left <|
+        path.lineTo(x - rotate  * beta * halfWidth , y + rotate * halfWidth );
+        path.lineTo(x + rotate  * halfWidth, y + rotate * beta * halfWidth ) ;
+        path.lineTo(x - halfWidth * gamma * alpha , y - rotate  * halfWidth * (1-gamma) ); // Back to first point
+        path.close();
+
+        canvas.drawPath(path, paint);
+    }
 
     public void draw (Canvas canvas, Hero current){
         super.draw(canvas);
@@ -134,9 +167,6 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
             darkwall.setColor(Color.rgb(40, 18, 0));
             Paint fog = new Paint();
             fog.setColor(Color.rgb(0, 0, 0));
-            Paint food = new Paint();
-            food.setColor(Color.rgb(230, 220, 80));
-
             Paint command = new Paint();
             command.setColor(Color.rgb(0,0,0));
             Paint hp = new Paint();
@@ -172,9 +202,6 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
                             canvas.drawRect((i + 10) * pixelSize, (j + 10) * pixelSize, (i + 11) * pixelSize, (j + 11) * pixelSize, ground);
                         } else if (cMap.getValMap(x + i + a, y + j + b) == 4) {
                             canvas.drawRect((i + 10) * pixelSize, (j + 10) * pixelSize, (i + 11) * pixelSize, (j + 11) * pixelSize, stairs);
-                        } else if (cMap.getValMap(x + i + a, y + j + b) == 5) {
-                            canvas.drawRect((i + 10) * pixelSize, (j + 10) * pixelSize, (i + 11) * pixelSize, (j + 11) * pixelSize, food);
-
                         } else if (cMap.getValMap(x + i + a, y + j + b) == 0) {
                             canvas.drawRect((i + 10) * pixelSize, (j + 10) * pixelSize, (i + 11) * pixelSize, (j + 11) * pixelSize, wall);
                         }
@@ -194,11 +221,33 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
                     }
 
                     canvas.drawRect(screenHeight-screenWidht,screenWidht,screenHeight-screenWidht+10,screenHeight,command);
+
                     canvas.drawRect((screenHeight-screenWidht)/2,screenWidht,(screenHeight-screenWidht)/2+5,screenHeight,command);
-                   canvas.drawRect(0,(screenHeight+screenWidht)/2,screenHeight-screenWidht,(screenHeight+screenWidht+10)/2,command);
+
+                    Paint UP = new Paint();
+                    UP.setColor(Color.BLACK);
+                    drawTriangle(canvas, UP, (screenHeight - screenWidht)/2, screenWidht+60, 120, 3);
+
+                    Paint DOWN = new Paint();
+                    DOWN.setColor(Color.BLACK);
+                    drawTriangle(canvas, DOWN, (screenHeight - screenWidht)/2, screenHeight-60, 120, 1);
+
+                    Paint LEFT = new Paint();
+                    LEFT.setColor(Color.BLACK);
+                    drawTriangle(canvas, LEFT, 60, (screenHeight+screenWidht)/2, 120, 2);
+
+                    Paint RIGHT = new Paint();
+                    RIGHT.setColor(Color.BLACK);
+                    drawTriangle(canvas, RIGHT,  (screenHeight-screenWidht)-60,(screenHeight+screenWidht)/2, 120, 0);
+
+                    // Caracteristique
+                    canvas.drawRect(0,(float) (screenHeight+screenWidht)/2,screenHeight-screenWidht,(float ) (screenHeight+screenWidht+10)/2,command);
                     canvas.drawRect(screenHeight-screenWidht+20,screenWidht+20,screenHeight-screenWidht+20+current.getHp(),screenWidht+40,hp);
                     canvas.drawRect(screenHeight-screenWidht+20,screenWidht+60,screenHeight-screenWidht+20+current.getHunger(),screenWidht+80,hunger);
-                    canvas.drawText("lvl"+current.getCurrentLevel(), screenHeight-screenWidht,screenWidht+100 ,fog);
+                    canvas.drawText("lvl"+current.getCurrentLevel(), screenHeight-screenWidht+20,screenWidht+140 ,fog);
+                    fog.setColor(Color.BLACK);
+                    fog.setTextSize(60);
+
 
                 }
             }
