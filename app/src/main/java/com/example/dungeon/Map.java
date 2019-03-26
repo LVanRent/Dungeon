@@ -42,20 +42,19 @@ public class Map
         int[][] coords=new int [numberOfRooms][2];
         while(generated<numberOfRooms)
         {
-            i=generator.nextInt(length-3-2*maxsize)+maxsize+1;
-            j=generator.nextInt(width-3-2*maxsize)+maxsize;
+            i=generator.nextInt(length-2-2*maxsize)+maxsize+1;
+            j=generator.nextInt(width-2-2*maxsize)+maxsize+1;
             i2=i+size[generator.nextInt(size.length)];
-           /* if (i2 > this.length || i2 <= 0) {
-                continue ;
+            if (i2 >= this.length || i2 <= 0) {
+               break ;
             }
-            */
 
             j2=j+size[generator.nextInt(size.length)];
-/*
-            if (j2 > this.length || j2 <= 0) {
-                continue ;
+
+            if (j2 >= this.length || j2 <= 0) {
+                break ;
             }
-  */          if (notOccupied(i,j,i2,j2))
+            if (notOccupied(i,j,i2,j2))
             {
                 Log.d("addroom generated:",""+generated +" i "+ i +" j "+ j +" i2 "+ i2 +" j2 "+ j2 );
                 addRoom(i,j,i2,j2,2);
@@ -83,8 +82,6 @@ public class Map
             }
         }
     }
-
-
 
     //directions: 0-positivelength 1-positivewidth
     //            2-negativelength 3-negativewidth
@@ -228,7 +225,7 @@ public class Map
         double dist=0;
         this.enter=new int[2];
         this.exit=new int[2];
-        while(dist<1)
+        while(dist<length/4)
         {
             i=generator.nextInt(coords.length);
             j=generator.nextInt(coords.length);
@@ -343,7 +340,7 @@ public class Map
         {
             for(int i=Math.min(x1,x2)+1;i<=Math.max(x1,x2)-1;i++)
             {
-                if(map[i][(int)Math.round(linePointValueY(x1,y1,x2,y2,i))]==0)
+                if(map[i][(int)(Math.round(linePointValueY(x1,y1,x2,y2,i)))]==0)
                 {
                     return false;
                 }
@@ -353,8 +350,7 @@ public class Map
         {
             for(int i=Math.min(y1,y2)+1;i<=Math.max(y1,y2)-1;i++)
             {
-                if(map[(int)Math.round(linePointValueX(x1,y1,x2,y2,i))][i]==0)
-                {
+                if (map[(int) (Math.round(linePointValueX(x1, y1, x2, y2, i)))][i] == 0) {
                     return false;
                 }
             }
