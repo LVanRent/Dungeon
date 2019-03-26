@@ -20,12 +20,12 @@ public class Map
     private int[] exit;
     private int[][] explored;
 
-    public Map(int length,int width)
+    public Map(int length,int width, Random generator)
     {
+        this.generator=generator;
         map=new int[length][width];
         visible=new int[length][width];
         explored=new int[length][width];
-        generator=new Random();
         this.length=length;
         this.width=width;
 
@@ -42,11 +42,11 @@ public class Map
         int[][] coords=new int [numberOfRooms][2];
         while(generated<numberOfRooms)
         {
-            i=generator.nextInt(length-3-2*maxsize)+maxsize+1;
-            j=generator.nextInt(width-3-2*maxsize)+maxsize;
+            i=generator.nextInt(length-2-2*maxsize)+maxsize+1;
+            j=generator.nextInt(width-2-2*maxsize)+maxsize+1;
             i2=i+size[generator.nextInt(size.length)];
             if (i2 >= this.length || i2 <= 0) {
-                break ;
+               break ;
             }
 
             j2=j+size[generator.nextInt(size.length)];
@@ -56,13 +56,16 @@ public class Map
             }
             if (notOccupied(i,j,i2,j2))
             {
+                Log.d("addroom generated:",""+generated +" i "+ i +" j "+ j +" i2 "+ i2 +" j2 "+ j2 );
                 addRoom(i,j,i2,j2,2);
                 coords[generated]=new int[] {i,j};
                 generated++;
             }
         }
         generateTunnels(coords);
+
         addStairs(coords);
+
         addFood();
 
         for(i=0;i<length;i++)
@@ -73,7 +76,9 @@ public class Map
                 {
                     visible[i][j]=1;
                     explored[i][j]=1;
+
                 }
+
             }
         }
     }
@@ -84,6 +89,7 @@ public class Map
 
     public void addFood()
     {
+
         int generated=3;
         for(int i=0; i<generated;i++)
         {
@@ -392,12 +398,13 @@ public class Map
         return explored;
     }
 
-    public static Map createMap(){
-        Map map1=new Map(60,60);
-        return map1;}
+    public static Map createMap(Random generator){
+        Map map1=new Map(60,60,generator);
+        return map1;
+    }
 
     public static void main(String[] args)
     {
-        Map map1=new Map(100,100);
+        Map map1=new Map(100,100,new Random());
     }
 }
