@@ -13,15 +13,15 @@ class Hero extends Sprite {
     private int hunger;
 
 
-    public Hero(Bitmap bmp) {
-        super(bmp);
+    public Hero() {
+        super();
         super.setHp(100);
         hunger = 100;
         name = "hero";
 
     }
-    public Hero(Bitmap bmp,long seed) {
-        super(bmp, seed);
+    public Hero(long seed) {
+        super(seed);
         super.setHp(100);
         hunger = 100;
         name = "hero";
@@ -68,12 +68,12 @@ class Hero extends Sprite {
                 return 2;
             }
            /* if(super.getCurrentLevel()<4) {
-                Log.d("level", "" + super.getCurrentLevel());
+             */   Log.d("level", "" + super.getCurrentLevel());
                 hunger = 550;
                 nextlevel();
                 Log.d("level added", "" + super.getCurrentLevel());
                 return -1;
-            }*/
+            //}
 
         }
         return -1;

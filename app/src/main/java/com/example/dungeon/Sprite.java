@@ -26,8 +26,7 @@ public class Sprite {
     }
 
 
-    public Sprite(Bitmap bmp, long seed){
-        image = bmp;
+    public Sprite(long seed){
         generator = new Random(seed);
         currentMap = Map.createMap(generator);
         positionX =currentMap.getEnter()[0];
@@ -36,8 +35,7 @@ public class Sprite {
         currentMap.setMap(positionX, positionY,3);
 
     }
-    public Sprite(Bitmap bmp){
-        image = bmp;
+    public Sprite(){
         generator = new Random();
         currentMap = Map.createMap(generator);
         positionX =currentMap.getEnter()[0];
