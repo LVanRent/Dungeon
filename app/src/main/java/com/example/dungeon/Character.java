@@ -9,7 +9,7 @@ import java.util.Random;
 import static com.example.dungeon.MainThread.canvas;
 
 //
-public class Sprite {
+public class Character {
     private int positionX;
     private int positionY;
     private int currentCell;
@@ -26,7 +26,7 @@ public class Sprite {
     }
 
 
-    public Sprite(long seed){
+    public Character(long seed){
         generator = new Random(seed);
         currentMap = Map.createMap(generator);
         positionX =currentMap.getEnter()[0];
@@ -35,7 +35,7 @@ public class Sprite {
         currentMap.setMap(positionX, positionY,3);
 
     }
-    public Sprite(){
+    public Character(){
         generator = new Random();
         currentMap = Map.createMap(generator);
         positionX =currentMap.getEnter()[0];
@@ -45,7 +45,7 @@ public class Sprite {
 
     }
 
-    public Sprite(Map cMap, Bitmap bmp){
+    public Character(Map cMap, Bitmap bmp){
         image = bmp;
         currentLevel=1;
         currentMap = cMap;

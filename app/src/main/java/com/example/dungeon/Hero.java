@@ -1,11 +1,8 @@
 package com.example.dungeon;
 
-import android.graphics.Bitmap;
 import android.util.Log;
 
-import java.util.Random;
-
-class Hero extends Sprite {
+class Hero extends Character {
     private String name;
 
 

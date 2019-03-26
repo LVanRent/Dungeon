@@ -1,24 +1,20 @@
 package com.example.dungeon;
 import android.content.Context;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.graphics.Point;
-import android.view.Display;
 import android.view.SurfaceView;
 import android.view.SurfaceHolder;
 import android.view.MotionEvent;
 import android.util.Log;
-import android.view.Window;
-import android.view.WindowManager;
+
 import static java.lang.Math.min;
-import static com.example.dungeon.MainThread.canvas;
+
 public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
     private MainThread thread;
   //  final int pixelSize = 40;
-    Sprite ash;
+    Character ash;
     public int pixelSize = 40;
     public MotionEvent mEvent;
     public int lastevent;
@@ -58,7 +54,7 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
     public void surfaceCreated (SurfaceHolder holder){
         thread.setRunning(true);
         thread.start();
-        //ash = new Sprite(BitmapFactory.decodeResource(getResources(),R.drawable.ash));
+        //ash = new Character(BitmapFactory.decodeResource(getResources(),R.drawable.ash));
         //ash.draw(canvas);
 
 
