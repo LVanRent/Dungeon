@@ -2,6 +2,10 @@ package com.example.dungeon;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.util.Log;
+
+import java.util.Random;
+
 import static com.example.dungeon.MainThread.canvas;
 
 //
@@ -14,16 +18,28 @@ public class Sprite {
     private Bitmap image;
     private int currentLevel;
 
+    public Random generator;
+
 
     public void draw(Canvas canvas){
         canvas.drawBitmap(image,100,100,null);
     }
 
 
+    public Sprite(Bitmap bmp, long seed){
+        image = bmp;
+        generator = new Random(seed);
+        currentMap = Map.createMap(generator);
+        positionX =currentMap.getEnter()[0];
+        positionY =currentMap.getEnter()[1];
+        currentCell = 2;
+        currentMap.setMap(positionX, positionY,3);
+
+    }
     public Sprite(Bitmap bmp){
         image = bmp;
-
-        currentMap = Map.createMap();
+        generator = new Random();
+        currentMap = Map.createMap(generator);
         positionX =currentMap.getEnter()[0];
         positionY =currentMap.getEnter()[1];
         currentCell = 2;
@@ -45,7 +61,7 @@ public class Sprite {
 
     public void nextlevel(){
         currentLevel++;
-        currentMap = Map.createMap();
+        currentMap = Map.createMap(generator);
         positionX = 0;
         positionY = 0;
         positionX =currentMap.getEnter()[0];
@@ -54,6 +70,7 @@ public class Sprite {
 
         currentCell = 2;
         currentMap.setMap(positionX, positionY,3);
+        Log.d("end nextlevel",""+currentLevel);
         //explored = new int[currentMap.getLength()][currentMap.getWidth()];
         return ;
 
@@ -155,10 +172,7 @@ public class Sprite {
             }
             else return 0;
         }
-        if(currentCell==4){
-            nextlevel();
-            return 2;
-        }
+
         if(direction==-1) return 0;
         return 1;
 

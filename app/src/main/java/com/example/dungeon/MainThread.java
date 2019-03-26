@@ -51,8 +51,7 @@ public class MainThread extends Thread {
     public void run() {
         lastEvent = null;
         direction = 0;
-        Map cMap = Map.createMap();
-        Hero player = new Hero(cMap, BitmapFactory.decodeResource(gameView.getResources(),R.drawable.ash));
+        Hero player = new Hero(BitmapFactory.decodeResource(gameView.getResources(),R.drawable.ash),1234);
         while (running) {
             canvas = null;
 
