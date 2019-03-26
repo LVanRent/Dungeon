@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Dungeon</string>
+    <string name="button_Main">Start the game</string>
 </resources>
