@@ -109,7 +109,7 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
         return true;
     }
 
-    public void drawTriangle(Canvas canvas, Paint paint, int x, int y, int width,int direction) {
+    public void drawTriangle(Canvas canvas, Paint paint, float x, float y, int width,int direction) {
         int halfWidth = width / 2;
         int rotate = 1 ;
         int beta = 1 ;
@@ -218,23 +218,23 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
 
                     canvas.drawRect(screenHeight-screenWidht,screenWidht,screenHeight-screenWidht+10,screenHeight,command);
 
-                    canvas.drawRect((screenHeight-screenWidht)/2,screenWidht,(screenHeight-screenWidht)/2+5,screenHeight,command);
+                    canvas.drawRect((float)(screenHeight-screenWidht)/2,screenWidht,(float)(screenHeight-screenWidht)/2+5,screenHeight,command);
 
                     Paint UP = new Paint();
                     UP.setColor(Color.BLACK);
-                    drawTriangle(canvas, UP, (screenHeight - screenWidht)/2, screenWidht+60, 120, 3);
+                    drawTriangle(canvas, UP, (float)(screenHeight - screenWidht)/2, screenWidht+(float)1.5*pixelSize, 3*pixelSize, 3);
 
                     Paint DOWN = new Paint();
                     DOWN.setColor(Color.BLACK);
-                    drawTriangle(canvas, DOWN, (screenHeight - screenWidht)/2, screenHeight-60, 120, 1);
+                    drawTriangle(canvas, DOWN, (float)(screenHeight - screenWidht)/2, screenHeight-(float)1.5*pixelSize, 3*pixelSize, 1);
 
                     Paint LEFT = new Paint();
                     LEFT.setColor(Color.BLACK);
-                    drawTriangle(canvas, LEFT, 60, (screenHeight+screenWidht)/2, 120, 2);
+                    drawTriangle(canvas, LEFT, (float)1.5*pixelSize, (float)(screenHeight+screenWidht)/2, 3*pixelSize, 2);
 
                     Paint RIGHT = new Paint();
                     RIGHT.setColor(Color.BLACK);
-                    drawTriangle(canvas, RIGHT,  (screenHeight-screenWidht)-60,(screenHeight+screenWidht)/2, 120, 0);
+                    drawTriangle(canvas, RIGHT,  (screenHeight-screenWidht)-(float)1.5*pixelSize,(float)(screenHeight+screenWidht)/2, 3*pixelSize, 0);
 
                     // Caracteristique
                     canvas.drawRect(0,(float) (screenHeight+screenWidht)/2,screenHeight-screenWidht,(float ) (screenHeight+screenWidht+10)/2,command);

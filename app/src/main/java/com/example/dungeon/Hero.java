@@ -67,7 +67,7 @@ class Hero extends Character {
            /* if(super.getCurrentLevel()<4) {
              */   Log.d("level", "" + super.getCurrentLevel());
                 hunger = 550;
-                nextlevel();
+                //nextlevel();
                 Log.d("level added", "" + super.getCurrentLevel());
                 return -1;
             //}
