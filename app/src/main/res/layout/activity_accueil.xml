@@ -36,7 +36,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
         android:fontFamily="casual"
-        android:text="Enter the Dungeon"
+        android:text="@string/title_accueil"
         android:textAllCaps="false"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textSize="45sp"
