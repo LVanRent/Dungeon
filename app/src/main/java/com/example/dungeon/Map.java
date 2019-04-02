@@ -46,13 +46,13 @@ public class Map
             j=generator.nextInt(width-2-2*maxsize)+maxsize+1;
             i2=i+size[generator.nextInt(size.length)];
             if (i2 >= this.length || i2 <= 0) {
-               break ;
+               break;
             }
 
             j2=j+size[generator.nextInt(size.length)];
 
             if (j2 >= this.length || j2 <= 0) {
-                break ;
+                break;
             }
             if (notOccupied(i,j,i2,j2))
             {

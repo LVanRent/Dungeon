@@ -185,55 +185,46 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
             hunger.setColor(Color.rgb(0,200,0));
            int x = current.getPositionX();
            int y = current.getPositionY();
-           int a=0;
-           int b=0;
            Map cMap = current.getCurrentMap();
 
 
             for(int i=-10;i<10;i++) {
                 for (int j = -10; j < 10; j++) {
-                    if (x < 10) {
-                        a = 10 - x;
-                    }
-                    if (y < 10) {
-                        b = 10 - y;
-                    }
-                    if (x > cMap.getLength() - 10) {
-                        a = x - cMap.getLength();
-                    }
-                    if (y > cMap.getWidth() - 10) {
-                        b = y - cMap.getWidth();
-                    }
 
-                   if (cMap.getValVisible((x + i + a), (y + j + b)) == 1) {
-                        if (cMap.getValMap((x + i + a), (y + j + b)) == playerOnMap) {
-                            canvas.drawRect((i + 10) * pixelSize, (j + 10) * pixelSize, (i + 11) * pixelSize, (j + 11) * pixelSize, player);
-                        } else if (cMap.getValMap(x + i + a, y + j + b) == roomOnMap || cMap.getValMap(x + i + a, y + j + b) == pathOnMap) {
-                            canvas.drawRect((i + 10) * pixelSize, (j + 10) * pixelSize, (i + 11) * pixelSize, (j + 11) * pixelSize, ground);
-                        } else if (cMap.getValMap(x + i + a, y + j + b) == stairOnMap) {
-                            canvas.drawRect((i + 10) * pixelSize, (j + 10) * pixelSize, (i + 11) * pixelSize, (j + 11) * pixelSize, stairs);
-                        } else if (cMap.getValMap(x + i + a, y + j + b) == wallOnMap) {
-                            canvas.drawRect((i + 10) * pixelSize, (j + 10) * pixelSize, (i + 11) * pixelSize, (j + 11) * pixelSize, wall);
-                        }else if (cMap.getValMap(x + i + a, y + j + b) == foodOnMap) {
-                            canvas.drawRect((i + 10) * pixelSize, (j + 10) * pixelSize, (i + 11) * pixelSize, (j + 11) * pixelSize, food);
-                        }
-
-                    }
-                    if (cMap.getValVisible((x + i + a), (y + j + b)) == 0) {
+                    if(x+i<0 || x+i>=cMap.getLength() || y+j<0 || y+j>=cMap.getWidth())
+                    {
                         canvas.drawRect((i + 10) * pixelSize, (j + 10) * pixelSize, (i + 11) * pixelSize, (j + 11) * pixelSize, fog);
                     }
-                    if (cMap.getValVisible((x + i + a), (y + j + b)) == 0 && cMap.getValExplored((x + i + a), (y + j + b)) == 1) {
-                        if (cMap.getValMap(x + i + a, y + j + b) == roomOnMap || cMap.getValMap(x + i + a, y + j + b) == pathOnMap) {
-                            canvas.drawRect((i + 10) * pixelSize, (j + 10) * pixelSize, (i + 11) * pixelSize, (j + 11) * pixelSize, darkground);
-                        } else if (cMap.getValMap(x + i + a, y + j + b) == stairOnMap) {
-                            canvas.drawRect((i + 10) * pixelSize, (j + 10) * pixelSize, (i + 11) * pixelSize, (j + 11) * pixelSize, darkstairs);
-                        } else if (cMap.getValMap(x + i + a, y + j + b) == wallOnMap) {
-                            canvas.drawRect((i + 10) * pixelSize, (j + 10) * pixelSize, (i + 11) * pixelSize, (j + 11) * pixelSize, darkwall);
-                        }else if (cMap.getValMap(x + i + a, y + j + b) == foodOnMap) {
-                            canvas.drawRect((i + 10) * pixelSize, (j + 10) * pixelSize, (i + 11) * pixelSize, (j + 11) * pixelSize, darkfood);
+                    else {
+                        if (cMap.getValVisible((x + i), (y + j)) == 1) {
+                            if (cMap.getValMap((x + i), (y + j)) == playerOnMap) {
+                                canvas.drawRect((i + 10) * pixelSize, (j + 10) * pixelSize, (i + 11) * pixelSize, (j + 11) * pixelSize, player);
+                            } else if (cMap.getValMap(x + i, y + j) == roomOnMap || cMap.getValMap(x + i, y + j) == pathOnMap) {
+                                canvas.drawRect((i + 10) * pixelSize, (j + 10) * pixelSize, (i + 11) * pixelSize, (j + 11) * pixelSize, ground);
+                            } else if (cMap.getValMap(x + i, y + j) == stairOnMap) {
+                                canvas.drawRect((i + 10) * pixelSize, (j + 10) * pixelSize, (i + 11) * pixelSize, (j + 11) * pixelSize, stairs);
+                            } else if (cMap.getValMap(x + i, y + j) == wallOnMap) {
+                                canvas.drawRect((i + 10) * pixelSize, (j + 10) * pixelSize, (i + 11) * pixelSize, (j + 11) * pixelSize, wall);
+                            } else if (cMap.getValMap(x + i, y + j) == foodOnMap) {
+                                canvas.drawRect((i + 10) * pixelSize, (j + 10) * pixelSize, (i + 11) * pixelSize, (j + 11) * pixelSize, food);
+                            }
+
+                        }
+                        if (cMap.getValVisible((x + i), (y + j)) == 0) {
+                            canvas.drawRect((i + 10) * pixelSize, (j + 10) * pixelSize, (i + 11) * pixelSize, (j + 11) * pixelSize, fog);
+                        }
+                        if (cMap.getValVisible((x + i), (y + j)) == 0 && cMap.getValExplored((x + i), (y + j)) == 1) {
+                            if (cMap.getValMap(x + i, y + j) == roomOnMap || cMap.getValMap(x + i, y + j) == pathOnMap) {
+                                canvas.drawRect((i + 10) * pixelSize, (j + 10) * pixelSize, (i + 11) * pixelSize, (j + 11) * pixelSize, darkground);
+                            } else if (cMap.getValMap(x + i, y + j) == stairOnMap) {
+                                canvas.drawRect((i + 10) * pixelSize, (j + 10) * pixelSize, (i + 11) * pixelSize, (j + 11) * pixelSize, darkstairs);
+                            } else if (cMap.getValMap(x + i, y + j) == wallOnMap) {
+                                canvas.drawRect((i + 10) * pixelSize, (j + 10) * pixelSize, (i + 11) * pixelSize, (j + 11) * pixelSize, darkwall);
+                            } else if (cMap.getValMap(x + i, y + j) == foodOnMap) {
+                                canvas.drawRect((i + 10) * pixelSize, (j + 10) * pixelSize, (i + 11) * pixelSize, (j + 11) * pixelSize, darkfood);
+                            }
                         }
                     }
-
                     canvas.drawRect(screenHeight-screenWidht,screenWidht,screenHeight-screenWidht+10,screenHeight,command);
 
                     canvas.drawRect((float)(screenHeight-screenWidht)/2,screenWidht,(float)(screenHeight-screenWidht)/2+5,screenHeight,command);
