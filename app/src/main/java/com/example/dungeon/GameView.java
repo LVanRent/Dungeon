@@ -122,6 +122,14 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
                     direction=0;
                 }
             }
+                if(lastTouchX>screenHeight-screenWidht && lastTouchY > screenWidht+(float)7*(screenHeight-screenWidht)/(float)16 ){
+
+                    Log.d("attack","1");
+                    player.attack(player.firstMob);
+                    didAttack=3;
+                    Log.d("attack","2");
+
+            }
         }
 
         this.lastevent=0;
@@ -249,7 +257,7 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
                                 canvas.drawRect((i + 10) * pixelSize, (j + 10) * pixelSize, (i + 11) * pixelSize, (j + 11) * pixelSize, food);
                             } else if (cMap.getValMap(x + i, y + j) == mobOnMap) {
                                 canvas.drawRect((i + 10) * pixelSize, (j + 10) * pixelSize, (i + 11) * pixelSize, (j + 11) * pixelSize, mob);
-                            }else if (cMap.getValMap(x + i, y + j) == playerOnMap && didAttack>0) {
+                            }else if (cMap.getValMap(x + i, y + j) == playerOnMap && didAttack<0) {
                                 canvas.drawCircle((float) (i + 10.5) * pixelSize, (float) (j + 10.5) * pixelSize,pixelSize,  attack);
                                 didAttack--;
                             } else if (cMap.getValMap((x + i), (y + j)) == playerOnMap) {

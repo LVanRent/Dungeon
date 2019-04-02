@@ -21,7 +21,7 @@ public class Mob extends Character {
 
         }
         cMap.setMap(getPositionX(),getPositionY(),6);
-        Log.i("newmob at","x="+getPositionX()+", y="+getPositionY());
+        Log.i("newmob at","x="+getPositionX()+", y="+getPositionY()+" c="+getCurrentCell());
 
 
     }
@@ -50,10 +50,10 @@ public class Mob extends Character {
             int diffX = getPositionX() - player.getPositionX();
             int diffY = getPositionY() - player.getPositionY();
             if (diffX + diffY != 1 && diffX + diffY != -1 && (diffX != 0 && diffX != 1 && diffX != -1)) {
-                if (diffX >= diffY && diffX + diffY >= 0) moveChar(0, 6);
-                if (diffX < diffY && diffX + diffY >= 0) moveChar(1, 6);
-                if (diffX >= diffY && diffX + diffY < 0) moveChar(2, 6);
-                if (diffX < diffY && diffX + diffY < 0) moveChar(3, 6);
+                if (diffX >= diffY && diffX + diffY >= 0) this.moveChar(0, 6);
+                if (diffX < diffY && diffX + diffY >= 0) this.moveChar(1, 6);
+                if (diffX >= diffY && diffX + diffY < 0) this.moveChar(2, 6);
+                if (diffX < diffY && diffX + diffY < 0) this.moveChar(3, 6);
             } else {
                 player.setHp(getHp() - 20);
             }

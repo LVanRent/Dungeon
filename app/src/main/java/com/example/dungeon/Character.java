@@ -181,6 +181,7 @@ public class Character {
 
     }public int moveChar(int direction,int evil)
     {
+        Log.d("evil move","");
         if(direction==0)
         {
             int val = currentMap.getValMap(positionX +1, positionY);
