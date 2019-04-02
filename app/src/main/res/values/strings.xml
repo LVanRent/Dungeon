@@ -1,5 +1,9 @@
 <resources>
     <string name="app_name">Dungeon</string>
-    <string name="button_Main">Start the game</string>
+    <string name="button_main">Start the game</string>
     <string name="title_accueil">Enter the Dungeon</string>
+    <string name="title_gameOver">Game OVer</string>
+    <string name="button_retry">Retry</string>
+    <string name="button_quit">Quit</string>
 </resources>
+

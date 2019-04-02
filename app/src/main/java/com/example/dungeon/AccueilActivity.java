@@ -14,7 +14,7 @@ public class AccueilActivity extends Activity {
             setContentView(R.layout.activity_accueil);
         }
 
-        public void Main(View v) {
+        public void main(View v) {
 
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);

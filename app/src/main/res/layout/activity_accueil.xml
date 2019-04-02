@@ -7,7 +7,7 @@
     tools:context="com.example.dungeon.AccueilActivity">
 
     <Button
-        android:id="@+id/button_Main"
+        android:id="@+id/button_main"
         android:layout_width="0dp"
         android:layout_height="100dp"
         android:layout_marginStart="32dp"
@@ -16,8 +16,8 @@
         android:layout_marginEnd="32dp"
         android:layout_marginRight="32dp"
         android:layout_marginBottom="8dp"
-        android:onClick="Main"
-        android:text="@string/button_Main"
+        android:onClick="main"
+        android:text="@string/button_main"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -43,7 +43,7 @@
         android:textStyle="bold"
         android:typeface="normal"
         android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@+id/button_Main"
+        app:layout_constraintBottom_toTopOf="@+id/button_main"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.372"
         app:layout_constraintStart_toStartOf="parent"

@@ -85,9 +85,10 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
 
         }
 
+
     }
 
-    public void update (){
+    public void update () {
 
 
     }
