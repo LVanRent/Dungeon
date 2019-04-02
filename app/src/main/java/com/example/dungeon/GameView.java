@@ -1,5 +1,6 @@
 package com.example.dungeon;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -23,6 +24,9 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
     public float lastTouchY;
     public int screenWidht;
     public int screenHeight;
+    public int flagEnd =1;
+    public Context context;
+    public Intent intent;
 
     public final int wallOnMap = 0;
     public final int pathOnMap = 1;
@@ -30,6 +34,7 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
     public final int playerOnMap = 3;
     public final int stairOnMap = 4;
     public final int foodOnMap = 5;
+
 
 
     public GameView (Context context){
@@ -41,7 +46,7 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
         thread = new MainThread(getHolder(), this);
         setFocusable(true);
     }
-    public GameView (Context context,int widht,int height){
+    public GameView (Context context,int widht,int height,Intent gameOver){
         super(context);
         getHolder().addCallback(this);
         screenHeight=height;
@@ -49,6 +54,8 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
         Log.i("height is", ""+height);
         Log.i("width is", ""+widht);
         pixelSize = min(height,widht)/20;
+        this.context=context;
+        intent = gameOver;
 
         thread = new MainThread(getHolder(), this);
         setFocusable(true);
@@ -63,8 +70,7 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
     public void surfaceCreated (SurfaceHolder holder){
         thread.setRunning(true);
         thread.start();
-        //ash = new Character(BitmapFactory.decodeResource(getResources(),R.drawable.ash));
-        //ash.draw(canvas);
+
 
 
     }
@@ -77,6 +83,10 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
             try{
                 thread.setRunning(false);
                 thread.join();
+                (context).startActivity(intent);
+
+
+
             }
             catch (InterruptedException e){
                 e.printStackTrace();
@@ -85,10 +95,37 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
 
         }
 
-
     }
 
-    public void update () {
+    public void update(){}
+
+
+    public void update (Hero player, Canvas canvas){
+        int direction = -1;
+        if (this.lastevent ==2){
+            if(lastTouchY>screenWidht && screenWidht+lastTouchX<screenHeight){
+                if(lastTouchY-screenWidht < lastTouchX && lastTouchY+lastTouchX<screenHeight){
+                    direction = 3;
+                }
+                if(lastTouchY-screenWidht>lastTouchX && lastTouchY+lastTouchX>screenHeight){
+                    direction=1;
+                }
+                if(lastTouchY-screenWidht>lastTouchX && lastTouchY+lastTouchX<screenHeight){
+                    direction=2;
+                }
+                if(lastTouchY-screenWidht<lastTouchX && lastTouchY+lastTouchX>screenHeight){
+                    direction=0;
+                }
+            }
+        }
+
+        this.lastevent=0;
+        //direction = player.moveCharWall(direction);
+        player.moveChar(direction);
+
+        player.getCurrentMap().updateVisible(player.getPositionX(),player.getPositionY());
+        player.getCurrentMap().updateExplored(player.getPositionX(),player.getPositionY());
+        this.draw(canvas,player);
 
 
     }

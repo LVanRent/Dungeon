@@ -1,6 +1,7 @@
 package com.example.dungeon;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Point;
 import android.view.Display;
 import android.view.View;
@@ -23,18 +24,19 @@ public class MainActivity extends Activity {
         int width = size.x;
         int height = size.y;
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(new GameView(this,width,height));
+        Intent intent = new Intent(this, GameOverActivity.class);
+        GameView gv = new GameView(this,width,height,intent);
 
-       /* setContentView(R.layout.activity_main);
+        setContentView(gv);
 
-       View GV = (View) findViewById(R.id.view3);
-        setContentView(new GameView(GV.getContext()));
-
-        Button Up = (Button) findViewById(R.id.button);
-        Button Down = (Button) findViewById(R.id.button2);
-        Button LEFT = (Button) findViewById(R.id.button3);
-        Button RIGHT = (Button) findViewById(R.id.button4);
+        /*
+        Intent intent = new Intent(this, GameOverActivity.class);
+        startActivity(intent);
         */
+
+
     }
+
+
 
 }
