@@ -34,13 +34,12 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
     public final int playerOnMap = 3;
     public final int stairOnMap = 4;
     public final int foodOnMap = 5;
-
+    public final int mobOnMap = 6;
 
 
     public GameView (Context context){
         super(context);
         getHolder().addCallback(this);
-
 
 
         thread = new MainThread(getHolder(), this);
@@ -126,7 +125,6 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
         player.getCurrentMap().updateVisible(player.getPositionX(),player.getPositionY());
         player.getCurrentMap().updateExplored(player.getPositionX(),player.getPositionY());
         this.draw(canvas,player);
-
 
     }
     @Override
@@ -216,6 +214,9 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
             fog.setColor(Color.rgb(0, 0, 0));
             Paint command = new Paint();
             command.setColor(Color.rgb(0,0,0));
+            Paint mob = new Paint();
+            mob.setColor(Color.rgb(200,0,0));
+
             Paint hp = new Paint();
             hp.setColor(Color.rgb(200,0,0));
             Paint hunger = new Paint();
@@ -244,6 +245,8 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
                                 canvas.drawRect((i + 10) * pixelSize, (j + 10) * pixelSize, (i + 11) * pixelSize, (j + 11) * pixelSize, wall);
                             } else if (cMap.getValMap(x + i, y + j) == foodOnMap) {
                                 canvas.drawRect((i + 10) * pixelSize, (j + 10) * pixelSize, (i + 11) * pixelSize, (j + 11) * pixelSize, food);
+                            } else if (cMap.getValMap(x + i, y + j) == mobOnMap) {
+                                canvas.drawRect((i + 10) * pixelSize, (j + 10) * pixelSize, (i + 11) * pixelSize, (j + 11) * pixelSize, mob);
                             }
 
                         }
@@ -262,33 +265,37 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
                             }
                         }
                     }
-                    canvas.drawRect(screenHeight-screenWidht,screenWidht,screenHeight-screenWidht+10,screenHeight,command);
 
-                    canvas.drawRect((float)(screenHeight-screenWidht)/2,screenWidht,(float)(screenHeight-screenWidht)/2+5,screenHeight,command);
+                    canvas.drawRect(screenHeight-screenWidht,screenWidht,screenHeight-screenWidht+pixelSize/(float)5,screenHeight,command);
+
+                    canvas.drawRect((screenHeight-screenWidht)/(float)2,screenWidht,(screenHeight-screenWidht)/(float)2+pixelSize/(float)5,screenHeight,command);
+
+                    canvas.drawRect(0,(screenHeight+screenWidht)/(float)2,screenHeight-screenWidht,(screenHeight+screenWidht+pixelSize/(float)5)/2,command);
 
                     Paint UP = new Paint();
                     UP.setColor(Color.BLACK);
-                    drawTriangle(canvas, UP, (float)(screenHeight - screenWidht)/2, screenWidht+(float)1.5*pixelSize, 3*pixelSize, 3);
+                    drawTriangle(canvas, UP, (screenHeight - screenWidht)/(float)2, screenWidht+(screenHeight-screenWidht)/(float)8, (screenHeight-screenWidht)/4, 3);
 
                     Paint DOWN = new Paint();
                     DOWN.setColor(Color.BLACK);
-                    drawTriangle(canvas, DOWN, (float)(screenHeight - screenWidht)/2, screenHeight-(float)1.5*pixelSize, 3*pixelSize, 1);
+                    drawTriangle(canvas, DOWN, (screenHeight - screenWidht)/(float)2, screenHeight-(screenHeight-screenWidht)/(float)8, (screenHeight-screenWidht)/4, 1);
 
                     Paint LEFT = new Paint();
                     LEFT.setColor(Color.BLACK);
-                    drawTriangle(canvas, LEFT, (float)1.5*pixelSize, (float)(screenHeight+screenWidht)/2, 3*pixelSize, 2);
+                    drawTriangle(canvas, LEFT, (screenHeight-screenWidht)/(float)8, (screenHeight+screenWidht)/(float)2, (screenHeight-screenWidht)/4, 2);
 
                     Paint RIGHT = new Paint();
                     RIGHT.setColor(Color.BLACK);
-                    drawTriangle(canvas, RIGHT,  (screenHeight-screenWidht)-(float)1.5*pixelSize,(float)(screenHeight+screenWidht)/2, 3*pixelSize, 0);
+                    drawTriangle(canvas, RIGHT,  (screenHeight-screenWidht)-(screenHeight-screenWidht)/(float)8,(float)(screenHeight+screenWidht)/2, (screenHeight-screenWidht)/4, 0);
 
                     // Caracteristique
-                    canvas.drawRect(0,(float) (screenHeight+screenWidht)/2,screenHeight-screenWidht,(float ) (screenHeight+screenWidht+10)/2,command);
-                    canvas.drawRect(screenHeight-screenWidht+pixelSize/2,screenWidht+pixelSize/2,screenHeight-screenWidht+pixelSize/2+(2*screenWidht-screenHeight)*current.getHp()/100,screenWidht+pixelSize,hp);
-                    canvas.drawRect(screenHeight-screenWidht+pixelSize/2,screenWidht+3*pixelSize/2,screenHeight-screenWidht+pixelSize/2+(2*screenWidht-screenHeight)*2*current.getHunger()/3,screenWidht+2*pixelSize,hunger);
-                    canvas.drawText("lvl"+current.getCurrentLevel(), screenHeight-screenWidht+20,screenWidht+140 ,fog);
+                    fog.setTextSize( 6*pixelSize/(float)10);
                     fog.setColor(Color.BLACK);
-                    fog.setTextSize(60);
+                    canvas.drawText("Hp : "+current.getHp() +"/100", screenHeight-screenWidht+pixelSize/(float)2,screenWidht+ pixelSize ,fog);
+                    canvas.drawRect(screenHeight-screenWidht+pixelSize/(float)2,screenWidht+(float) 1.5*pixelSize+pixelSize/(float)2,screenWidht-pixelSize- (100-current.getHp())*pixelSize/(float)100,screenWidht+(float)1.5* pixelSize,hp);
+                    canvas.drawText("Hg : "+current.getHp() +"/100", screenHeight-screenWidht+pixelSize/(float)2,screenWidht+ 3 * pixelSize ,fog);
+                    canvas.drawRect(screenHeight-screenWidht+pixelSize/(float)2,screenWidht+(float) 3.5*pixelSize+pixelSize/(float)2,screenWidht-pixelSize- (100-current.getHunger())*pixelSize/(float)100,screenWidht+(float)3.5* pixelSize,hunger);
+                    canvas.drawText("lvl :"+current.getCurrentLevel(), screenHeight-screenWidht+pixelSize/(float)2,screenWidht+(float) 5*pixelSize ,fog);
 
 
                 }
