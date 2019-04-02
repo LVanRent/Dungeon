@@ -45,8 +45,8 @@ public class Character {
 
     }
 
-    public Character(Map cMap, Bitmap bmp){
-        image = bmp;
+    public Character(Map cMap){
+
         currentLevel=1;
         currentMap = cMap;
         positionX =cMap.getEnter()[0];

@@ -79,4 +79,11 @@ class Hero extends Character {
         }
         return -1;
     }
+    public void attack(){
+
+
+    }
+    public void findMob(){
+
+    }
 }
