@@ -97,6 +97,7 @@ class Hero extends Character {
             if((getPositionX()+1 == cMob.getPositionX() && getPositionY()==cMob.getPositionY())||(getPositionX()-1 == cMob.getPositionX() && getPositionY()==cMob.getPositionY())||(getPositionX() == cMob.getPositionX() && getPositionY()+1==cMob.getPositionY())||(getPositionX()+1 == cMob.getPositionX() && getPositionY()-1==cMob.getPositionY())){
                 lMob.setHp(getHp()-100);
             }
+            Log.i("attack mob","");
         }
 
 

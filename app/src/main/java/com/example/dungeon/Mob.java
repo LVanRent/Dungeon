@@ -15,8 +15,8 @@ public class Mob extends Character {
         setHp(100);
         nextmob=cMob;
         while (getCurrentCell()!=2) {
-            setPositionX(mobGen.nextInt(cMap.getWidth()));
-            setPositionY(mobGen.nextInt(cMap.getLength()));
+            setPositionY(mobGen.nextInt(cMap.getWidth()));
+            setPositionX(mobGen.nextInt(cMap.getLength()));
             setCurrentCell(cMap.getValMap(getPositionX(),getPositionY()));
 
         }
