@@ -2,8 +2,14 @@ package com.example.dungeon;
 
 import android.util.Log;
 
+import java.util.Random;
+
 class Hero extends Character {
     private String name;
+    public Random mobGen;
+    public Mob firstMob;
+    public int mobAmount;
+
 
 
 
@@ -15,6 +21,7 @@ class Hero extends Character {
         super.setHp(100);
         hunger = 100;
         name = "hero";
+        mobGen = new Random(generator.nextLong());
 
     }
     public Hero(long seed) {
@@ -22,6 +29,8 @@ class Hero extends Character {
         super.setHp(100);
         hunger = 100;
         name = "hero";
+        mobGen=new Random(generator.nextLong());
+
 
     }
 
@@ -79,11 +88,15 @@ class Hero extends Character {
         }
         return -1;
     }
-    public void attack(){
+    public void attack(Mob cMob){
+        Mob lMob = firstMob;
+        while(lMob.nextmob!=null){
+            if((getPositionX()+1 == cMob.getPositionX() && getPositionY()==cMob.getPositionY())||(getPositionX()-1 == cMob.getPositionX() && getPositionY()==cMob.getPositionY())||(getPositionX() == cMob.getPositionX() && getPositionY()+1==cMob.getPositionY())||(getPositionX()+1 == cMob.getPositionX() && getPositionY()-1==cMob.getPositionY())){
+                lMob.setHp(getHp()-100);
+            }
+        }
 
 
-    }
-    public void findMob(){
 
     }
 }

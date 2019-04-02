@@ -51,6 +51,8 @@ public class MainThread extends Thread {
     public void run() {
         lastEvent = null;
         direction = 0;
+
+
         Hero player = new Hero();
         while (running) {
             canvas = null;
@@ -61,6 +63,7 @@ public class MainThread extends Thread {
                 synchronized(surfaceHolder) {
 
                     // sleep(1000);
+
                     this.gameView.update(player,canvas);
                     if (player.getHp()<=0){
                         running = false;

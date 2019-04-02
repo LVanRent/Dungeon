@@ -27,6 +27,7 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
     public int flagEnd =1;
     public Context context;
     public Intent intent;
+    public int didAttack;
 
     public final int wallOnMap = 0;
     public final int pathOnMap = 1;
@@ -100,8 +101,13 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
 
 
     public void update (Hero player, Canvas canvas){
+        while(player.mobAmount*2 < player.getCurrentLevel()+1){
+            player.firstMob = new Mob(player.getCurrentMap(),player.firstMob,player.mobGen);
+            player.mobAmount++;
+        }
+
         int direction = -1;
-        if (this.lastevent ==2){
+        if (this.lastevent ==2||lastevent==1){
             if(lastTouchY>screenWidht && screenWidht+lastTouchX<screenHeight){
                 if(lastTouchY-screenWidht < lastTouchX && lastTouchY+lastTouchX<screenHeight){
                     direction = 3;
@@ -115,12 +121,20 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
                 if(lastTouchY-screenWidht<lastTouchX && lastTouchY+lastTouchX>screenHeight){
                     direction=0;
                 }
+                if(lastTouchX>2*screenWidht-screenHeight && lastTouchY > screenWidht){
+                    player.attack(player.firstMob);
+                    didAttack=50;
+                }
             }
         }
 
         this.lastevent=0;
         //direction = player.moveCharWall(direction);
         player.moveChar(direction);
+        if (direction!=-1){
+            player.firstMob.mobGestion(player,player.firstMob);
+        }
+
 
         player.getCurrentMap().updateVisible(player.getPositionX(),player.getPositionY());
         player.getCurrentMap().updateExplored(player.getPositionX(),player.getPositionY());
@@ -130,23 +144,15 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public boolean onTouchEvent(MotionEvent me) {
 
-        int action = me.getAction();
+        lastevent = me.getAction();
         lastTouchX = me.getX();
         lastTouchY = me.getY();
-        Log.i("action x y",""+action+" "+lastTouchX+" "+lastTouchY);
+        Log.i("action x y",""+lastevent+" "+lastTouchX+" "+lastTouchY);
 /*
         Log.v("MotionEvent", "Action = " + action);
         Log.v("MotionEvent", "X = " + currentXPosition + "Y = " + currentYPosition);
 */
-        if (action == MotionEvent.ACTION_MOVE) {
-            lastevent = 1;
-        }
-        if (action == MotionEvent.ACTION_UP) {
-            lastevent =0;
-        }
-        if (action != 0) {
-            lastevent =2;
-        }
+
 
 
 
@@ -214,6 +220,8 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
             fog.setColor(Color.rgb(0, 0, 0));
             Paint command = new Paint();
             command.setColor(Color.rgb(0,0,0));
+            Paint attack = new Paint();
+            attack.setColor(Color.rgb(180,180,250));
             Paint mob = new Paint();
             mob.setColor(Color.rgb(200,0,0));
 
@@ -235,9 +243,7 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
                     }
                     else {
                         if (cMap.getValVisible((x + i), (y + j)) == 1) {
-                            if (cMap.getValMap((x + i), (y + j)) == playerOnMap) {
-                                canvas.drawRect((i + 10) * pixelSize, (j + 10) * pixelSize, (i + 11) * pixelSize, (j + 11) * pixelSize, player);
-                            } else if (cMap.getValMap(x + i, y + j) == roomOnMap || cMap.getValMap(x + i, y + j) == pathOnMap) {
+                            if (cMap.getValMap(x + i, y + j) == roomOnMap || cMap.getValMap(x + i, y + j) == pathOnMap) {
                                 canvas.drawRect((i + 10) * pixelSize, (j + 10) * pixelSize, (i + 11) * pixelSize, (j + 11) * pixelSize, ground);
                             } else if (cMap.getValMap(x + i, y + j) == stairOnMap) {
                                 canvas.drawRect((i + 10) * pixelSize, (j + 10) * pixelSize, (i + 11) * pixelSize, (j + 11) * pixelSize, stairs);
@@ -247,6 +253,11 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
                                 canvas.drawRect((i + 10) * pixelSize, (j + 10) * pixelSize, (i + 11) * pixelSize, (j + 11) * pixelSize, food);
                             } else if (cMap.getValMap(x + i, y + j) == mobOnMap) {
                                 canvas.drawRect((i + 10) * pixelSize, (j + 10) * pixelSize, (i + 11) * pixelSize, (j + 11) * pixelSize, mob);
+                            }else if (cMap.getValMap(x + i, y + j) == playerOnMap && didAttack<0) {
+                                canvas.drawCircle((float) (i + 10.5) * pixelSize, (float) (j + 10.5) * pixelSize,pixelSize,  attack);
+                                didAttack--;
+                            } else if (cMap.getValMap((x + i), (y + j)) == playerOnMap) {
+                                canvas.drawRect((i + 10) * pixelSize, (j + 10) * pixelSize, (i + 11) * pixelSize, (j + 11) * pixelSize, player);
                             }
 
                         }

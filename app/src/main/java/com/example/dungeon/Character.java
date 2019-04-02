@@ -177,6 +177,60 @@ public class Character {
 
 
 
+    }public int moveChar(int direction,int evil)
+    {
+        if(direction==0)
+        {
+            int val = currentMap.getValMap(positionX +1, positionY);
+            if(currentMap.getValMap(positionX +1, positionY)!=0) {
+                currentMap.setMap(positionX, positionY, currentCell);
+                currentCell = val;
+                positionX = positionX + 1;
+                currentMap.setMap(positionX, positionY, evil);
+
+            }
+            else return 0;
+        }
+        if(direction==1)
+        {
+            int val = currentMap.getValMap(positionX, positionY + 1);
+            if (currentMap.getValMap(positionX, positionY + 1) != 0) {
+                currentMap.setMap(positionX, positionY, currentCell);
+                currentCell = val;
+                positionY = positionY + 1;
+                currentMap.setMap(positionX, positionY, evil);
+            }
+            else return 0;
+        }
+        if(direction==2)
+        {
+            int val = currentMap.getValMap(positionX -1, positionY);
+            if(currentMap.getValMap(positionX -1, positionY)!=0) {
+                currentMap.setMap(positionX, positionY, currentCell);
+                currentCell = val;
+                positionX = positionX - 1;
+                currentMap.setMap(positionX, positionY, evil);
+            }
+            else return 0;
+        }
+        if(direction==3)
+        {
+            int val = currentMap.getValMap(positionX, positionY - 1);
+            if (currentMap.getValMap(positionX, positionY - 1) != 0) {
+                currentMap.setMap(positionX, positionY, currentCell);
+                currentCell = val;
+                positionY = positionY - 1;
+                currentMap.setMap(positionX, positionY, evil);
+            }
+            else return 0;
+        }
+
+        if(direction==-1) return 0;
+        return 1;
+
+
+
+
     }
     public int moveCharWall(int direction)
     {
