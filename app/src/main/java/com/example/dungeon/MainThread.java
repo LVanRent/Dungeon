@@ -56,36 +56,15 @@ public class MainThread extends Thread {
             canvas = null;
 
             try {
-                this.processEvents();
+                //this.processEvents();
                 canvas = this.surfaceHolder.lockCanvas();
                 synchronized(surfaceHolder) {
 
-                   // sleep(1000);
-                    this.gameView.update();
-                    if (this.gameView.lastevent ==2){
-                        if(gameView.lastTouchY>gameView.screenWidht && gameView.screenWidht+gameView.lastTouchX<gameView.screenHeight){
-                        if(gameView.lastTouchY-gameView.screenWidht < gameView.lastTouchX && gameView.lastTouchY+gameView.lastTouchX<gameView.screenHeight){
-                        direction = 3;
-                        }
-                        if(gameView.lastTouchY-gameView.screenWidht>gameView.lastTouchX && gameView.lastTouchY+gameView.lastTouchX>gameView.screenHeight){
-                            direction=1;
-                        }
-                        if(gameView.lastTouchY-gameView.screenWidht>gameView.lastTouchX && gameView.lastTouchY+gameView.lastTouchX<gameView.screenHeight){
-                            direction=2;
-                        }
-                        if(gameView.lastTouchY-gameView.screenWidht<gameView.lastTouchX && gameView.lastTouchY+gameView.lastTouchX>gameView.screenHeight){
-                            direction=0;
-                        }
+                    // sleep(1000);
+                    this.gameView.update(player,canvas);
+                    if (player.getHp()<=0){
+                        running = false;
                     }
-                    }
-
-                    this.gameView.lastevent=0;
-                    //direction = player.moveCharWall(direction);
-                    player.moveChar(direction);
-                    direction=-1;
-                    player.getCurrentMap().updateVisible(player.getPositionX(),player.getPositionY());
-                    player.getCurrentMap().updateExplored(player.getPositionX(),player.getPositionY());
-                    this.gameView.draw(canvas,player);
 
                 }
             } catch (Exception e) {} finally {
@@ -97,7 +76,11 @@ public class MainThread extends Thread {
                     }
                 }
             }
+
         }
+
+        (gameView.context).startActivity(gameView.intent);
+
     }
 
     public void processEvents() {

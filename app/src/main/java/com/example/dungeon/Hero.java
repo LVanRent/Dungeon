@@ -73,6 +73,10 @@ class Hero extends Character {
             }*/
 
         }
+        else{
+
+
+        }
         return -1;
     }
 }
