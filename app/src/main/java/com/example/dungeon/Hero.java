@@ -69,6 +69,9 @@ class Hero extends Character {
                 setCurrentCell(1);
             }
             if (getCurrentCell() == 4) {
+
+                mobAmount=0;
+                firstMob=null;
                 nextlevel();
                 hunger = hunger + 30;
                 return 2;

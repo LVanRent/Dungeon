@@ -225,7 +225,7 @@ public class Map
         double dist=0;
         this.enter=new int[2];
         this.exit=new int[2];
-        while(dist<length/4)
+        while(dist<1)
         {
             i=generator.nextInt(coords.length);
             j=generator.nextInt(coords.length);

@@ -1,5 +1,7 @@
 package com.example.dungeon;
 
+import android.util.Log;
+
 import java.util.Random;
 
 public class Mob extends Character {
@@ -19,6 +21,7 @@ public class Mob extends Character {
 
         }
         cMap.setMap(getPositionX(),getPositionY(),6);
+        Log.i("newmob at","x="+getPositionX()+", y="+getPositionY());
 
 
     }

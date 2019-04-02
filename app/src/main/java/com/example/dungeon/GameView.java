@@ -300,7 +300,7 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
                     drawTriangle(canvas, RIGHT,  (screenHeight-screenWidht)-(screenHeight-screenWidht)/(float)8,(float)(screenHeight+screenWidht)/2, (screenHeight-screenWidht)/4, 0);
 
                     // Caracteristique
-                    fog.setTextSize(  6*pixelSize/(float)10);
+                    fog.setTextSize( 6*pixelSize/(float)10);
                     fog.setColor(Color.BLACK);
                     canvas.drawText("Hp : "+current.getHp() +"/100", screenHeight-screenWidht+pixelSize/(float)2,screenWidht+ (screenHeight-screenWidht)/(float)16 ,fog);
                     canvas.drawRect(screenHeight-screenWidht+pixelSize/(float)2,screenWidht+(float)1.5*(screenHeight-screenWidht)/(float)16,screenWidht-pixelSize- (100-current.getHp())*pixelSize/(float)100,screenWidht+(float)2.5*(screenHeight-screenWidht)/(float)16,hp);
