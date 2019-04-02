@@ -121,10 +121,6 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
                 if(lastTouchY-screenWidht<lastTouchX && lastTouchY+lastTouchX>screenHeight){
                     direction=0;
                 }
-                if(lastTouchX>2*screenWidht-screenHeight && lastTouchY > screenWidht+(float)7*(screenHeight-screenWidht)/(float)16 ){
-                    player.attack(player.firstMob);
-                    didAttack=50;
-                }
             }
         }
 
@@ -253,7 +249,7 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
                                 canvas.drawRect((i + 10) * pixelSize, (j + 10) * pixelSize, (i + 11) * pixelSize, (j + 11) * pixelSize, food);
                             } else if (cMap.getValMap(x + i, y + j) == mobOnMap) {
                                 canvas.drawRect((i + 10) * pixelSize, (j + 10) * pixelSize, (i + 11) * pixelSize, (j + 11) * pixelSize, mob);
-                            }else if (cMap.getValMap(x + i, y + j) == playerOnMap && didAttack<0) {
+                            }else if (cMap.getValMap(x + i, y + j) == playerOnMap && didAttack>0) {
                                 canvas.drawCircle((float) (i + 10.5) * pixelSize, (float) (j + 10.5) * pixelSize,pixelSize,  attack);
                                 didAttack--;
                             } else if (cMap.getValMap((x + i), (y + j)) == playerOnMap) {
@@ -310,6 +306,10 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
 
                     canvas.drawRect(screenHeight-screenWidht,screenWidht+(float)6.5*(screenHeight-screenWidht)/(float)16,screenWidht,screenWidht+(float)7*(screenHeight-screenWidht)/(float)16,command);
 
+                    Paint Sword = new Paint();
+                    Sword.setColor(Color.BLUE);
+                    drawTriangle(canvas, Sword, (screenHeight - screenWidht)+(float) 2*(2*screenWidht - screenHeight)/(float) 4, screenWidht+(float)9.5*(screenHeight-screenWidht)/(float)16, (screenHeight-screenWidht)/4, 3);
+                    drawTriangle(canvas, Sword, (screenHeight - screenWidht)+(float) 2*(2*screenWidht - screenHeight)/(float) 4, screenWidht+(float)13.5*(screenHeight-screenWidht)/(float)16, (screenHeight-screenWidht)/4, 1);
 
                 }
             }
