@@ -140,7 +140,7 @@ public class Character {
         if(direction==1)
         {
             int val = currentMap.getValMap(positionX, positionY + 1);
-            if (currentMap.getValMap(positionX, positionY + 1) != 0&&currentMap.getValMap(positionX +1, positionY)!=6) {
+            if ((currentMap.getValMap(positionX, positionY + 1) != 0) && (currentMap.getValMap(positionX , positionY+1)!=6)) {
                 currentMap.setMap(positionX, positionY, currentCell);
                 currentCell = val;
                 positionY = positionY + 1;
@@ -151,7 +151,7 @@ public class Character {
         if(direction==2)
         {
             int val = currentMap.getValMap(positionX -1, positionY);
-            if(currentMap.getValMap(positionX -1, positionY)!=0&&currentMap.getValMap(positionX +1, positionY)!=6) {
+            if(currentMap.getValMap(positionX -1, positionY)!=0&&currentMap.getValMap(positionX -1, positionY)!=6) {
                 currentMap.setMap(positionX, positionY, currentCell);
                 currentCell = val;
                 positionX = positionX - 1;
@@ -162,7 +162,7 @@ public class Character {
         if(direction==3)
         {
             int val = currentMap.getValMap(positionX, positionY - 1);
-            if (currentMap.getValMap(positionX, positionY - 1) != 0&&currentMap.getValMap(positionX +1, positionY)!=6) {
+            if (currentMap.getValMap(positionX, positionY - 1) != 0&&currentMap.getValMap(positionX , positionY-1)!=6) {
                 currentMap.setMap(positionX, positionY, currentCell);
                 currentCell = val;
                 positionY = positionY - 1;
@@ -171,7 +171,9 @@ public class Character {
             else return 0;
         }
 
+
         if(direction==-1) return 0;
+        Log.i("currentcell x y ",""+getCurrentCell()+" "+positionX+" "+positionY);
         return 1;
 
 
