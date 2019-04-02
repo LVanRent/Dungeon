@@ -121,7 +121,7 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
                 if(lastTouchY-screenWidht<lastTouchX && lastTouchY+lastTouchX>screenHeight){
                     direction=0;
                 }
-                if(lastTouchX>2*screenWidht-screenHeight && lastTouchY > screenWidht){
+                if(lastTouchX>2*screenWidht-screenHeight && lastTouchY > screenWidht+(float)7*(screenHeight-screenWidht)/(float)16 ){
                     player.attack(player.firstMob);
                     didAttack=50;
                 }
@@ -303,10 +303,13 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
                     fog.setTextSize( 6*pixelSize/(float)10);
                     fog.setColor(Color.BLACK);
                     canvas.drawText("Hp : "+current.getHp() +"/100", screenHeight-screenWidht+pixelSize/(float)2,screenWidht+ (screenHeight-screenWidht)/(float)16 ,fog);
-                    canvas.drawRect(screenHeight-screenWidht+pixelSize/(float)2,screenWidht+(float)1.5*(screenHeight-screenWidht)/(float)16,screenWidht-pixelSize- (100-current.getHp())*pixelSize/(float)100,screenWidht+(float)2.5*(screenHeight-screenWidht)/(float)16,hp);
+                    canvas.drawRect(screenHeight-screenWidht+pixelSize/(float)2,screenWidht+(float)1.5*(screenHeight-screenWidht)/(float)16, screenHeight-screenWidht+(pixelSize/(float)2) + ((-screenHeight+2*screenWidht-pixelSize)*(current.getHp())/(float)100),screenWidht+(float)2.5*(screenHeight-screenWidht)/(float)16,hp);
                     canvas.drawText("Hg : "+current.getHunger() +"/100", screenHeight-screenWidht+pixelSize/(float)2,screenWidht+(float) 3.5*(screenHeight-screenWidht)/(float)16  ,fog);
-                    canvas.drawRect(screenHeight-screenWidht+pixelSize/(float)2,screenWidht+(float)4*(screenHeight-screenWidht)/(float)16,screenWidht-pixelSize- (100-current.getHunger())*pixelSize/(float)100,screenWidht+(float)5*(screenHeight-screenWidht)/(float)16,hunger);
+                    canvas.drawRect(screenHeight-screenWidht+pixelSize/(float)2,screenWidht+(float)4*(screenHeight-screenWidht)/(float)16,screenHeight-screenWidht+(pixelSize/(float)2) + ((-screenHeight+2*screenWidht-pixelSize)*(current.getHunger())/(float)100),screenWidht+(float)5*(screenHeight-screenWidht)/(float)16,hunger);
                     canvas.drawText("lvl : "+current.getCurrentLevel(), screenHeight-screenWidht+pixelSize/(float)2,screenWidht+(float)6*(screenHeight-screenWidht)/(float)16 ,fog);
+
+                    canvas.drawRect(screenHeight-screenWidht,screenWidht+(float)6.5*(screenHeight-screenWidht)/(float)16,screenWidht,screenWidht+(float)7*(screenHeight-screenWidht)/(float)16,command);
+
 
                 }
             }
