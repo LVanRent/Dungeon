@@ -86,7 +86,7 @@ public class Mob extends Character {
         if(direction==0)
         {
             int val = player.getCurrentMap().getValMap(getPositionX() +1, getPositionY());
-            if(player.getCurrentMap().getValMap(getPositionX() +1, getPositionY())!=0) {
+            if(player.getCurrentMap().getValMap(getPositionX() +1, getPositionY())!=0&&player.getCurrentMap().getValMap(getPositionX() +1, getPositionY())!=6) {
                 player.getCurrentMap().setMap(getPositionX(), getPositionY(), getCurrentCell());
                 setCurrentCell(val);
                 setPositionX(getPositionX() + 1);
@@ -98,7 +98,7 @@ public class Mob extends Character {
         if(direction==1)
         {
             int val = player.getCurrentMap().getValMap(getPositionX(), getPositionY() + 1);
-            if (player.getCurrentMap().getValMap(getPositionX(), getPositionY() + 1) != 0) {
+            if (player.getCurrentMap().getValMap(getPositionX(), getPositionY() + 1) != 0&&player.getCurrentMap().getValMap(getPositionX(), getPositionY() + 1) != 6) {
                 player.getCurrentMap().setMap(getPositionX(), getPositionY(), getCurrentCell());
                 setCurrentCell(val);
                 setPositionY(getPositionY() + 1);
@@ -109,7 +109,7 @@ public class Mob extends Character {
         if(direction==2)
         {
             int val = player.getCurrentMap().getValMap(getPositionX() -1, getPositionY());
-            if(player.getCurrentMap().getValMap(getPositionX() -1, getPositionY())!=0) {
+            if(player.getCurrentMap().getValMap(getPositionX() -1, getPositionY())!=0&&player.getCurrentMap().getValMap(getPositionX() -1, getPositionY())!=6) {
                 player.getCurrentMap().setMap(getPositionX(), getPositionY(), getCurrentCell());
                 setCurrentCell(val);
                 setPositionX(getPositionX() - 1);
@@ -120,7 +120,7 @@ public class Mob extends Character {
         if(direction==3)
         {
             int val = player.getCurrentMap().getValMap(getPositionX(), getPositionY() - 1);
-            if (player.getCurrentMap().getValMap(getPositionX(), getPositionY() - 1) != 0) {
+            if (player.getCurrentMap().getValMap(getPositionX(), getPositionY() - 1) != 0&&player.getCurrentMap().getValMap(getPositionX(), getPositionY() - 1) != 6) {
                 player.getCurrentMap().setMap(getPositionX(), getPositionY(), getCurrentCell());
                 setCurrentCell(val);
                 setPositionY(getPositionY() - 1);

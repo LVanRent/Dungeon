@@ -67,7 +67,7 @@ public class MainThread extends Thread {
                     this.gameView.update(player,canvas);
                     if (player.getHp()<=0){
                         running = false;
-
+                        (gameView.context).startActivity(gameView.intent);
                     }
 
                 }
@@ -83,7 +83,7 @@ public class MainThread extends Thread {
 
         }
 
-        (gameView.context).startActivity(gameView.intent);
+
 
     }
 

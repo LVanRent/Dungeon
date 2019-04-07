@@ -94,14 +94,14 @@ class Hero extends Character {
     public void attack(Mob cMob){
         Mob lMob = firstMob;
         if((getPositionX()+1 == cMob.getPositionX() && getPositionY()==cMob.getPositionY())||(getPositionX()-1 == cMob.getPositionX() && getPositionY()==cMob.getPositionY())||(getPositionX() == cMob.getPositionX() && getPositionY()+1==cMob.getPositionY())||(getPositionX()+1 == cMob.getPositionX() && getPositionY()-1==cMob.getPositionY())){
-            lMob.setHp(getHp()-100);
+            lMob.setHp(lMob.getHp()-100);
             Log.d("atk x y",""+lMob.getPositionX()+ " "+lMob.getPositionY());
         }
         Log.i("attack mob","");
 
         while(lMob.nextmob!=null){
             if((getPositionX()+1 == lMob.getPositionX() && getPositionY()==lMob.getPositionY())||(getPositionX()-1 == lMob.getPositionX() && getPositionY()==lMob.getPositionY())||(getPositionX() == lMob.getPositionX() && getPositionY()+1==lMob.getPositionY())||(getPositionX()+1 == lMob.getPositionX() && getPositionY()-1==lMob.getPositionY())){
-                lMob.setHp(getHp()-100);
+                lMob.setHp(lMob.getHp()-100);
                 Log.d("atk x y",""+lMob.getPositionX()+ " "+lMob.getPositionY());
             }
             Log.i("attack mob","");
