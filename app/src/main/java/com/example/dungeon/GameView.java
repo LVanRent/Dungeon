@@ -134,13 +134,16 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
             }
         }
 
-        this.lastevent=0;
+
         //direction = player.moveCharWall(direction);
         player.moveChar(direction);
-        if (direction!=-1){
-            player.firstMob.mobGestion(player,player.firstMob);
-        }
+        if (direction!=-1||didAttack==3){
 
+            Log.d("direction",""+direction+" "+didAttack);
+
+            player.firstMob.mobGestion(player,null);
+        }
+        this.lastevent=0;
 
         player.getCurrentMap().updateVisible(player.getPositionX(),player.getPositionY());
         player.getCurrentMap().updateExplored(player.getPositionX(),player.getPositionY());
@@ -259,7 +262,7 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
                                 canvas.drawRect((i + 10) * pixelSize, (j + 10) * pixelSize, (i + 11) * pixelSize, (j + 11) * pixelSize, food);
                             } else if (cMap.getValMap(x + i, y + j) == mobOnMap) {
                                 canvas.drawRect((i + 10) * pixelSize, (j + 10) * pixelSize, (i + 11) * pixelSize, (j + 11) * pixelSize, mob);
-                            }else if (cMap.getValMap(x + i, y + j) == playerOnMap && didAttack<0) {
+                            }else if (cMap.getValMap(x + i, y + j) == playerOnMap && didAttack>0) {
                                 canvas.drawCircle((float) (i + 10.5) * pixelSize, (float) (j + 10.5) * pixelSize,pixelSize,  attack);
                                 didAttack--;
                             } else if (cMap.getValMap((x + i), (y + j)) == playerOnMap) {

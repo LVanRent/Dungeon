@@ -67,6 +67,7 @@ public class MainThread extends Thread {
                     this.gameView.update(player,canvas);
                     if (player.getHp()<=0){
                         running = false;
+
                     }
 
                 }

@@ -39,9 +39,11 @@ public class Mob extends Character {
     }
 
     public void mobGestion(Hero player,Mob prevMob){
+        Log.d("mobgestion","test"+(nextmob !=null));
+
+        mobIsDead(prevMob,player);
+        mobSeePlayer(player);
         if(nextmob !=null){
-            mobIsDead(prevMob,player);
-            mobSeePlayer(player);
             nextmob.mobGestion(player,this);
         }
 
@@ -50,7 +52,7 @@ public class Mob extends Character {
     }
     public void mobIsDead(Mob prevMob,Hero player){
         if(getHp()<=0){
-            getCurrentMap().setMap(getPositionX(),getPositionY(),getCurrentCell());
+            player.getCurrentMap().setMap(getPositionX(),getPositionY(),getCurrentCell());
             prevMob.nextmob=nextmob;
             player.mobAmount--;
 
@@ -58,68 +60,71 @@ public class Mob extends Character {
 
     }
     public void mobSeePlayer(Hero player){
-        Log.d("Mobseeplayer","before if");
-        if(getCurrentMap().isSeen(getPositionX(),getPositionY(),player.getPositionX(),player.getPositionY())) {
+        Log.d("Mobseeplayer","before if" + player.getCurrentMap().getValVisible(getPositionX(), getPositionY()));
+        if(player.getCurrentMap().getValVisible(getPositionX(), getPositionY())==1) {
             Log.d("Mobseeplayer","player seen");
             int diffX = getPositionX() - player.getPositionX();
             int diffY = getPositionY() - player.getPositionY();
-            if (diffX + diffY != 1 && diffX + diffY != -1 && (diffX != 0 && diffX != 1 && diffX != -1)) {
-                if (diffX >= diffY && diffX + diffY >= 0) moveMob(0);
-                if (diffX < diffY && diffX + diffY >= 0) moveMob(1);
-                if (diffX >= diffY && diffX + diffY < 0) moveMob(2);
-                if (diffX < diffY && diffX + diffY < 0) moveMob(3);
-            } else {
-                player.setHp(getHp() - 20);
+            Log.i("diff pm"," x "+diffX+" y "+diffY);
+            if ((diffX == 0 && (diffY== 1 || diffY == -1))||(diffY == 0 && (diffX== 1 || diffX == -1))) {
+
+                player.setHp(player.getHp() - 20);
+            }else{
+                if (diffX >= diffY && diffX + diffY >= 0) moveMob(2,player); //←
+                if (diffX < diffY && diffX + diffY >= 0) moveMob(3,player); //↑
+                if (diffX >= diffY && diffX + diffY < 0) moveMob(1,player); //↓
+                if (diffX < diffY && diffX + diffY < 0) moveMob(0,player); //→
+
             }
             Log.d("Mobposition","x="+getPositionX()+" y="+getPositionY());
         }
 
     }
 
-    public int moveMob(int direction){
+    public int moveMob(int direction,Hero player){
         Log.d("6 move","");
         if(direction==0)
         {
-            int val = getCurrentMap().getValMap(getPositionX() +1, getPositionY());
-            if(getCurrentMap().getValMap(getPositionX() +1, getPositionY())!=0) {
-                getCurrentMap().setMap(getPositionX(), getPositionY(), getCurrentCell());
+            int val = player.getCurrentMap().getValMap(getPositionX() +1, getPositionY());
+            if(player.getCurrentMap().getValMap(getPositionX() +1, getPositionY())!=0) {
+                player.getCurrentMap().setMap(getPositionX(), getPositionY(), getCurrentCell());
                 setCurrentCell(val);
                 setPositionX(getPositionX() + 1);
-                getCurrentMap().setMap(getPositionX(), getPositionY(), 6);
+                player.getCurrentMap().setMap(getPositionX(), getPositionY(), 6);
 
             }
             else return 0;
         }
         if(direction==1)
         {
-            int val = getCurrentMap().getValMap(getPositionX(), getPositionY() + 1);
-            if (getCurrentMap().getValMap(getPositionX(), getPositionY() + 1) != 0) {
-                getCurrentMap().setMap(getPositionX(), getPositionY(), getCurrentCell());
+            int val = player.getCurrentMap().getValMap(getPositionX(), getPositionY() + 1);
+            if (player.getCurrentMap().getValMap(getPositionX(), getPositionY() + 1) != 0) {
+                player.getCurrentMap().setMap(getPositionX(), getPositionY(), getCurrentCell());
                 setCurrentCell(val);
                 setPositionY(getPositionY() + 1);
-                getCurrentMap().setMap(getPositionX(), getPositionY(), 6);
+                player.getCurrentMap().setMap(getPositionX(), getPositionY(), 6);
             }
             else return 0;
         }
         if(direction==2)
         {
-            int val = getCurrentMap().getValMap(getPositionX() -1, getPositionY());
-            if(getCurrentMap().getValMap(getPositionX() -1, getPositionY())!=0) {
-                getCurrentMap().setMap(getPositionX(), getPositionY(), getCurrentCell());
+            int val = player.getCurrentMap().getValMap(getPositionX() -1, getPositionY());
+            if(player.getCurrentMap().getValMap(getPositionX() -1, getPositionY())!=0) {
+                player.getCurrentMap().setMap(getPositionX(), getPositionY(), getCurrentCell());
                 setCurrentCell(val);
                 setPositionX(getPositionX() - 1);
-                getCurrentMap().setMap(getPositionX(), getPositionY(), 6);
+                player.getCurrentMap().setMap(getPositionX(), getPositionY(), 6);
             }
             else return 0;
         }
         if(direction==3)
         {
-            int val = getCurrentMap().getValMap(getPositionX(), getPositionY() - 1);
-            if (getCurrentMap().getValMap(getPositionX(), getPositionY() - 1) != 0) {
-                getCurrentMap().setMap(getPositionX(), getPositionY(), getCurrentCell());
+            int val = player.getCurrentMap().getValMap(getPositionX(), getPositionY() - 1);
+            if (player.getCurrentMap().getValMap(getPositionX(), getPositionY() - 1) != 0) {
+                player.getCurrentMap().setMap(getPositionX(), getPositionY(), getCurrentCell());
                 setCurrentCell(val);
                 setPositionY(getPositionY() - 1);
-                getCurrentMap().setMap(getPositionX(), getPositionY(), 6);
+                player.getCurrentMap().setMap(getPositionX(), getPositionY(), 6);
             }
             else return 0;
         }
