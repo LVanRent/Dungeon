@@ -3,11 +3,16 @@ import java.util.Random;
 import android.util.Log;
 
 /*
+generation and gestion of the level
+
 0=mur
 1=couloir
 2=salle
 3=perso
 4=sortie
+5=food
+6=opponent
+
 */
 public class Map
 {

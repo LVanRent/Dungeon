@@ -12,7 +12,9 @@ import android.util.Log;
 
 import static java.lang.Math.min;
 
-
+/*
+gestion of the screen while in game
+ */
 public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
     private MainThread thread;
   //  final int pixelSize = 40;
@@ -122,7 +124,7 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
                     direction=0;
                 }
             }
-                if(lastTouchX>screenHeight-screenWidht && lastTouchY > screenWidht+(float)7*(screenHeight-screenWidht)/(float)16 ){
+                if(lastTouchX>screenHeight-screenWidht /*&& lastTouchY > screenWidht+(float)7*(screenHeight-screenWidht)/(float)16*/ ){
 
                     Log.d("attack","1");
                     player.attack(player.firstMob);
