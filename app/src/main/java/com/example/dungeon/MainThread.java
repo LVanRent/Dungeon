@@ -65,16 +65,14 @@ public class MainThread extends Thread {
                     // sleep(1000);
 
                     this.gameView.update(player,canvas);
-                    if (player.getHp()<=0){
-                        running = false;
-                        (gameView.context).startActivity(gameView.intent);
-                    }
+
 
                 }
             } catch (Exception e) {} finally {
                 if (canvas != null) {
                     try {
                         surfaceHolder.unlockCanvasAndPost(canvas);
+
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

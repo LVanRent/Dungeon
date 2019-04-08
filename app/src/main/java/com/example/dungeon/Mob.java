@@ -41,8 +41,8 @@ public class Mob extends Character {
     public void mobGestion(Hero player,Mob prevMob){
         Log.d("mobgestion","test"+(nextmob !=null));
 
-        mobIsDead(prevMob,player);
-        mobSeePlayer(player);
+        int a=mobIsDead(prevMob,player);
+        if(a==1) mobSeePlayer(player);
         if(nextmob !=null){
             nextmob.mobGestion(player,this);
         }
@@ -50,13 +50,17 @@ public class Mob extends Character {
 
 
     }
-    public void mobIsDead(Mob prevMob,Hero player){
+    public int mobIsDead(Mob prevMob,Hero player){
         if(getHp()<=0){
-            player.getCurrentMap().setMap(getPositionX(),getPositionY(),getCurrentCell());
-            prevMob.nextmob=nextmob;
+            int a = getCurrentCell();
+            if ((a== 1||a==2) && player.mobGen.nextInt(3)==2) a=5;
+            player.getCurrentMap().setMap(getPositionX(),getPositionY(),a);
+            if(prevMob==null)player.firstMob = nextmob;
+            else prevMob.nextmob=nextmob;
             player.mobAmount--;
-
+            return 0;
         }
+        return 1;
 
     }
     public void mobSeePlayer(Hero player){

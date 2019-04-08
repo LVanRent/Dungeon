@@ -148,6 +148,10 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
         player.getCurrentMap().updateVisible(player.getPositionX(),player.getPositionY());
         player.getCurrentMap().updateExplored(player.getPositionX(),player.getPositionY());
         this.draw(canvas,player);
+        if (player.getHp()<=0){
+            //running = false;
+            (context).startActivity(intent);
+        }
 
     }
     @Override
