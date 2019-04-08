@@ -17,6 +17,7 @@ public class Character {
     private int hp;
     private Bitmap image;
     private int currentLevel;
+    private long seed;
 
     public Random generator;
 
@@ -27,6 +28,7 @@ public class Character {
 
 
     public Character(long seed){
+        this.seed = seed;
         generator = new Random(seed);
         currentMap = Map.createMap(generator);
         positionX =currentMap.getEnter()[0];
@@ -37,6 +39,8 @@ public class Character {
     }
     public Character(){
         generator = new Random();
+        seed = generator.nextLong();
+        generator = new Random(seed);
         currentMap = Map.createMap(generator);
         positionX =currentMap.getEnter()[0];
         positionY =currentMap.getEnter()[1];
@@ -97,6 +101,11 @@ public class Character {
     {
         this.currentCell = currentCell;
     }
+
+    public long getSeed() {
+        return seed;
+    }
+
 
     public void setCurrentMap(Map map)
     { this.currentMap = map;}

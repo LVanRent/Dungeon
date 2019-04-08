@@ -91,6 +91,8 @@ class Hero extends Character {
         }
         return -1;
     }
+
+
     public void attack(Mob cMob){
 
         if((getPositionX()+1 == cMob.getPositionX() && getPositionY()==cMob.getPositionY())||(getPositionX()-1 == cMob.getPositionX() && getPositionY()==cMob.getPositionY())||(getPositionX() == cMob.getPositionX() && getPositionY()+1==cMob.getPositionY())||(getPositionX()+1 == cMob.getPositionX() && getPositionY()-1==cMob.getPositionY())){

@@ -17,8 +17,6 @@ gestion of the screen while in game
  */
 public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
     private MainThread thread;
-  //  final int pixelSize = 40;
-    Character ash;
     public int pixelSize = 40;
     public MotionEvent mEvent;
     public int lastevent;
@@ -31,13 +29,13 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
     public Intent intent;
     public int didAttack;
 
-    public final int wallOnMap = 0;
-    public final int pathOnMap = 1;
-    public final int roomOnMap = 2;
-    public final int playerOnMap = 3;
-    public final int stairOnMap = 4;
-    public final int foodOnMap = 5;
-    public final int mobOnMap = 6;
+    public final static int wallOnMap = 0;
+    public final static int pathOnMap = 1;
+    public final static int roomOnMap = 2;
+    public final static int playerOnMap = 3;
+    public final static int stairOnMap = 4;
+    public final static int foodOnMap = 5;
+    public final static int mobOnMap = 6;
 
 
     public GameView (Context context){
