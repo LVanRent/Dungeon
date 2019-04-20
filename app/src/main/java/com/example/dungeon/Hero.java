@@ -95,7 +95,10 @@ class Hero extends Character {
 
     public void attack(Mob cMob){
 
-        if((getPositionX()+1 == cMob.getPositionX() && getPositionY()==cMob.getPositionY())||(getPositionX()-1 == cMob.getPositionX() && getPositionY()==cMob.getPositionY())||(getPositionX() == cMob.getPositionX() && getPositionY()+1==cMob.getPositionY())||(getPositionX()+1 == cMob.getPositionX() && getPositionY()-1==cMob.getPositionY())){
+        if((getPositionX()+1 == cMob.getPositionX() && getPositionY()==cMob.getPositionY())||
+                (getPositionX()-1 == cMob.getPositionX() && getPositionY()==cMob.getPositionY())||
+                (getPositionX() == cMob.getPositionX() && getPositionY()+1==cMob.getPositionY())||
+                (getPositionX() == cMob.getPositionX() && getPositionY()-1==cMob.getPositionY())){
             cMob.setHp(cMob.getHp()-100);
             Log.d("atk x y",""+cMob.getPositionX()+ " "+cMob.getPositionY());
         }

@@ -269,6 +269,10 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
                                 didAttack--;
                             } else if (cMap.getValMap((x + i), (y + j)) == playerOnMap) {
                                 canvas.drawRect((i + 10) * pixelSize, (j + 10) * pixelSize, (i + 11) * pixelSize, (j + 11) * pixelSize, player);
+                                if(current.dirChar == 0) canvas.drawRect((float)((i + 10.8) * pixelSize), (float)((j + 10.4) * pixelSize), (float)((i + 11) * pixelSize), (float)((j + 10.6) * pixelSize), ground);
+                                if(current.dirChar == 1) canvas.drawRect((float)((i + 10.4) * pixelSize), (float)((j + 10.8) * pixelSize), (float)((i + 10.6) * pixelSize), (float)((j + 11) * pixelSize), ground);
+                                if(current.dirChar == 2) canvas.drawRect((float)((i + 10) * pixelSize), (float)((j + 10.4) * pixelSize), (float)((i + 10.2) * pixelSize), (float)((j + 10.6) * pixelSize), ground);
+                                if(current.dirChar == 3) canvas.drawRect((float)((i + 10.4) * pixelSize), (float)((j + 10) * pixelSize), (float)((i + 10.6) * pixelSize), (float)((j + 10.2) * pixelSize), ground);
                             }
 
                         }

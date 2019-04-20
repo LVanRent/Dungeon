@@ -20,6 +20,7 @@ public class Character {
     private long seed;
 
     public Random generator;
+    public int dirChar=1;
 
 
     public void draw(Canvas canvas){
@@ -142,6 +143,7 @@ public class Character {
                 currentCell = val;
                 positionX = positionX + 1;
                 currentMap.setMap(positionX, positionY, 3);
+                dirChar=direction;
 
             }
             else return 0;
@@ -154,6 +156,7 @@ public class Character {
                 currentCell = val;
                 positionY = positionY + 1;
                 currentMap.setMap(positionX, positionY, 3);
+                dirChar=direction;
             }
             else return 0;
         }
@@ -165,6 +168,8 @@ public class Character {
                 currentCell = val;
                 positionX = positionX - 1;
                 currentMap.setMap(positionX, positionY, 3);
+
+                dirChar=direction;
             }
             else return 0;
         }
@@ -176,6 +181,8 @@ public class Character {
                 currentCell = val;
                 positionY = positionY - 1;
                 currentMap.setMap(positionX, positionY, 3);
+
+                dirChar=direction;
             }
             else return 0;
         }

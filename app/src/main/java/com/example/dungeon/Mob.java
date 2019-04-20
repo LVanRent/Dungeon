@@ -96,6 +96,8 @@ public class Mob extends Character {
                 setPositionX(getPositionX() + 1);
                 player.getCurrentMap().setMap(getPositionX(), getPositionY(), 6);
 
+                dirChar=direction;
+
             }
             else return 0;
         }
@@ -107,6 +109,8 @@ public class Mob extends Character {
                 setCurrentCell(val);
                 setPositionY(getPositionY() + 1);
                 player.getCurrentMap().setMap(getPositionX(), getPositionY(), 6);
+
+                dirChar=direction;
             }
             else return 0;
         }
@@ -118,6 +122,8 @@ public class Mob extends Character {
                 setCurrentCell(val);
                 setPositionX(getPositionX() - 1);
                 player.getCurrentMap().setMap(getPositionX(), getPositionY(), 6);
+
+                dirChar=direction;
             }
             else return 0;
         }
@@ -129,6 +135,7 @@ public class Mob extends Character {
                 setCurrentCell(val);
                 setPositionY(getPositionY() - 1);
                 player.getCurrentMap().setMap(getPositionX(), getPositionY(), 6);
+                dirChar=direction;
             }
             else return 0;
         }
