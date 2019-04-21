@@ -236,8 +236,8 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
         super.draw(canvas);
         canvas.drawColor(Color.WHITE);
         if (canvas != null) {
-            Paint maper = new Paint();
-            maper.setColor(Color.YELLOW);
+            //Paint maper = new Paint();
+            //maper.setColor(Color.YELLOW);
 
 
 
@@ -435,10 +435,19 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
 
 
             }
+            int itmSz=126;
             //canvas.drawRect(screenWidht-2*pixelSize,0,screenWidht,2*pixelSize,maper);
-            Rect mapPlace = new Rect(screenWidht-2*pixelSize,0,screenWidht,2*pixelSize);
-            Rect mapSRC = new Rect(84,1036,126,1342);
-            canvas.drawBitmap((BitmapFactory.decodeResource(getResources(),R.drawable.zelda_menu)),mapSRC,mapPlace,null);
+
+
+                    int posX = 168+itmSz;
+                    int posY = 4450+itmSz;
+                    Rect mapPlace = new Rect(screenWidht-2*pixelSize,0,screenWidht,2*pixelSize);
+
+
+
+                    Rect mapSRC = new Rect(posX, posY, posX + itmSz, posY + itmSz);
+                    canvas.drawBitmap((BitmapFactory.decodeResource(getResources(), R.drawable.zelda_menu)), mapSRC, mapPlace, null);
+
 
         }
 
