@@ -1,6 +1,7 @@
 package com.example.dungeon;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -41,6 +42,7 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
     public final static int stairOnMap = 4;
     public final static int foodOnMap = 5;
     public final static int mobOnMap = 6;
+    public Bitmap zelda_menu;
 
 
     public GameView (Context context){
@@ -64,6 +66,8 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
 
         thread = new MainThread(getHolder(), this);
         setFocusable(true);
+
+        zelda_menu = BitmapFactory.decodeResource(getResources(), R.drawable.zelda_menu);
     }
 
     @Override
@@ -436,6 +440,7 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
 
             }
             int itmSz=126;
+
             //canvas.drawRect(screenWidht-2*pixelSize,0,screenWidht,2*pixelSize,maper);
 
 
@@ -446,7 +451,7 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
 
 
                     Rect mapSRC = new Rect(posX, posY, posX + itmSz, posY + itmSz);
-                    canvas.drawBitmap((BitmapFactory.decodeResource(getResources(), R.drawable.zelda_menu)), mapSRC, mapPlace, null);
+                    canvas.drawBitmap(zelda_menu, mapSRC, mapPlace, null);
 
 
         }

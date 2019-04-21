@@ -107,4 +107,16 @@ class Hero extends Character {
 
 
     }
+    public void spinAttack(){
+        int dir = dirChar;
+        dirChar = 0;
+        attack(firstMob);
+        dirChar=1;
+        attack(firstMob);
+        dirChar =2;
+        attack(firstMob);
+        dirChar =3;
+        attack(firstMob);
+        dirChar=dir;
+    }
 }
