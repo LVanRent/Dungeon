@@ -28,6 +28,8 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
     public Context context;
     public Intent intent;
     public int didAttack;
+    public boolean rotateFlag=false;
+    public boolean map=false;
 
     public final static int wallOnMap = 0;
     public final static int pathOnMap = 1;
@@ -101,55 +103,76 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
 
 
     public void update (Hero player, Canvas canvas){
-        while(player.mobAmount*2 < player.getCurrentLevel()+1){
-            player.firstMob = new Mob(player.getCurrentMap(),player.firstMob,player.mobGen);
-            player.mobAmount++;
-        }
+        if ((lastevent==1||lastevent==2)&&lastTouchX>screenWidht-2*pixelSize &&lastTouchY<2*pixelSize){
+            map=!map;
+            Log.i("map",""+map);}
+        if(!map){
 
-        int direction = -1;
-        if (this.lastevent ==2||lastevent==1){
-            if(lastTouchY>screenWidht && screenWidht+lastTouchX<screenHeight){
-                if(lastTouchY-screenWidht < lastTouchX && lastTouchY+lastTouchX<screenHeight){
-                    direction = 3;
+            while(player.mobAmount*2 < player.getCurrentLevel()+1){
+                player.firstMob = new Mob(player.getCurrentMap(),player.firstMob,player.mobGen);
+                player.mobAmount++;
+            }
+
+            int direction = -1;
+            if (this.lastevent ==2||lastevent==1) {
+                if ((lastTouchY > screenWidht+(screenHeight-screenWidht)/3)
+                        && (lastTouchY<(screenWidht+2*(screenHeight-screenWidht)/3))
+                        && (lastTouchX>((screenHeight-screenWidht)/3))
+                        && (lastTouchX<(2*(screenHeight-screenWidht)/3))) {
+                    rotateFlag = !rotateFlag;
                 }
-                if(lastTouchY-screenWidht>lastTouchX && lastTouchY+lastTouchX>screenHeight){
-                    direction=1;
-                }
-                if(lastTouchY-screenWidht>lastTouchX && lastTouchY+lastTouchX<screenHeight){
-                    direction=2;
-                }
-                if(lastTouchY-screenWidht<lastTouchX && lastTouchY+lastTouchX>screenHeight){
-                    direction=0;
+                else {
+                    if (lastTouchY > screenWidht && screenWidht + lastTouchX < screenHeight) {
+                        if (lastTouchY - screenWidht < lastTouchX && lastTouchY + lastTouchX < screenHeight) {
+                            direction = 3;
+                        }
+                        if (lastTouchY - screenWidht > lastTouchX && lastTouchY + lastTouchX > screenHeight) {
+                            direction = 1;
+                        }
+                        if (lastTouchY - screenWidht > lastTouchX && lastTouchY + lastTouchX < screenHeight) {
+                            direction = 2;
+                        }
+                        if (lastTouchY - screenWidht < lastTouchX && lastTouchY + lastTouchX > screenHeight) {
+                            direction = 0;
+                        }
+                    }
+                    if (lastTouchX > screenHeight - screenWidht && lastTouchY > screenWidht) {
+
+                        Log.d("attack", "1");
+                        player.attack(player.firstMob);
+                        didAttack = 3;
+                        Log.d("attack", "2");
+
+                    }
                 }
             }
-                if(lastTouchX>screenHeight-screenWidht /*&& lastTouchY > screenWidht+(float)7*(screenHeight-screenWidht)/(float)16*/ ){
+            int a=0;
 
-                    Log.d("attack","1");
-                    player.attack(player.firstMob);
-                    didAttack=3;
-                    Log.d("attack","2");
+            //direction = player.moveCharWall(direction);
+            if(rotateFlag){ player.orientChar(direction);}
+            else a=player.moveChar(direction);
+            if ((a>0)||didAttack==3){
 
+                Log.d("direction",""+direction+" "+didAttack);
+
+                player.firstMob.mobGestion(player,null);
+            }
+
+
+            player.getCurrentMap().updateVisible(player.getPositionX(),player.getPositionY());
+            player.getCurrentMap().updateExplored(player.getPositionX(),player.getPositionY());
+            this.draw(canvas,player);
+            if (player.getHp()<=0){
+                //running = false;
+                (context).startActivity(intent);
             }
         }
+        else{
+            this.draw(canvas,player);
 
-
-        //direction = player.moveCharWall(direction);
-        player.moveChar(direction);
-        if (direction!=-1||didAttack==3){
-
-            Log.d("direction",""+direction+" "+didAttack);
-
-            player.firstMob.mobGestion(player,null);
         }
+
         this.lastevent=0;
-
-        player.getCurrentMap().updateVisible(player.getPositionX(),player.getPositionY());
-        player.getCurrentMap().updateExplored(player.getPositionX(),player.getPositionY());
-        this.draw(canvas,player);
-        if (player.getHp()<=0){
-            //running = false;
-            (context).startActivity(intent);
-        }
 
     }
     @Override
@@ -207,8 +230,13 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
 
     public void draw (Canvas canvas, Hero current){
         super.draw(canvas);
+        canvas.drawColor(Color.WHITE);
         if (canvas != null) {
-            canvas.drawColor(Color.WHITE);
+            Paint maper = new Paint();
+            maper.setColor(Color.YELLOW);
+
+
+
             Paint player = new Paint();
             player.setColor(Color.rgb(0, 250, 0));
             Paint ground = new Paint();
@@ -240,99 +268,163 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
             hp.setColor(Color.rgb(200,0,0));
             Paint hunger = new Paint();
             hunger.setColor(Color.rgb(0,200,0));
-           int x = current.getPositionX();
-           int y = current.getPositionY();
-           Map cMap = current.getCurrentMap();
+            int x = current.getPositionX();
+            int y = current.getPositionY();
+            Map cMap = current.getCurrentMap();
+            float a=0;
+            float b=0;
+            int pi=0;
+            int pj=0;
 
+            if(map){
+                Log.d("try map","start");
+                int pixelSize = (screenWidht/cMap.getWidth());
 
-            for(int i=-10;i<10;i++) {
-                for (int j = -10; j < 10; j++) {
+                for(int i=0;i<cMap.getLength();i++){
+                    for (int j=0;j<cMap.getWidth();j++){
+                        if(cMap.getValExplored(i,j)==0){
+                            if(cMap.getValMap(i,j)==wallOnMap)
+                                canvas.drawRect(x*pixelSize,y*pixelSize,x*pixelSize+pixelSize,y*pixelSize+pixelSize,wall);
+                            if(cMap.getValMap(i,j)==pathOnMap)
+                                canvas.drawRect(x*pixelSize,y*pixelSize,x*pixelSize+pixelSize,y*pixelSize+pixelSize,ground);
+                            if(cMap.getValMap(i,j)==roomOnMap)canvas.drawRect(x*pixelSize,y*pixelSize,x*pixelSize+pixelSize,y*pixelSize+pixelSize,ground);
+                            if(cMap.getValMap(i,j)==playerOnMap)canvas.drawRect(x*pixelSize,y*pixelSize,x*pixelSize+pixelSize,y*pixelSize+pixelSize,player);
+                            if(cMap.getValMap(i,j)==stairOnMap)canvas.drawRect(x*pixelSize,y*pixelSize,x*pixelSize+pixelSize,y*pixelSize+pixelSize,stairs);
+                            if(cMap.getValMap(i,j)==foodOnMap)canvas.drawRect(x*pixelSize,y*pixelSize,x*pixelSize+pixelSize,y*pixelSize+pixelSize,food);
+                            if(cMap.getValMap(i,j)==mobOnMap){
+                                if(cMap.getValVisible(i,j)==1)canvas.drawRect(x*pixelSize,y*pixelSize,x*pixelSize+pixelSize,y*pixelSize+pixelSize,mob);
+                                else {canvas.drawRect(x*pixelSize,y*pixelSize,x*pixelSize+pixelSize,y*pixelSize+pixelSize,ground);
+                                }
 
-                    if(x+i<0 || x+i>=cMap.getLength() || y+j<0 || y+j>=cMap.getWidth())
-                    {
-                        canvas.drawRect((i + 10) * pixelSize, (j + 10) * pixelSize, (i + 11) * pixelSize, (j + 11) * pixelSize, fog);
-                    }
-                    else {
-                        if (cMap.getValVisible((x + i), (y + j)) == 1) {
-                            if (cMap.getValMap(x + i, y + j) == roomOnMap || cMap.getValMap(x + i, y + j) == pathOnMap) {
-                                canvas.drawRect((i + 10) * pixelSize, (j + 10) * pixelSize, (i + 11) * pixelSize, (j + 11) * pixelSize, ground);
-                            } else if (cMap.getValMap(x + i, y + j) == stairOnMap) {
-                                canvas.drawRect((i + 10) * pixelSize, (j + 10) * pixelSize, (i + 11) * pixelSize, (j + 11) * pixelSize, stairs);
-                            } else if (cMap.getValMap(x + i, y + j) == wallOnMap) {
-                                canvas.drawRect((i + 10) * pixelSize, (j + 10) * pixelSize, (i + 11) * pixelSize, (j + 11) * pixelSize, wall);
-                            } else if (cMap.getValMap(x + i, y + j) == foodOnMap) {
-                                canvas.drawRect((i + 10) * pixelSize, (j + 10) * pixelSize, (i + 11) * pixelSize, (j + 11) * pixelSize, food);
-                            } else if (cMap.getValMap(x + i, y + j) == mobOnMap) {
-                                canvas.drawRect((i + 10) * pixelSize, (j + 10) * pixelSize, (i + 11) * pixelSize, (j + 11) * pixelSize, mob);
-                            }else if (cMap.getValMap(x + i, y + j) == playerOnMap && didAttack>0) {
-                                canvas.drawCircle((float) (i + 10.5) * pixelSize, (float) (j + 10.5) * pixelSize,pixelSize,  attack);
-                                didAttack--;
-                            } else if (cMap.getValMap((x + i), (y + j)) == playerOnMap) {
-                                canvas.drawRect((i + 10) * pixelSize, (j + 10) * pixelSize, (i + 11) * pixelSize, (j + 11) * pixelSize, player);
-                                if(current.dirChar == 0) canvas.drawRect((float)((i + 10.8) * pixelSize), (float)((j + 10.4) * pixelSize), (float)((i + 11) * pixelSize), (float)((j + 10.6) * pixelSize), ground);
-                                if(current.dirChar == 1) canvas.drawRect((float)((i + 10.4) * pixelSize), (float)((j + 10.8) * pixelSize), (float)((i + 10.6) * pixelSize), (float)((j + 11) * pixelSize), ground);
-                                if(current.dirChar == 2) canvas.drawRect((float)((i + 10) * pixelSize), (float)((j + 10.4) * pixelSize), (float)((i + 10.2) * pixelSize), (float)((j + 10.6) * pixelSize), ground);
-                                if(current.dirChar == 3) canvas.drawRect((float)((i + 10.4) * pixelSize), (float)((j + 10) * pixelSize), (float)((i + 10.6) * pixelSize), (float)((j + 10.2) * pixelSize), ground);
                             }
 
+
+
+
                         }
-                        if (cMap.getValVisible((x + i), (y + j)) == 0) {
-                            canvas.drawRect((i + 10) * pixelSize, (j + 10) * pixelSize, (i + 11) * pixelSize, (j + 11) * pixelSize, fog);
-                        }
-                        if (cMap.getValVisible((x + i), (y + j)) == 0 && cMap.getValExplored((x + i), (y + j)) == 1) {
-                            if (cMap.getValMap(x + i, y + j) == roomOnMap || cMap.getValMap(x + i, y + j) == pathOnMap) {
-                                canvas.drawRect((i + 10) * pixelSize, (j + 10) * pixelSize, (i + 11) * pixelSize, (j + 11) * pixelSize, darkground);
-                            } else if (cMap.getValMap(x + i, y + j) == stairOnMap) {
-                                canvas.drawRect((i + 10) * pixelSize, (j + 10) * pixelSize, (i + 11) * pixelSize, (j + 11) * pixelSize, darkstairs);
-                            } else if (cMap.getValMap(x + i, y + j) == wallOnMap) {
-                                canvas.drawRect((i + 10) * pixelSize, (j + 10) * pixelSize, (i + 11) * pixelSize, (j + 11) * pixelSize, darkwall);
-                            } else if (cMap.getValMap(x + i, y + j) == foodOnMap) {
-                                canvas.drawRect((i + 10) * pixelSize, (j + 10) * pixelSize, (i + 11) * pixelSize, (j + 11) * pixelSize, darkfood);
-                            }
+                        else{
+                            canvas.drawRect(x*pixelSize,y*pixelSize,x*pixelSize+pixelSize,y*pixelSize+pixelSize,fog);
+
                         }
                     }
-
-                    canvas.drawRect(screenHeight-screenWidht,screenWidht,screenHeight-screenWidht+pixelSize/(float)5,screenHeight,command);
-
-                    canvas.drawRect((screenHeight-screenWidht)/(float)2,screenWidht,(screenHeight-screenWidht)/(float)2+pixelSize/(float)5,screenHeight,command);
-
-                    canvas.drawRect(0,(screenHeight+screenWidht)/(float)2,screenHeight-screenWidht,(screenHeight+screenWidht+pixelSize/(float)5)/2,command);
-
-                    Paint UP = new Paint();
-                    UP.setColor(Color.BLACK);
-                    drawTriangle(canvas, UP, (screenHeight - screenWidht)/(float)2, screenWidht+(screenHeight-screenWidht)/(float)8, (screenHeight-screenWidht)/4, 3);
-
-                    Paint DOWN = new Paint();
-                    DOWN.setColor(Color.BLACK);
-                    drawTriangle(canvas, DOWN, (screenHeight - screenWidht)/(float)2, screenHeight-(screenHeight-screenWidht)/(float)8, (screenHeight-screenWidht)/4, 1);
-
-                    Paint LEFT = new Paint();
-                    LEFT.setColor(Color.BLACK);
-                    drawTriangle(canvas, LEFT, (screenHeight-screenWidht)/(float)8, (screenHeight+screenWidht)/(float)2, (screenHeight-screenWidht)/4, 2);
-
-                    Paint RIGHT = new Paint();
-                    RIGHT.setColor(Color.BLACK);
-                    drawTriangle(canvas, RIGHT,  (screenHeight-screenWidht)-(screenHeight-screenWidht)/(float)8,(float)(screenHeight+screenWidht)/2, (screenHeight-screenWidht)/4, 0);
-
-                    // Caracteristique
-                    fog.setTextSize( 6*pixelSize/(float)10);
-                    fog.setColor(Color.BLACK);
-                    canvas.drawText("Hp : "+current.getHp() +"/100", screenHeight-screenWidht+pixelSize/(float)2,screenWidht+ (screenHeight-screenWidht)/(float)16 ,fog);
-                    canvas.drawRect(screenHeight-screenWidht+pixelSize/(float)2,screenWidht+(float)1.5*(screenHeight-screenWidht)/(float)16, screenHeight-screenWidht+(pixelSize/(float)2) + ((-screenHeight+2*screenWidht-pixelSize)*(current.getHp())/(float)100),screenWidht+(float)2.5*(screenHeight-screenWidht)/(float)16,hp);
-                    canvas.drawText("Hg : "+current.getHunger() +"/100", screenHeight-screenWidht+pixelSize/(float)2,screenWidht+(float) 3.5*(screenHeight-screenWidht)/(float)16  ,fog);
-                    canvas.drawRect(screenHeight-screenWidht+pixelSize/(float)2,screenWidht+(float)4*(screenHeight-screenWidht)/(float)16,screenHeight-screenWidht+(pixelSize/(float)2) + ((-screenHeight+2*screenWidht-pixelSize)*(current.getHunger())/(float)100),screenWidht+(float)5*(screenHeight-screenWidht)/(float)16,hunger);
-                    canvas.drawText("lvl : "+current.getCurrentLevel(), screenHeight-screenWidht+pixelSize/(float)2,screenWidht+(float)6*(screenHeight-screenWidht)/(float)16 ,fog);
-
-                    canvas.drawRect(screenHeight-screenWidht,screenWidht+(float)6.5*(screenHeight-screenWidht)/(float)16,screenWidht,screenWidht+(float)7*(screenHeight-screenWidht)/(float)16,command);
-
-                    Paint Sword = new Paint();
-                    Sword.setColor(Color.BLUE);
-                    drawTriangle(canvas, Sword, (screenHeight - screenWidht)+(float) 2*(2*screenWidht - screenHeight)/(float) 4, screenWidht+(float)9.5*(screenHeight-screenWidht)/(float)16, (screenHeight-screenWidht)/4, 3);
-                    drawTriangle(canvas, Sword, (screenHeight - screenWidht)+(float) 2*(2*screenWidht - screenHeight)/(float) 4, screenWidht+(float)13.5*(screenHeight-screenWidht)/(float)16, (screenHeight-screenWidht)/4, 1);
 
                 }
-            }
+                Log.d("try map","map should be here");
 
+
+            }
+            else{
+
+
+                for(int i=-10;i<10;i++) {
+                    for (int j = -10; j < 10; j++) {
+
+                        if (x + i < 0 || x + i >= cMap.getLength() || y + j < 0 || y + j >= cMap.getWidth()) {
+                            canvas.drawRect((i + 10) * pixelSize, (j + 10) * pixelSize, (i + 11) * pixelSize, (j + 11) * pixelSize, fog);
+                        } else {
+                            if (cMap.getValVisible((x + i), (y + j)) == 1) {
+                                if (cMap.getValMap(x + i, y + j) == roomOnMap || cMap.getValMap(x + i, y + j) == pathOnMap) {
+                                    canvas.drawRect((i + 10) * pixelSize, (j + 10) * pixelSize, (i + 11) * pixelSize, (j + 11) * pixelSize, ground);
+                                } else if (cMap.getValMap(x + i, y + j) == stairOnMap) {
+                                    canvas.drawRect((i + 10) * pixelSize, (j + 10) * pixelSize, (i + 11) * pixelSize, (j + 11) * pixelSize, stairs);
+                                } else if (cMap.getValMap(x + i, y + j) == wallOnMap) {
+                                    canvas.drawRect((i + 10) * pixelSize, (j + 10) * pixelSize, (i + 11) * pixelSize, (j + 11) * pixelSize, wall);
+                                } else if (cMap.getValMap(x + i, y + j) == foodOnMap) {
+                                    canvas.drawRect((i + 10) * pixelSize, (j + 10) * pixelSize, (i + 11) * pixelSize, (j + 11) * pixelSize, food);
+                                } else if (cMap.getValMap(x + i, y + j) == mobOnMap) {
+                                    canvas.drawRect((i + 10) * pixelSize, (j + 10) * pixelSize, (i + 11) * pixelSize, (j + 11) * pixelSize, mob);
+                                } else if (cMap.getValMap(x + i, y + j) == playerOnMap && didAttack > 0) {
+                                    a = (float) (i + 10.5) * pixelSize;
+                                    b = (float) (j + 10.5) * pixelSize;
+
+                                } else if (cMap.getValMap((x + i), (y + j)) == playerOnMap) {
+                                    pi=i;
+                                    pj=j;
+                                }
+
+                            }
+                            if (cMap.getValVisible((x + i), (y + j)) == 0) {
+                                canvas.drawRect((i + 10) * pixelSize, (j + 10) * pixelSize, (i + 11) * pixelSize, (j + 11) * pixelSize, fog);
+                            }
+                            if (cMap.getValVisible((x + i), (y + j)) == 0 && cMap.getValExplored((x + i), (y + j)) == 1) {
+                                if (cMap.getValMap(x + i, y + j) == roomOnMap || cMap.getValMap(x + i, y + j) == pathOnMap) {
+                                    canvas.drawRect((i + 10) * pixelSize, (j + 10) * pixelSize, (i + 11) * pixelSize, (j + 11) * pixelSize, darkground);
+                                } else if (cMap.getValMap(x + i, y + j) == stairOnMap) {
+                                    canvas.drawRect((i + 10) * pixelSize, (j + 10) * pixelSize, (i + 11) * pixelSize, (j + 11) * pixelSize, darkstairs);
+                                } else if (cMap.getValMap(x + i, y + j) == wallOnMap) {
+                                    canvas.drawRect((i + 10) * pixelSize, (j + 10) * pixelSize, (i + 11) * pixelSize, (j + 11) * pixelSize, darkwall);
+                                } else if (cMap.getValMap(x + i, y + j) == foodOnMap) {
+                                    canvas.drawRect((i + 10) * pixelSize, (j + 10) * pixelSize, (i + 11) * pixelSize, (j + 11) * pixelSize, darkfood);
+                                }
+                            }
+                        }
+                    }
+                }
+                if (didAttack>0) {
+                    if(current.dirChar==0){a=a+(float)(pixelSize/2);}
+                    if(current.dirChar==1){b=b+(float)(pixelSize/2);}
+                    if(current.dirChar==2){a=a-(float)(pixelSize/2);}
+                    if(current.dirChar==3){b=b-(float)(pixelSize/2);}
+
+                    canvas.drawCircle(a, b, (float)(pixelSize/2), attack);
+                    didAttack--;
+                }
+                canvas.drawRect((pi + 10) * pixelSize, (pj + 10) * pixelSize, (pi + 11) * pixelSize, (pj + 11) * pixelSize, player);
+                if (current.dirChar == 0)
+                    canvas.drawRect((float) ((pi + 10.8) * pixelSize), (float) ((pj + 10.4) * pixelSize), (float) ((pi + 11) * pixelSize), (float) ((pj + 10.6) * pixelSize), ground);
+                if (current.dirChar == 1)
+                    canvas.drawRect((float) ((pi + 10.4) * pixelSize), (float) ((pj + 10.8) * pixelSize), (float) ((pi + 10.6) * pixelSize), (float) ((pj + 11) * pixelSize), ground);
+                if (current.dirChar == 2)
+                    canvas.drawRect((float) ((pi + 10) * pixelSize), (float) ((pj + 10.4) * pixelSize), (float) ((pi + 10.2) * pixelSize), (float) ((pj + 10.6) * pixelSize), ground);
+                if (current.dirChar == 3)
+                    canvas.drawRect((float) ((pi + 10.4) * pixelSize), (float) ((pj + 10) * pixelSize), (float) ((pi + 10.6) * pixelSize), (float) ((pj + 10.2) * pixelSize), ground);
+                Paint arrow = new Paint();
+
+                if(rotateFlag)arrow.setColor(Color.BLUE);
+                else arrow.setColor(Color.BLACK);
+
+                canvas.drawRect(screenHeight-screenWidht,screenWidht,screenHeight-screenWidht+pixelSize/(float)5,screenHeight,command);
+
+                canvas.drawRect((screenHeight-screenWidht)/(float)2,screenWidht,(screenHeight-screenWidht)/(float)2+pixelSize/(float)5,screenHeight,command);
+
+                canvas.drawRect(0,(screenHeight+screenWidht)/(float)2,screenHeight-screenWidht,(screenHeight+screenWidht+pixelSize/(float)5)/2,arrow);
+
+
+
+                //up
+                drawTriangle(canvas, arrow, (screenHeight - screenWidht)/(float)2, screenWidht+(screenHeight-screenWidht)/(float)8, (screenHeight-screenWidht)/4, 3);
+
+                //down
+                drawTriangle(canvas, arrow, (screenHeight - screenWidht)/(float)2, screenHeight-(screenHeight-screenWidht)/(float)8, (screenHeight-screenWidht)/4, 1);
+
+                //left
+                drawTriangle(canvas, arrow, (screenHeight-screenWidht)/(float)8, (screenHeight+screenWidht)/(float)2, (screenHeight-screenWidht)/4, 2);
+                //right
+                drawTriangle(canvas, arrow,  (screenHeight-screenWidht)-(screenHeight-screenWidht)/(float)8,(float)(screenHeight+screenWidht)/2, (screenHeight-screenWidht)/4, 0);
+
+                //rotate
+                canvas.drawCircle((float)((screenHeight-screenWidht)/2),(float)((screenHeight+screenWidht)/2),(float)((screenHeight-screenWidht)/6),arrow);
+
+                // Caracteristique
+                fog.setTextSize( 6*pixelSize/(float)10);
+                fog.setColor(Color.BLACK);
+                canvas.drawText("Hp : "+current.getHp() +"/100", screenHeight-screenWidht+pixelSize/(float)2,screenWidht+ (screenHeight-screenWidht)/(float)16 ,fog);
+                canvas.drawRect(screenHeight-screenWidht+pixelSize/(float)2,screenWidht+(float)1.5*(screenHeight-screenWidht)/(float)16, screenHeight-screenWidht+(pixelSize/(float)2) + ((-screenHeight+2*screenWidht-pixelSize)*(current.getHp())/(float)100),screenWidht+(float)2.5*(screenHeight-screenWidht)/(float)16,hp);
+                canvas.drawText("Hg : "+current.getHunger() +"/100", screenHeight-screenWidht+pixelSize/(float)2,screenWidht+(float) 3.5*(screenHeight-screenWidht)/(float)16  ,fog);
+                canvas.drawRect(screenHeight-screenWidht+pixelSize/(float)2,screenWidht+(float)4*(screenHeight-screenWidht)/(float)16,screenHeight-screenWidht+(pixelSize/(float)2) + ((-screenHeight+2*screenWidht-pixelSize)*(current.getHunger())/(float)100),screenWidht+(float)5*(screenHeight-screenWidht)/(float)16,hunger);
+                canvas.drawText("lvl : "+current.getCurrentLevel(), screenHeight-screenWidht+pixelSize/(float)2,screenWidht+(float)6*(screenHeight-screenWidht)/(float)16 ,fog);
+
+                canvas.drawRect(screenHeight-screenWidht,screenWidht+(float)6.5*(screenHeight-screenWidht)/(float)16,screenWidht,screenWidht+(float)7*(screenHeight-screenWidht)/(float)16,command);
+
+                Paint Sword = new Paint();
+                Sword.setColor(Color.BLUE);
+                drawTriangle(canvas, Sword, (screenHeight - screenWidht)+(float) 2*(2*screenWidht - screenHeight)/(float) 4, screenWidht+(float)9.5*(screenHeight-screenWidht)/(float)16, (screenHeight-screenWidht)/4, 3);
+                drawTriangle(canvas, Sword, (screenHeight - screenWidht)+(float) 2*(2*screenWidht - screenHeight)/(float) 4, screenWidht+(float)13.5*(screenHeight-screenWidht)/(float)16, (screenHeight-screenWidht)/4, 1);
+
+
+
+            }
+            canvas.drawRect(screenWidht-2*pixelSize,0,screenWidht,2*pixelSize,maper);
         }
 
     }

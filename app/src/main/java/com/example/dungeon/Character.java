@@ -188,6 +188,9 @@ public class Character {
         }
 
 
+
+
+
         if(direction==-1) return 0;
         Log.i("currentcell x y ",""+getCurrentCell()+" "+positionX+" "+positionY);
         return 1;
@@ -195,7 +198,12 @@ public class Character {
 
 
 
-    }public int moveChar(int direction,int evil)
+    }
+    public void orientChar(int direction){
+        if (direction>=0) dirChar=direction;
+    }
+
+    public int moveChar(int direction,int evil)
     {
         Log.d("evil move","");
         if(direction==0)

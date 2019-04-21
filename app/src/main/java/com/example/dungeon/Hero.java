@@ -76,6 +76,7 @@ class Hero extends Character {
                 hunger = hunger + 30;
                 return 2;
             }
+            return a;
            /* if(super.getCurrentLevel()<4) {
                 Log.d("level", "" + super.getCurrentLevel());
                 hunger = 550;
@@ -85,20 +86,17 @@ class Hero extends Character {
             }*/
 
         }
-        else{
 
-
-        }
         return -1;
     }
 
 
     public void attack(Mob cMob){
 
-        if((getPositionX()+1 == cMob.getPositionX() && getPositionY()==cMob.getPositionY())||
-                (getPositionX()-1 == cMob.getPositionX() && getPositionY()==cMob.getPositionY())||
-                (getPositionX() == cMob.getPositionX() && getPositionY()+1==cMob.getPositionY())||
-                (getPositionX() == cMob.getPositionX() && getPositionY()-1==cMob.getPositionY())){
+        if(((getPositionX()+1 == cMob.getPositionX() && getPositionY()==cMob.getPositionY())&&dirChar==0)||
+                ((getPositionX()-1 == cMob.getPositionX() && getPositionY()==cMob.getPositionY())&&dirChar==2)||
+                ((getPositionX() == cMob.getPositionX() && getPositionY()+1==cMob.getPositionY())&&dirChar==1)||
+                ((getPositionX() == cMob.getPositionX() && getPositionY()-1==cMob.getPositionY())&&dirChar==3)){
             cMob.setHp(cMob.getHp()-100);
             Log.d("atk x y",""+cMob.getPositionX()+ " "+cMob.getPositionY());
         }
