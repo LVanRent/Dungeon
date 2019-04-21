@@ -1,16 +1,19 @@
 package com.example.dungeon;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.Rect;
 import android.view.SurfaceView;
 import android.view.SurfaceHolder;
 import android.view.MotionEvent;
 import android.util.Log;
 
 import static java.lang.Math.min;
+import static java.lang.Thread.sleep;
 
 /*
 gestion of the screen while in game
@@ -170,6 +173,7 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
         else{
             this.draw(canvas,player);
 
+
         }
 
         this.lastevent=0;
@@ -277,23 +281,30 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
             int pj=0;
 
             if(map){
-                Log.d("try map","start");
+
                 int pixelSize = (screenWidht/cMap.getWidth());
+                Log.d("try map","start");
+                Log.d("try map","sW= "+screenWidht+" mW= "+cMap.getWidth()+"pS= "+pixelSize);
+
+//                canvas.drawRect(0,0,screenWidht,screenWidht,fog);
+
 
                 for(int i=0;i<cMap.getLength();i++){
                     for (int j=0;j<cMap.getWidth();j++){
-                        if(cMap.getValExplored(i,j)==0){
+                       // Log.d("tryMap",""+cMap.getValExplored(i,j));
+                        if(cMap.getValExplored(i,j)==1){
+                            //Log.d("tryMap",""+cMap.getValExplored(i,j)+" "+i+" "+j+" "+cMap.getValMap(i,j));
                             if(cMap.getValMap(i,j)==wallOnMap)
-                                canvas.drawRect(x*pixelSize,y*pixelSize,x*pixelSize+pixelSize,y*pixelSize+pixelSize,wall);
+                                canvas.drawRect(i*pixelSize,j*pixelSize,(i*pixelSize)+pixelSize,(j*pixelSize)+pixelSize,wall);
                             if(cMap.getValMap(i,j)==pathOnMap)
-                                canvas.drawRect(x*pixelSize,y*pixelSize,x*pixelSize+pixelSize,y*pixelSize+pixelSize,ground);
-                            if(cMap.getValMap(i,j)==roomOnMap)canvas.drawRect(x*pixelSize,y*pixelSize,x*pixelSize+pixelSize,y*pixelSize+pixelSize,ground);
-                            if(cMap.getValMap(i,j)==playerOnMap)canvas.drawRect(x*pixelSize,y*pixelSize,x*pixelSize+pixelSize,y*pixelSize+pixelSize,player);
-                            if(cMap.getValMap(i,j)==stairOnMap)canvas.drawRect(x*pixelSize,y*pixelSize,x*pixelSize+pixelSize,y*pixelSize+pixelSize,stairs);
-                            if(cMap.getValMap(i,j)==foodOnMap)canvas.drawRect(x*pixelSize,y*pixelSize,x*pixelSize+pixelSize,y*pixelSize+pixelSize,food);
+                                canvas.drawRect(i*pixelSize,j*pixelSize,i*pixelSize+pixelSize,j*pixelSize+pixelSize,ground);
+                            if(cMap.getValMap(i,j)==roomOnMap) canvas.drawRect(i*pixelSize,j*pixelSize,i*pixelSize+pixelSize,j*pixelSize+pixelSize,ground);
+                            if(cMap.getValMap(i,j)==playerOnMap) canvas.drawRect(i*pixelSize,j*pixelSize,i*pixelSize+pixelSize,j*pixelSize+pixelSize,player);
+                            if(cMap.getValMap(i,j)==stairOnMap) canvas.drawRect(i*pixelSize,j*pixelSize,i*pixelSize+pixelSize,j*pixelSize+pixelSize,stairs);
+                            if(cMap.getValMap(i,j)==foodOnMap) canvas.drawRect(i*pixelSize,j*pixelSize,i*pixelSize+pixelSize,j*pixelSize+pixelSize,food);
                             if(cMap.getValMap(i,j)==mobOnMap){
-                                if(cMap.getValVisible(i,j)==1)canvas.drawRect(x*pixelSize,y*pixelSize,x*pixelSize+pixelSize,y*pixelSize+pixelSize,mob);
-                                else {canvas.drawRect(x*pixelSize,y*pixelSize,x*pixelSize+pixelSize,y*pixelSize+pixelSize,ground);
+                                if(cMap.getValVisible(i,j)==1)canvas.drawRect(i*pixelSize,j*pixelSize,i*pixelSize+pixelSize,j*pixelSize+pixelSize,mob);
+                                else {canvas.drawRect(i*pixelSize,j*pixelSize,i*pixelSize+pixelSize,j*pixelSize+pixelSize,ground);
                                 }
 
                             }
@@ -303,13 +314,13 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
 
                         }
                         else{
-                            canvas.drawRect(x*pixelSize,y*pixelSize,x*pixelSize+pixelSize,y*pixelSize+pixelSize,fog);
+                            canvas.drawRect(i*pixelSize,j*pixelSize,(i*pixelSize)+pixelSize,(j*pixelSize)+pixelSize,fog);
 
                         }
                     }
 
                 }
-                Log.d("try map","map should be here");
+                Log.d("try map","map should be here"+pixelSize);
 
 
             }
@@ -424,7 +435,11 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
 
 
             }
-            canvas.drawRect(screenWidht-2*pixelSize,0,screenWidht,2*pixelSize,maper);
+            //canvas.drawRect(screenWidht-2*pixelSize,0,screenWidht,2*pixelSize,maper);
+            Rect mapPlace = new Rect(screenWidht-2*pixelSize,0,screenWidht,2*pixelSize);
+            Rect mapSRC = new Rect(84,1036,126,1342);
+            canvas.drawBitmap((BitmapFactory.decodeResource(getResources(),R.drawable.zelda_menu)),mapSRC,mapPlace,null);
+
         }
 
     }
