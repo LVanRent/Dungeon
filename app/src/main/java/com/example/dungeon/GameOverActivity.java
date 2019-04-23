@@ -17,7 +17,7 @@ public class GameOverActivity extends Activity {
         SharedPreferences test = PreferenceManager.getDefaultSharedPreferences(this);
         long seed = test.getLong("currentSeed",0);
         int level = test.getInt("level",0);
-        int hiScore = test.getInt("HiScore",0);
+        int highScore = test.getInt("HighScore",0);
 
     }
 
