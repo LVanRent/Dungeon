@@ -181,11 +181,15 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
             if (player.getHp()<=0){
                 //running = false;
                 SharedPreferences test = PreferenceManager.getDefaultSharedPreferences(context);
+                int hiScore = test.getInt("hiScore",0);
+
 
 
                 final SharedPreferences.Editor editor;
                 editor = test.edit();
                 editor.putInt("Level",player.getCurrentLevel());
+                if (hiScore<player.getCurrentLevel()){editor.putInt("hiScore",player.getCurrentLevel());}
+                editor.commit();
                 (context).startActivity(intent);
             }
         }
