@@ -41,7 +41,7 @@ public class MainThread extends Thread {
     public static Canvas canvas;
     public MotionEvent lastEvent;
     public int direction;
-    private int targetFPS =30;
+    private int targetFPS =5;
     private double averageFPS;
 
     public MainThread(SurfaceHolder surfaceHolder, GameView gameView){

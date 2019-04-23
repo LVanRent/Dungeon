@@ -462,17 +462,17 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
             }
             int itmSz=126;
 
-            canvas.drawRect(screenWidht-2*pixelSize,0,screenWidht,2*pixelSize,maper);
+
 
 
                     int posX = 168+itmSz;
                     int posY = 4440+itmSz;
                     Rect mapPlace = new Rect(screenWidht-2*pixelSize,0,screenWidht,2*pixelSize);
-
+                    canvas.drawRect(mapPlace,maper);
 
 
                    Rect mapSRC = new Rect(posX, posY, posX + itmSz, posY + itmSz);
-                   canvas.drawBitmap(zelda_menu, mapSRC, mapPlace, null);
+                   canvas.drawBitmap(zelda_menu, mapSRC, mapPlace, maper);
 
 
         }
