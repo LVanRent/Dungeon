@@ -15,7 +15,9 @@ import android.view.SurfaceHolder;
 import android.view.MotionEvent;
 import android.util.Log;
 
+import android.app.Activity;
 import static java.lang.Math.min;
+import static java.lang.Thread.holdsLock;
 import static java.lang.Thread.sleep;
 
 /*
@@ -181,16 +183,22 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
             if (player.getHp()<=0){
                 //running = false;
                 SharedPreferences test = PreferenceManager.getDefaultSharedPreferences(context);
-                int hiScore = test.getInt("hiScore",0);
+                int highScore = test.getInt("highScore",0);
 
 
 
                 final SharedPreferences.Editor editor;
                 editor = test.edit();
-                editor.putInt("Level",player.getCurrentLevel());
-                if (hiScore<player.getCurrentLevel()){editor.putInt("highScore",player.getCurrentLevel());}
+                editor.putInt("level",player.getCurrentLevel());
                 editor.commit();
-                (context).startActivity(intent);
+                if (highScore<player.getCurrentLevel()){
+                    editor.putInt("highScore",player.getCurrentLevel());
+                    editor.commit();
+                }
+
+
+                Log.d("it's dead","really very dead");
+                ((Activity)context).finish();
             }
         }
 

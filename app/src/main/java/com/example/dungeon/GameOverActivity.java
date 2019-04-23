@@ -17,12 +17,12 @@ public class GameOverActivity extends Activity {
         setContentView(R.layout.activity_game_over);
         SharedPreferences test = PreferenceManager.getDefaultSharedPreferences(this);
         long seed = test.getLong("currentSeed",0);
-        int level = test.getInt("level",0);
-        int highScore = test.getInt("HighScore",0);
+        int level = test.getInt("level",-10);
+        int highScore = test.getInt("highScore",-10);
 
 
         TextView score = findViewById(R.id.textView_score);
-        score.setText(String.format(" Seed : " + String.valueOf(seed) + " | Level : " + String.valueOf(level)));
+        score.setText(String.format(" Seed : " + String.valueOf(seed) + " | Level : " + String.valueOf(level)+" | High-Score : "+highScore));
     }
 
     public void retry(View v) {

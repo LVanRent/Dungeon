@@ -80,8 +80,7 @@ public class Mob extends Character {
                     {
                         if(diffY>0) moveMob(3,player);
                         if(diffY<0) moveMob(1,player);
-                    }
-                    else moveMob(2,player);//←
+                    }//←
                 }
 
                 if (diffX < diffY && diffX + diffY >= 0)
@@ -90,8 +89,7 @@ public class Mob extends Character {
                     {
                         if(diffX>0) moveMob(2,player);
                         if(diffX<0) moveMob(0,player);
-                    }
-                    else moveMob(3,player); //↑
+                    } //↑
                 }
 
                 if (diffX >= diffY && diffX + diffY < 0)
@@ -100,8 +98,7 @@ public class Mob extends Character {
                     {
                         if(diffX>0) moveMob(2,player);
                         if(diffX<0) moveMob(0,player);
-                    }
-                    moveMob(1,player); //↓
+                    } //↓
                 }
 
                 if (diffX < diffY && diffX + diffY < 0)
@@ -110,8 +107,7 @@ public class Mob extends Character {
                     {
                         if(diffY>0) moveMob(3,player);
                         if(diffY<0) moveMob(1,player);
-                    }
-                    else moveMob(0,player); //→
+                    } //→
                 }
 
             }
