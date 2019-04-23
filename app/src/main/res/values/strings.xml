@@ -5,5 +5,6 @@
     <string name="title_gameOver">Game OVer</string>
     <string name="button_retry">Retry</string>
     <string name="button_quit">Quit</string>
+    <string name="button_seed">input seed</string>
 </resources>
 

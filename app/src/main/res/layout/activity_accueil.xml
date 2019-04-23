@@ -50,5 +50,27 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.327" />
 
+    <EditText
+        android:id="@+id/editSeed"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        app:layout_constraintEnd_toStartOf="@+id/button_seed"
+        app:layout_constraintStart_toStartOf="@+id/button_main"
+        app:layout_constraintTop_toTopOf="@+id/button_seed" />
+
+    <Button
+        android:id="@+id/button_seed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="19dp"
+        android:onClick="seed"
+        android:text="@string/button_seed"
+        app:layout_constraintEnd_toEndOf="@+id/button_main"
+        app:layout_constraintTop_toBottomOf="@+id/button_main" />
+
 
 </android.support.constraint.ConstraintLayout>

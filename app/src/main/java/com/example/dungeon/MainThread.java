@@ -1,6 +1,8 @@
 package com.example.dungeon;
 
+import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
+import android.preference.PreferenceManager;
 import android.view.SurfaceHolder;
 import android.graphics.Canvas;
 import android.view.MotionEvent;
@@ -59,9 +61,18 @@ public class MainThread extends Thread {
         long targetTime = 1000/targetFPS;
         lastEvent = null;
         direction = 0;
+        SharedPreferences test = PreferenceManager.getDefaultSharedPreferences(gameView.context);
+        long seed = test.getLong("newSeed",0);
 
+        final SharedPreferences.Editor editor;
+        editor = test.edit();
+        editor.putLong("newSeed",0);
+        editor.commit();
 
-        Hero player = new Hero();
+        Hero player;
+        if (seed == 0) player = new Hero();
+        else player = new Hero(seed);
+
         while (running) {
             startTime = System.nanoTime();
             canvas = null;

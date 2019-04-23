@@ -72,6 +72,7 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
         zelda_menu = BitmapFactory.decodeResource(getResources(), R.drawable.zelda_menu);
     }
 
+
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height){
 
