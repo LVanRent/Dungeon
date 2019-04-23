@@ -1,6 +1,7 @@
 package com.example.dungeon;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -8,6 +9,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Rect;
+import android.preference.PreferenceManager;
 import android.view.SurfaceView;
 import android.view.SurfaceHolder;
 import android.view.MotionEvent;
@@ -178,6 +180,12 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
 
             if (player.getHp()<=0){
                 //running = false;
+                SharedPreferences test = PreferenceManager.getDefaultSharedPreferences(context);
+
+
+                final SharedPreferences.Editor editor;
+                editor = test.edit();
+                editor.putInt("Level",player.getCurrentLevel());
                 (context).startActivity(intent);
             }
         }
