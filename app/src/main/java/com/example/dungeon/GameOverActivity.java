@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
+import android.widget.TextView;
 
 public class GameOverActivity extends Activity {
     /** Called when the activity is first created. */
@@ -19,6 +20,9 @@ public class GameOverActivity extends Activity {
         int level = test.getInt("level",0);
         int highScore = test.getInt("HighScore",0);
 
+
+        TextView score = findViewById(R.id.textView_score);
+        score.setText(String.format(" Seed : " + String.valueOf(seed) + " | Level : " + String.valueOf(level)));
     }
 
     public void retry(View v) {
