@@ -49,11 +49,5 @@ public class AccueilActivity extends Activity {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         }
-        public void seed(View v){
 
-
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
-
-        }
 }

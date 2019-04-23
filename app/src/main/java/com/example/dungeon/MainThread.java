@@ -67,11 +67,13 @@ public class MainThread extends Thread {
         final SharedPreferences.Editor editor;
         editor = test.edit();
         editor.putLong("newSeed",0);
-        editor.commit();
+
 
         Hero player;
         if (seed == 0) player = new Hero();
         else player = new Hero(seed);
+        editor.putLong("currentSeed",player.getSeed());
+        editor.commit();
 
         while (running) {
             startTime = System.nanoTime();
