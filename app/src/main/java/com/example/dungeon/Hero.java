@@ -1,5 +1,7 @@
 package com.example.dungeon;
 
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import java.util.Random;
@@ -9,6 +11,7 @@ class Hero extends Character {
     public Random mobGen;
     public Mob firstMob;
     public int mobAmount;
+    public long currentSeed;
 
 
 
@@ -17,11 +20,13 @@ class Hero extends Character {
 
 
     public Hero() {
+
         super();
         super.setHp(100);
         hunger = 100;
         name = "hero";
         mobGen = new Random(generator.nextLong());
+
 
     }
     public Hero(long seed) {
@@ -30,6 +35,8 @@ class Hero extends Character {
         hunger = 100;
         name = "hero";
         mobGen=new Random(generator.nextLong());
+
+
 
 
     }

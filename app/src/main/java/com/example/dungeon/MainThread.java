@@ -1,6 +1,8 @@
 package com.example.dungeon;
 
+import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
+import android.preference.PreferenceManager;
 import android.view.SurfaceHolder;
 import android.graphics.Canvas;
 import android.view.MotionEvent;
@@ -39,6 +41,8 @@ public class MainThread extends Thread {
     public static Canvas canvas;
     public MotionEvent lastEvent;
     public int direction;
+    private int targetFPS =30;
+    private double averageFPS;
 
     public MainThread(SurfaceHolder surfaceHolder, GameView gameView){
 
@@ -49,12 +53,30 @@ public class MainThread extends Thread {
     }
     @Override
     public void run() {
+        long startTime;
+        long timeMillis;
+        long waitTime;
+        long totalTime=0;
+        int frameCount=0;
+        long targetTime = 1000/targetFPS;
         lastEvent = null;
         direction = 0;
+        SharedPreferences test = PreferenceManager.getDefaultSharedPreferences(gameView.context);
+        long seed = test.getLong("newSeed",0);
+
+        final SharedPreferences.Editor editor;
+        editor = test.edit();
+        editor.putLong("newSeed",0);
 
 
-        Hero player = new Hero();
+        Hero player;
+        if (seed == 0) player = new Hero();
+        else player = new Hero(seed);
+        editor.putLong("currentSeed",player.getSeed());
+        editor.commit();
+
         while (running) {
+            startTime = System.nanoTime();
             canvas = null;
 
             try {
@@ -68,7 +90,9 @@ public class MainThread extends Thread {
 
 
                 }
-            } catch (Exception e) {} finally {
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
                 if (canvas != null) {
                     try {
                         surfaceHolder.unlockCanvasAndPost(canvas);
@@ -78,11 +102,26 @@ public class MainThread extends Thread {
                     }
                 }
             }
+            timeMillis =(System.nanoTime()-startTime)/1000000;
+            waitTime = targetTime - timeMillis;
+
+            try {
+                this.sleep(waitTime);
+            } catch (Exception e) {}
+
+            totalTime += System.nanoTime() - startTime;
+            frameCount++;
+            if (frameCount == targetFPS)        {
+                averageFPS = 1000 / ((totalTime / frameCount) / 1000000);
+                frameCount = 0;
+                totalTime = 0;
+                Log.i("averageFPS",""+averageFPS);
+
+            }
+
+
 
         }
-
-
-
     }
 
     public void processEvents() {

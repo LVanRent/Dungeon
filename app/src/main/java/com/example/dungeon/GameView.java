@@ -1,6 +1,7 @@
 package com.example.dungeon;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -8,6 +9,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Rect;
+import android.preference.PreferenceManager;
 import android.view.SurfaceView;
 import android.view.SurfaceHolder;
 import android.view.MotionEvent;
@@ -33,7 +35,9 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
     public Intent intent;
     public int didAttack;
     public boolean rotateFlag=false;
+    public int rotateCounter;
     public boolean map=false;
+    public int mapCounter;
 
     public final static int wallOnMap = 0;
     public final static int pathOnMap = 1;
@@ -42,7 +46,7 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
     public final static int stairOnMap = 4;
     public final static int foodOnMap = 5;
     public final static int mobOnMap = 6;
-    public Bitmap zelda_menu;
+   public Bitmap zelda_menu;
 
 
     public GameView (Context context){
@@ -69,6 +73,7 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
 
         zelda_menu = BitmapFactory.decodeResource(getResources(), R.drawable.zelda_menu);
     }
+
 
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height){
@@ -110,8 +115,9 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
 
 
     public void update (Hero player, Canvas canvas){
-        if ((lastevent==1||lastevent==2)&&lastTouchX>screenWidht-2*pixelSize &&lastTouchY<2*pixelSize){
+        if (mapCounter==0 && (lastevent==1||lastevent==2) && lastTouchX>screenWidht-2*pixelSize &&lastTouchY<2*pixelSize){
             map=!map;
+            mapCounter=5;
             Log.i("map",""+map);}
         if(!map){
 
@@ -126,7 +132,10 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
                         && (lastTouchY<(screenWidht+2*(screenHeight-screenWidht)/3))
                         && (lastTouchX>((screenHeight-screenWidht)/3))
                         && (lastTouchX<(2*(screenHeight-screenWidht)/3))) {
-                    rotateFlag = !rotateFlag;
+                    if (rotateCounter==0) {
+                        rotateFlag = !rotateFlag;
+                        rotateCounter = 5;
+                    }
                 }
                 else {
                     if (lastTouchY > screenWidht && screenWidht + lastTouchX < screenHeight) {
@@ -168,19 +177,27 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
 
             player.getCurrentMap().updateVisible(player.getPositionX(),player.getPositionY());
             player.getCurrentMap().updateExplored(player.getPositionX(),player.getPositionY());
-            this.draw(canvas,player);
+
             if (player.getHp()<=0){
                 //running = false;
+                SharedPreferences test = PreferenceManager.getDefaultSharedPreferences(context);
+                int hiScore = test.getInt("hiScore",0);
+
+
+
+                final SharedPreferences.Editor editor;
+                editor = test.edit();
+                editor.putInt("Level",player.getCurrentLevel());
+                if (hiScore<player.getCurrentLevel()){editor.putInt("highScore",player.getCurrentLevel());}
+                editor.commit();
                 (context).startActivity(intent);
             }
         }
-        else{
-            this.draw(canvas,player);
 
-
-        }
-
+        this.draw(canvas,player);
         this.lastevent=0;
+        if(mapCounter>0)mapCounter--;
+        if(rotateCounter>0)rotateCounter--;
 
     }
     @Override
@@ -444,14 +461,14 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
             canvas.drawRect(screenWidht-2*pixelSize,0,screenWidht,2*pixelSize,maper);
 
 
-             //       int posX = 168+itmSz;
-             //       int posY = 4450+itmSz;
-             //       Rect mapPlace = new Rect(screenWidht-2*pixelSize,0,screenWidht,2*pixelSize);
+                    int posX = 168+itmSz;
+                    int posY = 4440+itmSz;
+                    Rect mapPlace = new Rect(screenWidht-2*pixelSize,0,screenWidht,2*pixelSize);
 
 
 
-              //      Rect mapSRC = new Rect(posX, posY, posX + itmSz, posY + itmSz);
-              //      canvas.drawBitmap(zelda_menu, mapSRC, mapPlace, null);
+                   Rect mapSRC = new Rect(posX, posY, posX + itmSz, posY + itmSz);
+                   canvas.drawBitmap(zelda_menu, mapSRC, mapPlace, null);
 
 
         }
