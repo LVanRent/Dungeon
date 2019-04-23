@@ -14,7 +14,7 @@ public class GameOverActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_over);
-        SharedPreferences test = PreferenceManager.getDefaultSharedPreferences(gameView.context);
+        SharedPreferences test = PreferenceManager.getDefaultSharedPreferences(this);
         long seed = test.getLong("currentSeed",0);
         int level = test.getInt("level",0);
     }
