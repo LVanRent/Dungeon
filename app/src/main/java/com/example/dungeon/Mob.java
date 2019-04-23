@@ -74,10 +74,45 @@ public class Mob extends Character {
 
                 player.setHp(player.getHp() - 20);
             }else{
-                if (diffX >= diffY && diffX + diffY >= 0) moveMob(2,player); //←
-                if (diffX < diffY && diffX + diffY >= 0) moveMob(3,player); //↑
-                if (diffX >= diffY && diffX + diffY < 0) moveMob(1,player); //↓
-                if (diffX < diffY && diffX + diffY < 0) moveMob(0,player); //→
+                if (diffX >= diffY && diffX + diffY >= 0)
+                {
+                    if (moveMob(2,player)==0)
+                    {
+                        if(diffY>0) moveMob(3,player);
+                        if(diffY<0) moveMob(1,player);
+                    }
+                    else moveMob(2,player);//←
+                }
+
+                if (diffX < diffY && diffX + diffY >= 0)
+                {
+                    if(moveMob(3,player)==0)
+                    {
+                        if(diffX>0) moveMob(2,player);
+                        if(diffX<0) moveMob(0,player);
+                    }
+                    else moveMob(3,player); //↑
+                }
+
+                if (diffX >= diffY && diffX + diffY < 0)
+                {
+                    if(moveMob(1,player)==0)
+                    {
+                        if(diffX>0) moveMob(2,player);
+                        if(diffX<0) moveMob(0,player);
+                    }
+                    moveMob(1,player); //↓
+                }
+
+                if (diffX < diffY && diffX + diffY < 0)
+                {
+                    if(moveMob(0,player)==0)
+                    {
+                        if(diffY>0) moveMob(3,player);
+                        if(diffY<0) moveMob(1,player);
+                    }
+                    else moveMob(0,player); //→
+                }
 
             }
             Log.d("Mobposition","x="+getPositionX()+" y="+getPositionY());
