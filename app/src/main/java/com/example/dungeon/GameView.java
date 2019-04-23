@@ -115,7 +115,7 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
 
 
     public void update (Hero player, Canvas canvas){
-        if (mapCounter==0 && (lastevent==1||lastevent==2) && lastTouchX>screenWidht-2*pixelSize &&lastTouchY<2*pixelSize){
+        if (mapCounter==0 && (lastevent==1||lastevent==2) && lastTouchX<screenWidht &&lastTouchY<screenWidht){
             map=!map;
             mapCounter=5;
             Log.i("map",""+map);}
@@ -468,7 +468,7 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
                     int posX = 168+itmSz;
                     int posY = 4440+itmSz;
                     Rect mapPlace = new Rect(screenWidht-2*pixelSize,0,screenWidht,2*pixelSize);
-                    canvas.drawRect(mapPlace,maper);
+                    //canvas.drawRect(mapPlace,maper);
 
 
                    Rect mapSRC = new Rect(posX, posY, posX + itmSz, posY + itmSz);
