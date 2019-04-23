@@ -42,7 +42,7 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
     public final static int stairOnMap = 4;
     public final static int foodOnMap = 5;
     public final static int mobOnMap = 6;
-    public Bitmap zelda_menu;
+   //public Bitmap zelda_menu;
 
 
     public GameView (Context context){
@@ -67,7 +67,7 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
         thread = new MainThread(getHolder(), this);
         setFocusable(true);
 
-        zelda_menu = BitmapFactory.decodeResource(getResources(), R.drawable.zelda_menu);
+        //zelda_menu = BitmapFactory.decodeResource(getResources(), R.drawable.zelda_menu);
     }
 
     @Override
