@@ -240,8 +240,8 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
         super.draw(canvas);
         canvas.drawColor(Color.WHITE);
         if (canvas != null) {
-            //Paint maper = new Paint();
-            //maper.setColor(Color.YELLOW);
+            Paint maper = new Paint();
+            maper.setColor(Color.YELLOW);
 
 
 
@@ -362,7 +362,7 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
                                 canvas.drawRect((i + 10) * pixelSize, (j + 10) * pixelSize, (i + 11) * pixelSize, (j + 11) * pixelSize, fog);
                             }
                             if (cMap.getValVisible((x + i), (y + j)) == 0 && cMap.getValExplored((x + i), (y + j)) == 1) {
-                                if (cMap.getValMap(x + i, y + j) == roomOnMap || cMap.getValMap(x + i, y + j) == pathOnMap) {
+                                if (cMap.getValMap(x + i, y + j) == roomOnMap || cMap.getValMap(x + i, y + j) == pathOnMap|| cMap.getValMap(x + i, y + j) ==mobOnMap) {
                                     canvas.drawRect((i + 10) * pixelSize, (j + 10) * pixelSize, (i + 11) * pixelSize, (j + 11) * pixelSize, darkground);
                                 } else if (cMap.getValMap(x + i, y + j) == stairOnMap) {
                                     canvas.drawRect((i + 10) * pixelSize, (j + 10) * pixelSize, (i + 11) * pixelSize, (j + 11) * pixelSize, darkstairs);
@@ -441,17 +441,17 @@ public class GameView  extends SurfaceView implements SurfaceHolder.Callback {
             }
             int itmSz=126;
 
-            //canvas.drawRect(screenWidht-2*pixelSize,0,screenWidht,2*pixelSize,maper);
+            canvas.drawRect(screenWidht-2*pixelSize,0,screenWidht,2*pixelSize,maper);
 
 
-                    int posX = 168+itmSz;
-                    int posY = 4450+itmSz;
-                    Rect mapPlace = new Rect(screenWidht-2*pixelSize,0,screenWidht,2*pixelSize);
+             //       int posX = 168+itmSz;
+             //       int posY = 4450+itmSz;
+             //       Rect mapPlace = new Rect(screenWidht-2*pixelSize,0,screenWidht,2*pixelSize);
 
 
 
-                    Rect mapSRC = new Rect(posX, posY, posX + itmSz, posY + itmSz);
-                    canvas.drawBitmap(zelda_menu, mapSRC, mapPlace, null);
+              //      Rect mapSRC = new Rect(posX, posY, posX + itmSz, posY + itmSz);
+              //      canvas.drawBitmap(zelda_menu, mapSRC, mapPlace, null);
 
 
         }
