@@ -25,6 +25,7 @@ public class MainActivity extends Activity {
         int height = size.y;
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         Intent intent = new Intent(this, GameOverActivity.class);
+
         GameView gv = new GameView(this,width,height,intent);
 
         setContentView(gv);

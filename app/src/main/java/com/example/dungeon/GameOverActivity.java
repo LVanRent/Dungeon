@@ -17,8 +17,8 @@ public class GameOverActivity extends Activity {
         setContentView(R.layout.activity_game_over);
         SharedPreferences test = PreferenceManager.getDefaultSharedPreferences(this);
         long seed = test.getLong("currentSeed",0);
-        int level = test.getInt("level",-10);
-        int highScore = test.getInt("highScore",-10);
+        int level = test.getInt("level",-1);
+        int highScore = test.getInt("highScore",-1);
 
 
         TextView score = findViewById(R.id.textView_score);
